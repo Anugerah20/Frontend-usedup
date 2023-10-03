@@ -1,8 +1,12 @@
+import Index from "./pages/Index"
+import Test from "./components/test"
+
 function App() {
   return (
     <>
       <div>
-        <h1>Halo bang sepuh</h1>
+        <Index />
+        <Test />
       </div>
     </>
   )
