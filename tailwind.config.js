@@ -7,7 +7,8 @@ export default {
     extend: {
       colors: {
         'primary': '#000000',
-        'secondary': '#B7B7B7'
+        'secondary': '#B7B7B7',
+        'blue-link': '#00659E',
       }
     },
   },
