@@ -1,15 +1,16 @@
-import Index from "./pages/Index"
-import Test from "./components/test"
+import Index from "./pages/Index";
+import LoginCard from "./components/LoginCard";
+import RegisterCard from "./components/RegisterCard";
 
 function App() {
   return (
     <>
-      <div>
-        <Index />
-        <Test />
+      <div className="flex">
+        <LoginCard />
+        <RegisterCard />
       </div>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
