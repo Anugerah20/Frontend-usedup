@@ -6,7 +6,7 @@ const LoginCard = () => {
       <div className="card card-login">
         <div className="mb-5">
           <p className="text-[30px] font-bold">LOGIN</p>
-          <p className="text-[14px] text-[#A4A4A4]">
+          <p className="text-[14px] text-btn-grey">
             Ingin mencari sesuatu? banyak barang bagus loh!
           </p>
         </div>
@@ -34,7 +34,7 @@ const LoginCard = () => {
             />
           </div>
           <div className="text-end">
-            <a href="#" className="font-semibold text-[#00659E] underline">
+            <a href="#" className="font-semibold text-blue-link underline">
               Lupa Password?
             </a>
           </div>
@@ -45,7 +45,7 @@ const LoginCard = () => {
         <div className="text-center">
           <span className="font-semibold text-black">
             Belum punya akun?{" "}
-            <a href="#" className="font-semibold text-[#00659E] underline">
+            <a href="#" className="font-semibold text-blue-link underline">
               Register disini
             </a>
           </span>

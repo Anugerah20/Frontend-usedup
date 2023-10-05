@@ -6,7 +6,7 @@ const RegisterCard = () => {
       <div className="card card-register">
         <div className="mb-5">
           <p className="text-[30px] font-bold">REGISTER</p>
-          <p className="text-[14px] text-[#A4A4A4]">
+          <p className="text-[14px] text-btn-grey">
             Register untuk menjual, menambahkan ke favorit.
           </p>
         </div>
@@ -17,7 +17,7 @@ const RegisterCard = () => {
             </label>
             <input
               type="text"
-              className="w-full h-[41px] border border-[#ECECEC] mt-2"
+              className="w-full h-[41px] border border-shadow mt-2"
               id="Nama"
               required
             />
@@ -28,7 +28,7 @@ const RegisterCard = () => {
             </label>
             <input
               type="email"
-              className="w-full h-[41px] border border-[#ECECEC] mt-2"
+              className="w-full h-[41px] border border-shadow mt-2"
               id="Email"
               required
             />
@@ -39,7 +39,7 @@ const RegisterCard = () => {
             </label>
             <input
               type="password"
-              className="w-full h-[41px] border border-[#ECECEC] my-2"
+              className="w-full h-[41px] border border-shadow my-2"
               id="Password"
               required
             />
@@ -53,7 +53,7 @@ const RegisterCard = () => {
             </label>
             <input
               type="password"
-              className="w-full h-[41px] border border-[#ECECEC] my-2"
+              className="w-full h-[41px] border border-shadow my-2"
               id="ConfirmPassword"
               required
             />
@@ -65,7 +65,7 @@ const RegisterCard = () => {
         <div className="text-center">
           <span className="font-semibold text-black">
             Sudah memiliki akun?{" "}
-            <a href="#" className="font-semibold text-[#00659E] underline">
+            <a href="#" className="font-semibold text-blue-link underline">
               Login disini
             </a>
           </span>
