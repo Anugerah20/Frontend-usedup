@@ -17,7 +17,7 @@ const LoginCard = () => {
             </label>
             <input
               type="email"
-              className="w-full h-[41px] border border-[#ECECEC] mt-2"
+              className="w-full h-[41px] border border-shadow mt-2"
               id="Email"
               required
             />
@@ -28,7 +28,7 @@ const LoginCard = () => {
             </label>
             <input
               type="password"
-              className="w-full h-[41px] border border-[#ECECEC] my-2"
+              className="w-full h-[41px] border border-shadow my-2"
               id="Password"
               required
             />
