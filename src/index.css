@@ -3,6 +3,40 @@
 @tailwind utilities;
 
 @layer components {
+     /* Breadcrumb edit profile */
+     .breadcrumb {
+          @apply flex
+     }
+     .breadcrumb-no-active {
+          @apply text-[18px] font-medium
+     }
+
+     .breadcrumb-active {
+          @apply text-[18px] font-medium underline
+     }
+
+     .breadcrumb-divider {
+          @apply text-[22px] flex justify-center items-center
+     }
+
+     /* Button edit profile */
+     .btn-profile {
+          @apply w-[20rem] h-[2.5rem] font-normal rounded transition-all duration-300 ease-in uppercase
+     }
+
+     .border-bottom {
+          @apply border-solid border-b-2 w-[20rem] pt-8
+     }
+
+     /* Input edit profile */
+     .input-profile {
+          @apply flex w-[20rem] h-[2rem] mb-[1rem] border-solid border-2 outline-none
+     }
+
+     .textarea-profile {
+          @apply flex w-[20rem] h-[4rem] mb-[1rem] border-solid border-2 outline-none
+     }
+}
   .card {
     @apply px-10 py-8 w-[440px] h-[440px] mx-auto shadow-md shadow-slate-300;
   }

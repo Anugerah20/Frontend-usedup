@@ -1,3 +1,4 @@
+import EditProfile from './pages/EditProfile'  
 import Index from "./pages/Index";
 import LoginCard from "./components/LoginCard";
 import RegisterCard from "./components/RegisterCard";
@@ -5,10 +6,13 @@ import RegisterCard from "./components/RegisterCard";
 function App() {
   return (
     <>
-      <div className="flex">
-        <LoginCard />
-        <RegisterCard />
-      </div>
+      <div>
+        <EditProfile />
+     </div>
+//       <div className="flex">
+//         <LoginCard />
+//         <RegisterCard />
+//       </div>
     </>
   );
 }
