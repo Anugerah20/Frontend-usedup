@@ -1,12 +1,9 @@
-import Index from "./pages/Index"
-import Test from "./components/test"
-
+import EditProfile from './pages/EditProfile'
 function App() {
   return (
     <>
       <div>
-        <Index />
-        <Test />
+        <EditProfile />
       </div>
     </>
   )
