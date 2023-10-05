@@ -9,7 +9,7 @@ export default {
         'blue-link': '#00659E',
         'btn-grey': '#A4A4A4',
         'shadow': '#ECECEC',
-      },
+      }
     },
   },
   plugins: [],
