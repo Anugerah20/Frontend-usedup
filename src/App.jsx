@@ -6,7 +6,7 @@ function App() {
         <EditProfile />
       </div>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
