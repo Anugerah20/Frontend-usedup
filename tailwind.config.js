@@ -9,9 +9,10 @@ export default {
         'primary': '#000000',
         'secondary': '#B7B7B7',
         'blue-link': '#00659E',
+        'btn-grey': '#A4A4A4',
+        'shadow': '#ECECEC',
       }
     },
   },
   plugins: [],
 }
-
