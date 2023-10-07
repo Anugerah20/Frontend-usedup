@@ -1,5 +1,3 @@
-import React from "react";
-
 const RegisterCard = () => {
   return (
     <>
@@ -7,12 +5,12 @@ const RegisterCard = () => {
         <div className="mb-5">
           <p className="text-[30px] font-bold">REGISTER</p>
           <p className="text-[14px] text-btn-grey">
-            Register untuk menjual, menambahkan ke favorit.
+            Register untuk menjual, menambahkan ke favorit dan masih banyak lagi!
           </p>
         </div>
         <form>
-          <div>
-            <label htmlFor="Nama" className="text-[12px] font-semibold">
+          <div className="my-[20px]">
+            <label htmlFor="Nama" className="text-sm font-semibold">
               Nama Lengkap
             </label>
             <input
@@ -22,8 +20,8 @@ const RegisterCard = () => {
               required
             />
           </div>
-          <div>
-            <label htmlFor="Email" className="text-[12px] font-semibold">
+          <div className="my-[20px]">
+            <label htmlFor="Email" className="text-sm font-semibold">
               Email
             </label>
             <input
@@ -33,8 +31,8 @@ const RegisterCard = () => {
               required
             />
           </div>
-          <div>
-            <label htmlFor="Password" className="text-[12px] font-semibold">
+          <div className="my-[20px]">
+            <label htmlFor="Password" className="text-sm font-semibold">
               Password
             </label>
             <input
@@ -44,10 +42,10 @@ const RegisterCard = () => {
               required
             />
           </div>
-          <div>
+          <div className="my-[20px]">
             <label
               htmlFor="ConfirmPassword"
-              className="text-[12px] font-semibold"
+              className="text-sm font-semibold"
             >
               Konfirmasi Password
             </label>
@@ -63,9 +61,9 @@ const RegisterCard = () => {
           </button>
         </form>
         <div className="text-center">
-          <span className="font-semibold text-black">
+          <span className="text-black">
             Sudah memiliki akun?{" "}
-            <a href="#" className="font-semibold text-blue-link underline">
+            <a href="#" className="text-blue-link underline">
               Login disini
             </a>
           </span>
