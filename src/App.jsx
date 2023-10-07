@@ -9,7 +9,7 @@ function App() {
   return (
     <>
       <Navigation />
-      <div className='App'>
+      <div className='App px-4 sm:my-10 my-5'>
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/login' element={<LoginCard />} />
