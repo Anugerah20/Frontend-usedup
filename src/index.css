@@ -41,16 +41,17 @@
 }
 
 .card {
-     @apply px-10 py-8 w-[440px] h-[440px] mx-auto shadow-md shadow-slate-300;
+     @apply px-10 py-8 mx-auto shadow-md shadow-slate-300;
 }
 
 .card-login {
-     @apply w-[440px] h-[440px];
-}
-
-.card-register {
-     @apply w-[440px] h-[600px];
-}
+     @apply max-w-xl
+   }
+   
+   .card-register {
+     @apply max-w-xl
+   }
+   
 
 /* Button Navigation */
 .btn-search {
