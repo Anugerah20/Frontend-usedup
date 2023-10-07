@@ -12,7 +12,7 @@ const Navigation = () => {
                <Navbar
                     fluid
                     rounded
-                    className="lg:mx-3 md:mx-3 sm:mx-3 lg:my-2 md:my-2 sm:my-2"
+                    className="lg:mx-3 md:mx-3 sm:mx-3 lg:my-2 md:my-2 sm:my-2 m-2"
                >
                     <Navbar.Brand href="/">
                          <img src={Logo} alt="used up" />

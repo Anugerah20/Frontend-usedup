@@ -9,15 +9,15 @@ function App() {
   return (
     <>
       <Navigation />
-    <div className='App flex justify-start items-center h-screen'>
-      <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/login' element={<LoginCard />} />
-        <Route path='/register' element={<RegisterCard />} />
-        <Route path='/edit-profile' element={<EditProfile />} />
-      </Routes>
-    </div>
- </>
+      <div className='App'>
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/login' element={<LoginCard />} />
+          <Route path='/register' element={<RegisterCard />} />
+          <Route path='/edit-profile' element={<EditProfile />} />
+        </Routes>
+      </div>
+    </>
   );
 }
 
