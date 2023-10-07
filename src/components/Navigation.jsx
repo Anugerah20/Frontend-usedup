@@ -23,7 +23,7 @@ const Navigation = () => {
                     </div>
                     <Navbar.Toggle />
                     <Navbar.Collapse>
-                         <form className="flex relative">
+                         <form className="relative">
                               <div className="relative">
                                    <TextInput
                                         className="input-search"
@@ -44,7 +44,7 @@ const Navigation = () => {
                          <div className="flex gap-4">
                               {userLogin ? (
                                    <div className="flex gap-4">
-                                        <div className="flex">
+                                        <div className="flex sm:mt-0 mt-4">
                                              <Button outline color="dark" className="btn-nav">
                                                   Jual
                                              </Button>
