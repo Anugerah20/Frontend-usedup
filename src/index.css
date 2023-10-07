@@ -42,17 +42,17 @@
 
 /* card untuk login & register */
 .card {
-     @apply px-10 py-8 mx-auto shadow-md shadow-slate-300;
+     @apply px-6 py-5 mx-auto sm:shadow-md shadow-none;
 }
 
 .card-login {
-     @apply max-w-xl
-   }
-   
+     @apply max-w-md
+}
+
 .card-register {
-     @apply max-w-xl
-   }
-   
+     @apply max-w-md
+}
+
 
 /* Button Navigation */
 .btn-search {
