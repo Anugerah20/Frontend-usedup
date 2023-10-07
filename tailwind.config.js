@@ -2,6 +2,7 @@
 export default {
   content: [
     "./src/**/*.{js,ts,jsx,tsx}",
+    'node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}'
   ],
   theme: {
     extend: {
@@ -18,8 +19,9 @@ export default {
         'blue-link': '#00659E',
         'btn-grey': '#A4A4A4',
         'shadow': '#ECECEC',
+        'btn-search': '#EFEFEF',
       }
     },
   },
-  plugins: [],
+  plugins: [require('flowbite/plugin')],
 }

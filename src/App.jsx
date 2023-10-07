@@ -1,9 +1,9 @@
-import EditProfile from './pages/EditProfile'
+import Navigation from "./components/Navigation";
 function App() {
   return (
     <>
       <div>
-        <EditProfile />
+        <Navigation />
       </div>
     </>
   );
