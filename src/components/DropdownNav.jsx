@@ -7,7 +7,7 @@ const DropdownNav = () => {
                     arrowIcon={true}
                     inline
                     className="mt-8"
-                    label={<Avatar alt="user" img={ProfileUser} className="mt-4 ml-6" />}
+                    label={<Avatar alt="user" img={ProfileUser} />}
                >
                     <Dropdown.Header>
                          <div className="bg-red-200 text-red-700 p-3 mx-2 my-4 rounded-md">Lengkapi profil di edit profil</div>

@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 @layer components {
+
      /* Breadcrumb edit profile */
      .breadcrumb {
           @apply flex
@@ -31,33 +32,38 @@
 
      /* Input edit profile */
      .input-profile {
-         @apply flex w-[20rem] h-[2rem] mb-[1rem] border-solid border-2 outline-none
+          @apply flex w-[20rem] h-[2rem] mb-[1rem] border-solid border-2 outline-none
      }
 
      .textarea-profile {
-         @apply flex w-[20rem] h-[4rem] mb-[1rem] border-solid border-2 outline-none
+          @apply flex w-[20rem] h-[4rem] mb-[1rem] border-solid border-2 outline-none
      }
 }
-  .card {
-    @apply px-10 py-8 w-[440px] h-[440px] mx-auto shadow-md shadow-slate-300;
-  }
-  .card-login {
-    @apply w-[440px] h-[440px];
-  }
-  .card-register {
-    @apply w-[440px] h-[600px];
-  }
 
-  /* Button Navigation */
-  .btn-search {
-     @apply lg:w-[60px] md:w-[40px] sm:w-[100px] h-[40px] mt-5;
-  }
-  .btn-nav {
-     @apply flex flex-col lg:w-[85px] md:w-[70px] w-[80px] h-[40px] text-[18px] mt-5;
-  }
-  .input-search {
-     @apply mt-5 lg:w-[400px] md:w-[300px] w-[100%] outline-none
-  }
+.card {
+     @apply px-10 py-8 w-[440px] h-[440px] mx-auto shadow-md shadow-slate-300;
+}
+
+.card-login {
+     @apply w-[440px] h-[440px];
+}
+
+.card-register {
+     @apply w-[440px] h-[600px];
+}
+
+/* Button Navigation */
+.btn-search {
+     @apply lg:w-[60px] md:w-[40px] sm:w-[100px] h-[40px];
+}
+
+.btn-nav {
+     @apply flex flex-col lg:w-[85px] md:w-[70px] w-[80px] h-[40px] text-[18px];
+}
+
+.input-search {
+     @apply lg:w-[400px] md:w-[300px] w-[100%] outline-none
+}
 
 /* Navigation */
 .categories {

@@ -18,13 +18,13 @@ const Navigation = () => {
                          <img src={Logo} alt="used up" />
                     </Navbar.Brand>
                     {/* Dropdown Mobile */}
-                    <div className="sm:invisible visible sm:ml-0 ml-44 mb-2">
+                    <div className="sm:invisible visible sm:ml-0 ml-44">
                          <DropdownNav />
                     </div>
                     <Navbar.Toggle />
                     <Navbar.Collapse>
                          <form className="flex relative">
-                              <div className="relative flex-1">
+                              <div className="relative">
                                    <TextInput
                                         className="input-search"
                                         id="search"

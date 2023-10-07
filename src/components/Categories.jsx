@@ -1,9 +1,9 @@
 
 const Categories = () => {
     return (
-        <div className="categories">
-            <div className="group-categories">
-                <ul className="flex gap-4 text-sm text-primary">
+        <div className="categories ">
+            <div className="group-categories ">
+                <ul className="flex gap-4 text-sm sm:pl-0 pl-3 text-primary">
                     <li className="mb-5 mr-0"><a href="#">Mobil Bekas</a></li>
                     <li className="mb-5 mr-0"><a href="#">Motor Bekas</a></li>
                     <li className="mb-5 mr-0"><a href="#">Property</a></li>
