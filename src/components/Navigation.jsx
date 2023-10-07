@@ -35,8 +35,8 @@ const Navigation = () => {
                                         color="off"
                                    />
                               </div>
-                              <div className="absolute right-0 top-0 transition-all">
-                                   <Button type="submit" color="off" className="btn-search bg-btn-search hover:bg-btn-grey duration-300 ease-out">
+                              <div className="flex absolute inset-y-0 right-0 items-center hover:cursor-pointer rounded-r-lg transition-all">
+                                   <Button type="submit" color="off" className="btn-search bg-btn-search hover:bg-btn-grey rounded-l-none duration-300 ease-out">
                                         <FaSistrix className="text-xl" />
                                    </Button>
                               </div>
