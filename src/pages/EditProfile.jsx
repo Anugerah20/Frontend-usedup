@@ -20,6 +20,7 @@ const EditProfile = () => {
                     <label htmlFor="bio">Tentang saya</label>
                     <textarea name="bio" id="bio" className="textarea-profile border-input-gray" cols="40" rows="10"></textarea>
                     <button className="btn-profile bg-black-breadcrumb text-white-breadcrumb hover:bg-black-breadcrumb-secondary">simpan</button>
+                    <div className="border-bottom text-input-gray"></div>
                </form >
           </div >
      )
