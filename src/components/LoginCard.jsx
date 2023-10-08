@@ -1,4 +1,4 @@
-import React from "react";
+import { Link } from "react-router-dom";
 
 const LoginCard = () => {
   return (
@@ -11,7 +11,7 @@ const LoginCard = () => {
           </p>
         </div>
         <form>
-          <div>
+          <div className="my-[20px]">
             <label htmlFor="Email" className="text-[12px] font-semibold">
               Email
             </label>
@@ -22,7 +22,7 @@ const LoginCard = () => {
               required
             />
           </div>
-          <div>
+          <div className="my-[20px]">
             <label htmlFor="Password" className="text-[12px] font-semibold">
               Password
             </label>
@@ -34,7 +34,7 @@ const LoginCard = () => {
             />
           </div>
           <div className="text-end">
-            <a href="#" className="font-semibold text-blue-link underline">
+            <a href="#" className=" text-blue-link underline">
               Lupa Password?
             </a>
           </div>
@@ -43,11 +43,11 @@ const LoginCard = () => {
           </button>
         </form>
         <div className="text-center">
-          <span className="font-semibold text-black">
+          <span className="text-black">
             Belum punya akun?{" "}
-            <a href="#" className="font-semibold text-blue-link underline">
+            <Link to="/register" className="text-blue-link underline">
               Register disini
-            </a>
+            </Link>
           </span>
         </div>
       </div>
