@@ -1,3 +1,4 @@
+import FooterComponent from "./components/FooterComponent";
 import EditProfile from './pages/EditProfile'
 import LoginCard from "./components/LoginCard";
 import RegisterCard from "./components/RegisterCard";
@@ -25,6 +26,7 @@ function App() {
           <Route path='/edit-profile' element={<EditProfile />} />
         </Routes>
       </div>
+      <FooterComponent />
     </>
   );
 }
