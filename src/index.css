@@ -56,7 +56,7 @@
 
 /* Button Navigation */
 .btn-search {
-     @apply lg:w-[60px] md:w-[40px] sm:w-[100px] h-[40px];
+     @apply lg:w-[60px] md:w-[40px] sm:w-[100px];
 }
 
 .btn-nav {

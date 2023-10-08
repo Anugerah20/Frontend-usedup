@@ -27,6 +27,7 @@ const Navigation = () => {
                               <div className="relative">
                                    <TextInput
                                         className="input-search"
+                                        sizing="lg"
                                         id="search"
                                         name="search"
                                         placeholder="Cari mobil, motor, handphone, dan lainnya..."
@@ -35,25 +36,23 @@ const Navigation = () => {
                                         color="off"
                                    />
                               </div>
-                              <div className="flex absolute inset-y-0 right-0 items-center hover:cursor-pointer rounded-r-lg transition-all">
-                                   <Button type="submit" color="off" className="btn-search bg-btn-search hover:bg-btn-grey rounded-l-none duration-300 ease-out">
-                                        <FaSistrix className="text-xl" />
-                                   </Button>
-                              </div>
+                              <Button type="submit" color="off" className="btn-search absolute inset-y-0 right-0 items-center hover:cursor-pointer rounded-r-lg transition-all bg-btn-search hover:bg-btn-grey rounded-l-none duration-300 ease-out">
+                                   <FaSistrix className="text-xl" />
+                              </Button>
                          </form>
                          <div className="flex gap-4">
                               {userLogin ? (
-                                   <div className="flex gap-4">
-                                        <div className="flex sm:mt-0 mt-4">
+                                   <>
+                                        <div className="flex items-center justify-center space-x-4 sm:mt-0 mt-4">
                                              <Button outline color="dark" className="btn-nav">
                                                   Jual
                                              </Button>
+                                             {/* Dropdown Desktop */}
+                                             <div className="sm:visible invisible">
+                                                  <DropdownNav />
+                                             </div>
                                         </div>
-                                        {/* Dropdown Desktop */}
-                                        <div className="sm:visible invisible">
-                                             <DropdownNav />
-                                        </div>
-                                   </div>
+                                   </>
                               ) : (
                                    <>
                                         <Button color="dark" className="btn-nav">
