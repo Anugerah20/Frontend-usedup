@@ -2,6 +2,7 @@ import Logo from "../assets/Logo.svg"
 import { FaSistrix } from "react-icons/fa"
 import { Button, Navbar, TextInput } from "flowbite-react"
 import DropdownNav from "./DropdownNav"
+import Categories from "./Categories"
 
 const Navigation = () => {
 
@@ -11,21 +12,22 @@ const Navigation = () => {
                <Navbar
                     fluid
                     rounded
-                    className="lg:mx-3 md:mx-3 sm:mx-3 lg:my-2 md:my-2 sm:my-2"
+                    className="lg:mx-3 md:mx-3 sm:mx-3 lg:my-2 md:my-2 sm:my-2 m-2"
                >
                     <Navbar.Brand href="/">
                          <img src={Logo} alt="used up" />
                     </Navbar.Brand>
                     {/* Dropdown Mobile */}
-                    <div className="sm:invisible visible sm:ml-0 ml-44 mb-2">
+                    <div className="sm:invisible visible sm:ml-0 ml-44">
                          <DropdownNav />
                     </div>
                     <Navbar.Toggle />
                     <Navbar.Collapse>
-                         <form className="flex relative">
-                              <div className="relative flex-1">
+                         <form className="relative">
+                              <div className="relative">
                                    <TextInput
                                         className="input-search"
+                                        sizing="lg"
                                         id="search"
                                         name="search"
                                         placeholder="Cari mobil, motor, handphone, dan lainnya..."
@@ -34,25 +36,23 @@ const Navigation = () => {
                                         color="off"
                                    />
                               </div>
-                              <div className="absolute right-0 top-0 transition-all">
-                                   <Button type="submit" color="off" className="btn-search bg-btn-search hover:bg-btn-grey duration-300 ease-out">
-                                        <FaSistrix className="text-xl" />
-                                   </Button>
-                              </div>
+                              <Button type="submit" color="off" className="btn-search absolute inset-y-0 right-0 items-center hover:cursor-pointer rounded-r-lg transition-all bg-btn-search hover:bg-btn-grey rounded-l-none duration-300 ease-out">
+                                   <FaSistrix className="text-xl" />
+                              </Button>
                          </form>
                          <div className="flex gap-4">
                               {userLogin ? (
-                                   <div className="flex gap-4">
-                                        <div className="flex">
+                                   <>
+                                        <div className="flex items-center justify-center space-x-4 sm:mt-0 mt-4">
                                              <Button outline color="dark" className="btn-nav">
                                                   Jual
                                              </Button>
+                                             {/* Dropdown Desktop */}
+                                             <div className="sm:visible invisible">
+                                                  <DropdownNav />
+                                             </div>
                                         </div>
-                                        {/* Dropdown Desktop */}
-                                        <div className="sm:visible invisible">
-                                             <DropdownNav />
-                                        </div>
-                                   </div>
+                                   </>
                               ) : (
                                    <>
                                         <Button color="dark" className="btn-nav">
@@ -66,17 +66,7 @@ const Navigation = () => {
                          </div>
                     </Navbar.Collapse>
                </Navbar>
-               <div className="categories">
-                    <div className="group-categories">
-                         <ul className="flex gap-4 text-sm text-primary">
-                              <li className="mb-5 mr-0"><a href="#">Mobil Bekas</a></li>
-                              <li className="mb-5 mr-0"><a href="#">Motor Bekas</a></li>
-                              <li className="mb-5 mr-0"><a href="#">Property</a></li>
-                              <li className="mb-5 mr-0"><a href="#">Handphone</a></li>
-                              <li className="mb-5 mr-0"><a href="#">TV & Audio, Video</a></li>
-                         </ul>
-                    </div>
-               </div>
+               <Categories />
           </div >
      )
 }
