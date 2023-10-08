@@ -1,10 +1,8 @@
-import Navigation from "./components/Navigation";
+import FooterComponent from "./components/FooterComponent";
 function App() {
   return (
     <>
-      <div>
-        <Navigation />
-      </div>
+      <FooterComponent />
     </>
   );
 }
