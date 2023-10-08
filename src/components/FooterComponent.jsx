@@ -5,7 +5,7 @@ const FooterComponent = () => {
      return (
           <>
                <Footer>
-                    <div className="w-full px-4 bg-black">
+                    <div className="w-full px-4 bg-primary">
                          <div className="grid text-left max-w-6xl mx-auto grid-cols-2 gap-8 py-8 md:grid-cols-4">
                               <div>
                                    <Footer.Title title="Kategori Lainnya" className="text-white-breadcrumb font-bold" />
