@@ -3,10 +3,11 @@ import { FaSistrix } from "react-icons/fa"
 import { Button, Navbar, TextInput } from "flowbite-react"
 import DropdownNav from "./DropdownNav"
 import Categories from "./Categories"
+import { Link } from "react-router-dom"
 
 const Navigation = () => {
 
-     const userLogin = true;
+     const userLogin = false;
      return (
           <div>
                <Navbar
@@ -18,16 +19,18 @@ const Navigation = () => {
                          <img src={Logo} alt="used up" />
                     </Navbar.Brand>
                     {/* Dropdown Mobile */}
-                    <div className="sm:invisible visible sm:ml-0 ml-44">
-                         <DropdownNav />
-                    </div>
+                    {userLogin ? (
+                         <div className="sm:visible invisible">
+                              <DropdownNav />
+                         </div>
+                    ) : null}
                     <Navbar.Toggle />
                     <Navbar.Collapse>
                          <form className="relative">
                               <div className="relative">
                                    <TextInput
                                         className="input-search"
-                                        sizing="lg"
+                                        sizing="md"
                                         id="search"
                                         name="search"
                                         placeholder="Cari mobil, motor, handphone, dan lainnya..."
@@ -40,26 +43,28 @@ const Navigation = () => {
                                    <FaSistrix className="text-xl" />
                               </Button>
                          </form>
-                         <div className="flex gap-4">
+                         <div className="flex items-center justify-center space-x-4 sm:mt-0 mt-4">
                               {userLogin ? (
                                    <>
-                                        <div className="flex items-center justify-center space-x-4 sm:mt-0 mt-4">
-                                             <Button outline color="dark" className="btn-nav">
-                                                  Jual
-                                             </Button>
-                                             {/* Dropdown Desktop */}
-                                             <div className="sm:visible invisible">
-                                                  <DropdownNav />
-                                             </div>
+                                        <Button outline color="dark" className="btn-nav">
+                                             Jual
+                                        </Button>
+                                        {/* Dropdown Desktop */}
+                                        <div className="sm:visible invisible">
+                                             <DropdownNav />
                                         </div>
                                    </>
                               ) : (
                                    <>
                                         <Button color="dark" className="btn-nav">
-                                             Login
+                                             <Link to='/login'>
+                                                  Login
+                                             </Link>
                                         </Button>
                                         <Button outline color="dark" className="btn-nav">
-                                             Jual
+                                             <Link to='/login'>
+                                                  Jual
+                                             </Link>
                                         </Button>
                                    </>
                               )}

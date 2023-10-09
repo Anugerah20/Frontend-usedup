@@ -60,7 +60,7 @@
 }
 
 .btn-nav {
-     @apply flex flex-col lg:w-[85px] md:w-[70px] w-[80px] h-[40px] text-[18px];
+     @apply flex flex-col lg:w-[85px] md:w-[70px] w-[80px] text-[18px];
 }
 
 .input-search {
