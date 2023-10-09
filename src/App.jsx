@@ -21,7 +21,7 @@ function App() {
       <Navigation />
 
       {/* Tampilkan banner hanya di halaman utama */}
-      <img src={Banner} alt='banner' className={`${isUrlContainSlash ? 'block' : 'hidden'}`} />
+      <img src={Banner} alt='banner' className={`${isUrlContainSlash ? 'md:block hidden ' : 'hidden'}`} />
 
       <div className='App px-4 sm:my-10 my-5'>
         <Routes>
