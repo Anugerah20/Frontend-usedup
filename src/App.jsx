@@ -16,8 +16,6 @@ function App() {
 
   const isUrlContainSlash = regex.test(pathname)
 
-  console.log(isUrlContainSlash)
-
   return (
     <>
       <Navigation />
