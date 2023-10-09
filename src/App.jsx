@@ -11,12 +11,19 @@ function App() {
 
   const pathname = useLocation().pathname
 
+  // regex untuk mengecek url khusus halaman utama
+  const regex = new RegExp('^/$')
+
+  const isUrlContainSlash = regex.test(pathname)
+
+  console.log(isUrlContainSlash)
+
   return (
     <>
       <Navigation />
 
       {/* Tampilkan banner hanya di halaman utama */}
-      <img src={Banner} alt='banner' className={`${pathname === '/' ? 'block' : 'hidden'} hidden md:block`} />
+      <img src={Banner} alt='banner' className={`${isUrlContainSlash ? 'block' : 'hidden'}`} />
 
       <div className='App px-4 sm:my-10 my-5'>
         <Routes>
