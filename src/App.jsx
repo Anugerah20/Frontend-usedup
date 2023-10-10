@@ -10,6 +10,7 @@ import PageKategori from "./pages/PageCategory";
 import SearchProduct from "./pages/SearchProduct";
 import FavoriteProduct from "./pages/FavoriteProduct";
 import NotFound from "./pages/NotFound";
+import { DetailProduct } from "./pages/DetailProduct";
 
 function App() {
 
@@ -36,6 +37,7 @@ function App() {
           <Route path='/pilih-kategori' element={<PageKategori />} />
           <Route path='/search-product' element={<SearchProduct />} />
           <Route path='/favorite-product' element={<FavoriteProduct />} />
+          <Route path='/detail' element={<DetailProduct />} />
           <Route path='*' element={<NotFound />} />
         </Routes>
       </div>
