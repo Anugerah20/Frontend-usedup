@@ -8,6 +8,7 @@ import { Link } from "react-router-dom"
 const Navigation = () => {
 
      const userLogin = true;
+
      return (
           <div>
                <Navbar
@@ -19,7 +20,7 @@ const Navigation = () => {
                          <img src={Logo} alt="used up" />
                     </Navbar.Brand>
                     {/* Dropdown Mobile */}
-                    <div className="flex">
+                    <div className="flex space-x-2">
                          {userLogin ? (
                               <div className="md:invisible sm:visible">
                                    <DropdownNav />
@@ -45,12 +46,14 @@ const Navigation = () => {
                                    <FaSistrix className="text-xl" />
                               </Button>
                          </form>
-                         <div className="flex items-center justify-center space-x-4 sm:mt-0 mt-4">
+                         <div className="flex items-center justify-start space-x-4 sm:mt-0 mt-4">
                               {userLogin ? (
                                    <>
-                                        <Button outline color="dark" className="btn-nav">
-                                             Jual
-                                        </Button>
+                                        <Link to='/pilih-kategori'>
+                                             <Button outline color="dark" className="btn-nav">
+                                                  Jual
+                                             </Button>
+                                        </Link>
                                         {/* Dropdown Desktop */}
                                         <div className="sm:visible invisible">
                                              <DropdownNav />
@@ -64,7 +67,7 @@ const Navigation = () => {
                                              </Link>
                                         </Button>
                                         <Button outline color="dark" className="btn-nav">
-                                             <Link to='/login'>
+                                             <Link to='/pilih-kategori'>
                                                   Jual
                                              </Link>
                                         </Button>
