@@ -1,5 +1,6 @@
 import { Button } from "flowbite-react"
 import CardProduct from "../components/CardProduct"
+import DataDummy from "../Data/DataDummy"
 
 export const Home = () => {
 
@@ -10,54 +11,15 @@ export const Home = () => {
             </h2>
             {/* Card */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <CardProduct
-                    image="https://images.unsplash.com/photo-1542291026-6d0fccf4d411"
-                    name="Product 1 adwd wa awdawodkawd awadawdw a wdaw"
-                    price="Rp. 1.000.000"
-                    location='Jakarta Selatan'
-                />
-                <CardProduct
-                    image="https://images.unsplash.com/photo-1542291026-6d0fccf4d411"
-                    name="Product 1"
-                    price="Rp. 1.000.000"
-                    location='Jakarta Selatan'
-                />
-                <CardProduct
-                    image="https://images.unsplash.com/photo-1542291026-6d0fccf4d411"
-                    name="Product 1"
-                    price="Rp. 1.000.000"
-                    location='Jakarta Selatan'
-                />
-                <CardProduct
-                    image="https://images.unsplash.com/photo-1542291026-6d0fccf4d411"
-                    name="Product 1"
-                    price="Rp. 1.000.000"
-                    location='Jakarta Selatan'
-                />
-                <CardProduct
-                    image="https://images.unsplash.com/photo-1542291026-6d0fccf4d411"
-                    name="Product 1 adwd wa awdawodkawd awadawdw a wdaw"
-                    price="Rp. 1.000.000"
-                    location='Jakarta Selatan'
-                />
-                <CardProduct
-                    image="https://images.unsplash.com/photo-1542291026-6d0fccf4d411"
-                    name="Product 1"
-                    price="Rp. 1.000.000"
-                    location='Jakarta Selatan'
-                />
-                <CardProduct
-                    image="https://images.unsplash.com/photo-1542291026-6d0fccf4d411"
-                    name="Product 1"
-                    price="Rp. 1.000.000"
-                    location='Jakarta Selatan'
-                />
-                <CardProduct
-                    image="https://images.unsplash.com/photo-1542291026-6d0fccf4d411"
-                    name="Product 1"
-                    price="Rp. 1.000.000"
-                    location='Jakarta Selatan'
-                />
+                {DataDummy.map((item) => (
+                    <CardProduct
+                        key={item.id}
+                        image={item.image}
+                        name={item.name}
+                        price={item.price}
+                        location={item.location}
+                    />
+                ))}
             </div>
 
             <Button
