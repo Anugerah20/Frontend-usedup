@@ -1,6 +1,7 @@
 import { Button } from "flowbite-react"
 import CardProduct from "../components/CardProduct"
 import DataDummy from "../Data/DataDummy"
+import { Link } from "react-router-dom"
 
 export const Home = () => {
 
@@ -12,13 +13,14 @@ export const Home = () => {
             {/* Card */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {DataDummy.map((item) => (
-                    <CardProduct
-                        key={item.id}
-                        image={item.image}
-                        name={item.name}
-                        price={item.price}
-                        location={item.location}
-                    />
+                    <Link key={item.id} to={`/detail`} className="hover:cursor-pointer">
+                        <CardProduct
+                            image={item.image}
+                            name={item.name}
+                            price={item.price}
+                            location={item.location}
+                        />
+                    </Link>
                 ))}
             </div>
 
