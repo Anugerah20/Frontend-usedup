@@ -4,7 +4,7 @@ const PilihKategori = () => {
   return (
     <>
       <section>
-        <div className='flex flex-col items-center'>
+        <div className='flex flex-col mx-auto items-center max-w-lg'>
           <p className='font-bold text-[32px] mb-6'>Pilih kategori</p>
           <Link className='box-category'>
             <div>

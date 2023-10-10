@@ -77,10 +77,14 @@
 }
 
 /* pilih kategori box */
-.box-category{
-     @apply h-[60px] w-[80%] border flex justify-center items-center border-input-gray mb-4
+.box-category {
+     @apply w-full py-5 border flex justify-center items-center transition border-input-gray mb-4
 }
 
-.text-choose-category{
+.box-category:hover {
+     @apply bg-black text-white
+}
+
+.text-choose-category {
      @apply font-semibold text-[20px]
 }
