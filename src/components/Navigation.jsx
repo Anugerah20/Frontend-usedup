@@ -7,7 +7,7 @@ import { Link } from "react-router-dom"
 
 const Navigation = () => {
 
-     const userLogin = false;
+     const userLogin = true;
      return (
           <div>
                <Navbar
@@ -19,12 +19,14 @@ const Navigation = () => {
                          <img src={Logo} alt="used up" />
                     </Navbar.Brand>
                     {/* Dropdown Mobile */}
-                    {userLogin ? (
-                         <div className="sm:visible invisible">
-                              <DropdownNav />
-                         </div>
-                    ) : null}
-                    <Navbar.Toggle />
+                    <div className="flex">
+                         {userLogin ? (
+                              <div className="md:invisible sm:visible">
+                                   <DropdownNav />
+                              </div>
+                         ) : null}
+                         <Navbar.Toggle />
+                    </div>
                     <Navbar.Collapse>
                          <form className="relative">
                               <div className="relative">
