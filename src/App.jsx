@@ -7,6 +7,9 @@ import { Route, Routes, useLocation } from 'react-router-dom';
 import { Home } from './pages/Home';
 import Banner from './assets/banner.webp'
 import PageKategori from "./pages/PageCategory";
+import SearchProduct from "./pages/SearchProduct";
+import FavoriteProduct from "./pages/FavoriteProduct";
+import NotFound from "./pages/NotFound";
 
 function App() {
 
@@ -31,6 +34,9 @@ function App() {
           <Route path='/register' element={<RegisterCard />} />
           <Route path='/edit-profile' element={<EditProfile />} />
           <Route path='/pilih-kategori' element={<PageKategori />} />
+          <Route path='/search-product' element={<SearchProduct />} />
+          <Route path='/favorite-product' element={<FavoriteProduct />} />
+          <Route path='*' element={<NotFound />} />
         </Routes>
       </div>
       <FooterComponent />

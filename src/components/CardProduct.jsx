@@ -2,12 +2,12 @@
 import { useState } from "react";
 import { AiFillHeart } from "react-icons/ai";
 
-const CardProduct = ({ name, price, location }) => {
+const CardProduct = ({ name, image, price, location }) => {
     const [isFavorite, setIsFavorite] = useState(false);
 
     return (
         <div className="border rounded overflow-hidden relative">
-            <img src='https://apollo-singapore.akamaized.net/v1/files/qcz1um0j089w1-ID/image;s=780x0;q=60' alt={name} className='max-w-full object-contain mx-auto' />
+            <img src={image} alt={name} className='max-w-full object-contain mx-auto' />
             <div className="px-4 md:px-6 py-4">
                 <div className="font-bold text-base md:text-lg mb-1 line-clamp-1">{name}</div>
                 <p className="text-blue-link font-bold text-base md:text-xl">{price}</p>
