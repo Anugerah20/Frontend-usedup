@@ -75,3 +75,12 @@
 .group-categories {
      @apply sm:mx-auto overflow-x-scroll sm:overflow-auto;
 }
+
+/* pilih kategori box */
+.box-category{
+     @apply h-[60px] w-[80%] border flex justify-center items-center border-input-gray mb-4
+}
+
+.text-choose-category{
+     @apply font-semibold text-[20px]
+}

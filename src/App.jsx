@@ -6,6 +6,7 @@ import Navigation from "./components/Navigation";
 import { Route, Routes, useLocation } from 'react-router-dom';
 import { Home } from './pages/Home';
 import Banner from './assets/banner.webp'
+import PageKategori from "./pages/PageCategory";
 
 function App() {
 
@@ -29,6 +30,7 @@ function App() {
           <Route path='/login' element={<LoginCard />} />
           <Route path='/register' element={<RegisterCard />} />
           <Route path='/edit-profile' element={<EditProfile />} />
+          <Route path='/pilih-kategori' element={<PageKategori />} />
         </Routes>
       </div>
       <FooterComponent />
