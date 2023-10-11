@@ -12,6 +12,7 @@ import FavoriteProduct from "./pages/FavoriteProduct";
 import NotFound from "./pages/NotFound";
 import { DetailProduct } from "./pages/DetailProduct";
 import MyAdvertisement from "./pages/My-Advertisement";
+import Profile from "./pages/Profile";
 
 function App() {
 
@@ -40,6 +41,8 @@ function App() {
           <Route path='/favorite-product' element={<FavoriteProduct />} />
           <Route path='/detail' element={<DetailProduct />} />
           <Route path='/my-advertisement' element={<MyAdvertisement />} />
+          
+          <Route path='/profile' element={<Profile />} />
           <Route path='*' element={<NotFound />} />
         </Routes>
       </div>
