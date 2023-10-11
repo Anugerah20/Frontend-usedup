@@ -13,7 +13,7 @@ const SearchProduct = () => {
                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                     {DataDummy.map((item) => (
                          <CardProduct
-                              id={item.id}
+                              key={item.id}
                               image={item.image}
                               name={item.name}
                               price={item.price}
