@@ -3,7 +3,7 @@ import { FaPlus } from "react-icons/fa"
 const FormUsedCars = () => {
      return (
           <div className="max-w-4xl mx-auto md:py-0 px-5">
-               <div className="bg-primary p-6 text-white">
+               <div className="bg-primary p-6 text-white-breadcrumb">
                     <h1 className="text-2xl font-bold mb-2">KAMU INGIN MENJUAL MOBIL</h1>
                     <p className="text-md">Kategori : <span className="text-blue-link font-bold">Mobil Bekas</span></p>
                </div>
