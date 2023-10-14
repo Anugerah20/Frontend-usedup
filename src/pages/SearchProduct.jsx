@@ -7,7 +7,7 @@ const SearchProduct = () => {
 
   // Gunakan filter untuk melakukan filtering berdasarkan searchTerm
   const filteredProducts = product.filter((item) =>
-    item.name.toLowerCase().includes(searchTerm.toLowerCase())
+  item.name.toLowerCase().startsWith(searchTerm.toLowerCase())
   );
 
      return (
