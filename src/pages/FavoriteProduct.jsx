@@ -1,10 +1,8 @@
 import { Button } from "flowbite-react"
 import CardProduct from "../components/CardProduct"
-import { useSelector } from "react-redux"
+import DataDummy from "../Data/DataDummy"
 
 const SearchProduct = () => {
-     
-  const {product} = useSelector((store) => store.product);
 
      return (
           <div className="max-w-6xl mx-auto">
@@ -13,7 +11,7 @@ const SearchProduct = () => {
                </h2>
                {/* Card */}
                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    {product.map((item) => (
+                    {DataDummy.map((item) => (
                          <CardProduct
                               key={item.id}
                               image={item.image}
