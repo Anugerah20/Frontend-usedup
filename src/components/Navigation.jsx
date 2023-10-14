@@ -4,10 +4,18 @@ import { Button, Navbar, TextInput } from "flowbite-react"
 import DropdownNav from "./DropdownNav"
 import Categories from "./Categories"
 import { Link } from "react-router-dom"
+import { useDispatch, useSelector } from "react-redux";
+import { updateSearchTerm } from "../features/liveSearchSlice";
 
 const Navigation = () => {
 
      const userLogin = true;
+     const dispatch = useDispatch();
+     const { searchTerm } = useSelector((state) => state.product);
+
+     const handleSearchChange = (e) => {
+          dispatch(updateSearchTerm(e.target.value));
+  };
 
      return (
           <div>
@@ -40,6 +48,8 @@ const Navigation = () => {
                                         required
                                         autoComplete="off"
                                         color="off"
+                                        value={searchTerm}
+                                        onChange={handleSearchChange} 
                                    />
                               </div>
                               <Button type="submit" color="off" className="btn-search absolute inset-y-0 right-0 items-center hover:cursor-pointer rounded-r-lg transition-all bg-btn-search hover:bg-btn-grey rounded-l-none duration-300 ease-out">
