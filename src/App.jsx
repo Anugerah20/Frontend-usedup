@@ -44,7 +44,7 @@ function App() {
           <Route path='/my-advertisement' element={<MyAdvertisement />} />
 
           <Route path='/profile' element={<Profile />} />
-          <Route path='/jual-mobil-bekas' element={<FormlMobilBekas />} />
+          <Route path='/form-jual' element={<FormlMobilBekas />} />
           <Route path='*' element={<NotFound />} />
         </Routes>
       </div>
