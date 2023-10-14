@@ -1,14 +1,24 @@
+import { useForm } from "react-hook-form"
+
 const RegisterCard = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm()
+
+  const onSubmit = (data) => console.log(data)
+
   return (
     <>
-      <div className="card card-register">
+      <form onClick={handleSubmit(onSubmit)} className="card card-register">
         <div className="mb-5">
           <p className="text-[30px] font-bold">REGISTER</p>
           <p className="text-[14px] text-btn-grey">
             Register untuk menjual, menambahkan ke favorit dan masih banyak lagi!
           </p>
         </div>
-        <form>
+        <div>
           <div className="my-[20px]">
             <label htmlFor="Nama" className="text-sm font-semibold">
               Nama Lengkap
@@ -17,8 +27,9 @@ const RegisterCard = () => {
               type="text"
               className="w-full h-[41px] border border-shadow mt-2"
               id="Nama"
-              required
+              {...register("nameRequired", { required: true })}
             />
+            {errors.nameRequired && <span className="text-sm text-red">Name required</span>}
           </div>
           <div className="my-[20px]">
             <label htmlFor="Email" className="text-sm font-semibold">
@@ -28,8 +39,10 @@ const RegisterCard = () => {
               type="email"
               className="w-full h-[41px] border border-shadow mt-2"
               id="Email"
-              required
+              {...register("emailRequired", { required: true, pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i, })}
             />
+            {errors.emailRequired && errors.emailRequired.type === "required" && <span className="text-sm text-red">Email required</span>}
+            {errors.emailRequired && errors.emailRequired.type === "pattern" && <span className="text-sm text-red">Invalid Email</span>}
           </div>
           <div className="my-[20px]">
             <label htmlFor="Password" className="text-sm font-semibold">
@@ -39,8 +52,10 @@ const RegisterCard = () => {
               type="password"
               className="w-full h-[41px] border border-shadow my-2"
               id="Password"
-              required
+              {...register("passwordRequired", { required: true, minLength: 6 })}
             />
+            {errors.passwordRequired && errors.passwordRequired.type === "required" && <span className="text-sm text-red">Password required</span>}
+            {errors.passwordRequired && errors.passwordRequired.type === "minLength" && <span className="text-sm text-red">Password min 6 character</span>}
           </div>
           <div className="my-[20px]">
             <label
@@ -53,13 +68,15 @@ const RegisterCard = () => {
               type="password"
               className="w-full h-[41px] border border-shadow my-2"
               id="ConfirmPassword"
-              required
+              {...register("ConfirmPasswordRequired", { required: true, minLength: 6 })}
             />
           </div>
+          {errors.ConfirmPasswordRequired && errors.ConfirmPasswordRequired.type === "required" && <span className="text-sm text-red">Confirm Password required</span>}
+          {errors.ConfirmPasswordRequired && errors.ConfirmPasswordRequired.type === "minLength" && <span className="text-sm text-red">Confirm Password min 6 character</span>}
           <button className="mt-10 mb-5 w-full h-[38px] bg-black text-white font-semibold">
             LOGIN
           </button>
-        </form>
+        </div>
         <div className="text-center">
           <span className="text-black">
             Sudah memiliki akun?{" "}
@@ -68,7 +85,7 @@ const RegisterCard = () => {
             </a>
           </span>
         </div>
-      </div>
+      </form>
     </>
   );
 };
