@@ -57,7 +57,7 @@ const RegisterCard = () => {
             />
           </div>
           <button className="mt-10 mb-5 w-full h-[38px] bg-black text-white font-semibold">
-            LOGIN
+            REGISTER
           </button>
         </form>
         <div className="text-center">
