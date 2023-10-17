@@ -3,15 +3,29 @@ import { FaSistrix } from "react-icons/fa"
 import { Button, Navbar, TextInput } from "flowbite-react"
 import DropdownNav from "./DropdownNav"
 import Categories from "./Categories"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"; 
 import { useDispatch, useSelector } from "react-redux";
 import { updateSearchTerm } from "../features/liveSearchSlice";
 
 const Navigation = () => {
-
      const userLogin = true;
      const dispatch = useDispatch();
      const { searchTerm } = useSelector((state) => state.product);
+
+     const navigate = useNavigate(); 
+
+     const handleSearchInputChange = (e) => {
+          const value = e.target.value;
+          dispatch(updateSearchTerm(value));
+
+          if (value.trim() !== '') {
+               navigate('/search-product');
+          }
+
+          else if(value.trim() === ''){
+               navigate(-1)
+          }
+     };
 
 
      return (
@@ -46,7 +60,8 @@ const Navigation = () => {
                                         autoComplete="off"
                                         color="off"
                                         value={searchTerm}
-                                        onChange={(e) => dispatch(updateSearchTerm(e.target.value))}
+                                        onChange={handleSearchInputChange}
+
                                    />
                               </div>
                               <Button type="submit" color="off" className="btn-search absolute inset-y-0 right-0 items-center hover:cursor-pointer rounded-r-lg transition-all bg-btn-search hover:bg-btn-grey rounded-l-none duration-300 ease-out">
