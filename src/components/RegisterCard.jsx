@@ -74,7 +74,7 @@ const RegisterCard = () => {
           {errors.ConfirmPasswordRequired && errors.ConfirmPasswordRequired.type === "required" && <span className="text-sm text-red">Confirm Password required</span>}
           {errors.ConfirmPasswordRequired && errors.ConfirmPasswordRequired.type === "minLength" && <span className="text-sm text-red">Confirm Password min 6 character</span>}
           <button className="mt-10 mb-5 w-full h-[38px] bg-black text-white font-semibold">
-            LOGIN
+            REGISTER
           </button>
         </div>
         <div className="text-center">
