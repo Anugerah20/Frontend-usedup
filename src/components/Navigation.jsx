@@ -46,7 +46,7 @@ const Navigation = () => {
                                         autoComplete="off"
                                         color="off"
                                         value={searchTerm}
-                                        onChange={dispatch(updateSearchTerm(e.target.value))} 
+                                        onChange={(e) => dispatch(updateSearchTerm(e.target.value))}
                                    />
                               </div>
                               <Button type="submit" color="off" className="btn-search absolute inset-y-0 right-0 items-center hover:cursor-pointer rounded-r-lg transition-all bg-btn-search hover:bg-btn-grey rounded-l-none duration-300 ease-out">
