@@ -5,7 +5,6 @@ const LoginCard = () => {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm()
 
@@ -29,9 +28,10 @@ const LoginCard = () => {
               type="email"
               className="w-full h-[41px] border border-shadow mt-2"
               id="Email"
-              {...register("emailRequired", { required: true })}
+              {...register("emailRequired", { required: true, pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i, })}
             />
-            {errors.emailRequired && <span className="text-sm text-red">Email required</span>}
+            {errors.emailRequired && errors.emailRequired.type === "required" && <span className="text-sm text-red">Email required</span>}
+            {errors.emailRequired && errors.emailRequired.type === "pattern" && <span className="text-sm text-red">Invalid Email</span>}
           </div>
           <div className="my-[20px]">
             <label htmlFor="Password" className="text-[12px] font-semibold">
@@ -39,7 +39,7 @@ const LoginCard = () => {
             </label>
             <input
               type="password"
-              className="w-full h-[41px] border border-shadow my-2"
+              className="w-full h-[41px] border border-shadow mt-2"
               id="Password"
               {...register("passwordRequired", { required: true, minLength: 6 })}
             />
