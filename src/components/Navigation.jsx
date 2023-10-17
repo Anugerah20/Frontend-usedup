@@ -20,10 +20,8 @@ const Navigation = () => {
 
           if (value.trim() !== '') {
                navigate('/search-product');
-          }
-
-          else if(value.trim() === ''){
-               navigate(-1)
+          } else if (value.trim() === '') {
+               navigate(-1);
           }
      };
 
