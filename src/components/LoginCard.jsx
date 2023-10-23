@@ -1,14 +1,44 @@
-import { Link } from "react-router-dom"
+import { Link, redirect, useNavigate } from "react-router-dom"
 import { useForm } from "react-hook-form"
+import { ToastContainer } from "react-toastify";
+import { toastError, toastSuccess } from "../services/toatsService";
+import { useApiPost } from "../services/apiService";
 
 const LoginCard = () => {
+
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm()
 
-  const onSubmit = (data) => console.log(data)
+  const onSubmit = async (data) => {
+    try {
+      const loginData = {
+        email: data.emailRequired,
+        password: data.passwordRequired,
+      };
+
+      const res = await useApiPost('/user/login', loginData)
+
+      if (res && res.data.token) {
+        localStorage.setItem("useToken", res.data.token)
+        toastSuccess("Login Successful")
+
+        setTimeout(() => {
+          navigate("/")
+        }, 1000)
+        reset()
+      }
+    } catch (error) {
+      console.error('Login error', error)
+      toastError("Wrong email or password");
+      reset();
+    }
+  }
 
   return (
     <>
@@ -63,6 +93,7 @@ const LoginCard = () => {
             </Link>
           </span>
         </div>
+        <ToastContainer />
       </form>
     </>
   );

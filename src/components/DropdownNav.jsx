@@ -1,6 +1,20 @@
 import ProfileUser from "../assets/profile-user.png"
 import { Avatar, Dropdown } from "flowbite-react"
+import { useNavigate } from "react-router-dom"
 const DropdownNav = () => {
+     const navigation = useNavigate();
+
+     const userLogout = () => {
+          try {
+               localStorage.removeItem("useToken")
+               console.log("remove token")
+               setTimeout(() => {
+                    navigation("/login")
+               }, 100)
+          } catch (error) {
+               console.error("Error logout", error);
+          }
+     }
      return (
           <div className="flex">
                <Dropdown
@@ -31,7 +45,7 @@ const DropdownNav = () => {
                     </Dropdown.Item>
                     <Dropdown.Divider />
                     <Dropdown.Item>
-                         <span className="block text-sm text-primary">
+                         <span className="block text-sm text-primary" onClick={userLogout}>
                               Logout
                          </span>
                     </Dropdown.Item>

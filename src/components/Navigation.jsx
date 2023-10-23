@@ -9,13 +9,19 @@ import { updateSearchTerm } from "../features/liveSearchSlice";
 
 const Navigation = () => {
 
-     const userLogin = true;
+     // const userLogin = true;
      const dispatch = useDispatch();
      const { searchTerm } = useSelector((state) => state.product);
 
+     // Token
+     const useToken = localStorage.getItem("useToken");
+     console.log("useToken", useToken)
+     const userLogin = useToken ? true : false;
+     // const userLogin = !!useToken;
+
      const handleSearchChange = (e) => {
           dispatch(updateSearchTerm(e.target.value));
-  };
+     };
 
      return (
           <div>
@@ -49,7 +55,7 @@ const Navigation = () => {
                                         autoComplete="off"
                                         color="off"
                                         value={searchTerm}
-                                        onChange={handleSearchChange} 
+                                        onChange={handleSearchChange}
                                    />
                               </div>
                               <Button type="submit" color="off" className="btn-search absolute inset-y-0 right-0 items-center hover:cursor-pointer rounded-r-lg transition-all bg-btn-search hover:bg-btn-grey rounded-l-none duration-300 ease-out">
