@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form"
 import { useApiPost } from "../services/apiService";
 import { ToastContainer } from "react-toastify";
 import { toastError, toastSuccess } from "../services/toatsService";
+import { Link } from "react-router-dom"
 
 const RegisterCard = () => {
   const {
@@ -111,9 +112,9 @@ const RegisterCard = () => {
         <div className="text-center">
           <span className="text-black">
             Sudah memiliki akun?{" "}
-            <a href="#" className="text-blue-link underline">
+            <Link to="/login" className="text-blue-link underline">
               Login disini
-            </a>
+            </Link>
           </span>
         </div>
       </form>

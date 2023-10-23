@@ -3,31 +3,21 @@ import { FaSistrix } from "react-icons/fa"
 import { Button, Navbar, TextInput } from "flowbite-react"
 import DropdownNav from "./DropdownNav"
 import Categories from "./Categories"
-import { Link, useNavigate } from "react-router-dom"; 
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { updateSearchTerm } from "../features/liveSearchSlice";
 
 const Navigation = () => {
-
-     // const userLogin = true;
-     const dispatch = useDispatch();
-     const { searchTerm } = useSelector((state) => state.product);
-
-     // Token
+     // Check Token User
      const useToken = localStorage.getItem("useToken");
      console.log("useToken", useToken)
      const userLogin = useToken ? true : false;
-     // const userLogin = !!useToken;
 
-     const handleSearchChange = (e) => {
-          dispatch(updateSearchTerm(e.target.value));
-     };
-
-     const userLogin = true;
+     // Live Search
      const dispatch = useDispatch();
      const { searchTerm } = useSelector((state) => state.product);
 
-     const navigate = useNavigate(); 
+     const navigate = useNavigate();
 
      const handleSearchInputChange = (e) => {
           const value = e.target.value;
@@ -35,8 +25,10 @@ const Navigation = () => {
 
           if (value.trim() !== '') {
                navigate('/search-product');
-          } else if (value.trim() === '') {
-               navigate(-1);
+          }
+
+          else if (value.trim() === '') {
+               navigate(-1)
           }
      };
 
@@ -72,7 +64,6 @@ const Navigation = () => {
                                         autoComplete="off"
                                         color="off"
                                         value={searchTerm}
-                                        onChange={handleSearchChange}
                                         onChange={handleSearchInputChange}
                                    />
                               </div>
