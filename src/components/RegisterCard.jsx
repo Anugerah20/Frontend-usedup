@@ -1,13 +1,44 @@
 import { useForm } from "react-hook-form"
+import { useApiPost } from "../services/apiService";
+import { ToastContainer } from "react-toastify";
+import { toastError, toastSuccess } from "../services/toatsService";
 
 const RegisterCard = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm()
 
-  const onSubmit = (data) => console.log(data)
+  const onSubmit = async (data) => {
+    try {
+      const registerData = {
+        fullname: data.nameRequired,
+        email: data.emailRequired,
+        password: data.passwordRequired,
+      };
+
+      const res = await useApiPost('/user/register', registerData)
+
+      if (res) {
+        toastSuccess("Registration Successful");
+        reset();
+      }
+
+      console.log("Data registrasi:", registerData)
+
+      const { user, token } = res.data;
+
+      console.log("Register Success:", user);
+      console.log("Token JWT:", token);
+
+    } catch (error) {
+      console.log("Register Failed", error)
+      toastError("Email already registered, use another email address");
+      reset();
+    }
+  }
 
   return (
     <>
@@ -86,6 +117,7 @@ const RegisterCard = () => {
           </span>
         </div>
       </form>
+      <ToastContainer />
     </>
   );
 };
