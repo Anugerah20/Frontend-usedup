@@ -86,11 +86,11 @@ const Navigation = () => {
                                    </>
                               ) : (
                                    <>
-                                        <Button color="dark" className="btn-nav">
-                                             <Link to='/login'>
+                                        <Link to='/login'>
+                                             <Button color="dark" className="btn-nav">
                                                   Login
-                                             </Link>
-                                        </Button>
+                                             </Button>
+                                        </Link>
                                         <Button outline color="dark" className="btn-nav">
                                              <Link to='/pilih-kategori'>
                                                   Jual

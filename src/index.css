@@ -40,6 +40,29 @@
      }
 }
 
+/* input */
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="date"],
+input[type="time"],
+input[type="file"],
+textarea {
+     @apply w-full px-4 py-2.5 rounded-lg border-2 border-gray-300 outline-none focus:border-indigo-500 transition ease-in-out
+}
+
+/* error validation color */
+.text-red-error {
+     @apply text-red-500
+}
+
+.button {
+     @apply rounded-lg text-white font-semibold ease-in-out transition
+}
+
+
 /* card untuk login & register */
 .card {
      @apply border mx-auto;

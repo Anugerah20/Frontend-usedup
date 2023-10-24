@@ -1,16 +1,22 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { useForm } from "react-hook-form"
 import { useApiPost } from "../services/apiService";
 import { ToastContainer } from "react-toastify";
 import { toastError, toastSuccess } from "../services/toatsService";
 import { Link } from "react-router-dom"
+import { Fragment } from "react";
+import { Button } from "flowbite-react";
 
 const RegisterCard = () => {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
     reset,
   } = useForm()
+
+  const password = watch("passwordRequired", "");
 
   const onSubmit = async (data) => {
     try {
@@ -42,54 +48,54 @@ const RegisterCard = () => {
   }
 
   return (
-    <>
-      <form onClick={handleSubmit(onSubmit)} className="card card-register">
+    <Fragment>
+      <form onSubmit={handleSubmit(onSubmit)} className="card card-register">
         <div className="mb-5">
           <p className="text-[30px] font-bold">REGISTER</p>
           <p className="text-[14px] text-btn-grey">
             Register untuk menjual, menambahkan ke favorit dan masih banyak lagi!
           </p>
         </div>
-        <div>
-          <div className="my-[20px]">
+        <div className="space-y-4">
+          <div>
             <label htmlFor="Nama" className="text-sm font-semibold">
               Nama Lengkap
             </label>
             <input
               type="text"
-              className="w-full h-[41px] border border-shadow mt-2"
+              className="w-full border border-shadow mt-2"
               id="Nama"
               {...register("nameRequired", { required: true })}
             />
-            {errors.nameRequired && <span className="text-sm text-red">Name required</span>}
+            {errors.nameRequired && <span className="text-sm text-red-error">Name required</span>}
           </div>
-          <div className="my-[20px]">
+          <div>
             <label htmlFor="Email" className="text-sm font-semibold">
               Email
             </label>
             <input
               type="email"
-              className="w-full h-[41px] border border-shadow mt-2"
+              className="w-full border border-shadow mt-2"
               id="Email"
               {...register("emailRequired", { required: true, pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i, })}
             />
-            {errors.emailRequired && errors.emailRequired.type === "required" && <span className="text-sm text-red">Email required</span>}
-            {errors.emailRequired && errors.emailRequired.type === "pattern" && <span className="text-sm text-red">Invalid Email</span>}
+            {errors.emailRequired && errors.emailRequired.type === "required" && <span className="text-sm text-red-error">Email required</span>}
+            {errors.emailRequired && errors.emailRequired.type === "pattern" && <span className="text-sm text-red-error">Invalid Email</span>}
           </div>
-          <div className="my-[20px]">
+          <div>
             <label htmlFor="Password" className="text-sm font-semibold">
               Password
             </label>
             <input
               type="password"
-              className="w-full h-[41px] border border-shadow my-2"
+              className="w-full border border-shadow mt-2"
               id="Password"
               {...register("passwordRequired", { required: true, minLength: 6 })}
             />
-            {errors.passwordRequired && errors.passwordRequired.type === "required" && <span className="text-sm text-red">Password required</span>}
-            {errors.passwordRequired && errors.passwordRequired.type === "minLength" && <span className="text-sm text-red">Password min 6 character</span>}
+            {errors.passwordRequired && errors.passwordRequired.type === "required" && <span className="text-sm text-red-error">Password required</span>}
+            {errors.passwordRequired && errors.passwordRequired.type === "minLength" && <span className="text-sm text-red-error">Password min 6 character</span>}
           </div>
-          <div className="my-[20px]">
+          <div>
             <label
               htmlFor="ConfirmPassword"
               className="text-sm font-semibold"
@@ -98,17 +104,22 @@ const RegisterCard = () => {
             </label>
             <input
               type="password"
-              className="w-full h-[41px] border border-shadow my-2"
+              className="w-full border border-shadow mt-2"
               id="ConfirmPassword"
-              {...register("ConfirmPasswordRequired", { required: true, minLength: 6 })}
+              {...register("ConfirmPasswordRequired", {
+                required: true,
+                validate: (value) => value === password
+              })}
             />
+            {errors.ConfirmPasswordRequired && errors.ConfirmPasswordRequired.type === "required" && <span className="text-sm text-red-error">Confirm Password required</span>}
+            {errors.ConfirmPasswordRequired && errors.ConfirmPasswordRequired.type === "validate" && <span className="text-sm text-red-error">
+              Password do not match
+            </span>}
           </div>
-          {errors.ConfirmPasswordRequired && errors.ConfirmPasswordRequired.type === "required" && <span className="text-sm text-red">Confirm Password required</span>}
-          {errors.ConfirmPasswordRequired && errors.ConfirmPasswordRequired.type === "minLength" && <span className="text-sm text-red">Confirm Password min 6 character</span>}
-          <button className="mt-10 mb-5 w-full h-[38px] bg-black text-white font-semibold">
-            REGISTER
-          </button>
         </div>
+        <Button type="submit" color="dark" className="btn w-full p-1 my-6">
+          REGISTER
+        </Button>
         <div className="text-center">
           <span className="text-black">
             Sudah memiliki akun?{" "}
@@ -119,7 +130,7 @@ const RegisterCard = () => {
         </div>
       </form>
       <ToastContainer />
-    </>
+    </Fragment>
   );
 };
 
