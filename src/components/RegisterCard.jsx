@@ -3,11 +3,13 @@ import { useForm } from "react-hook-form"
 import { useApiPost } from "../services/apiService";
 import { ToastContainer } from "react-toastify";
 import { toastError, toastSuccess } from "../services/toatsService";
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { Fragment } from "react";
 import { Button } from "flowbite-react";
 
 const RegisterCard = () => {
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -30,6 +32,9 @@ const RegisterCard = () => {
 
       if (res) {
         toastSuccess("Registration Successful");
+        setTimeout(() => {
+          navigate("/");
+        }, 100)
         reset();
       }
 
