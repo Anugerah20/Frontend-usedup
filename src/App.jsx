@@ -14,6 +14,7 @@ import { DetailProduct } from "./pages/DetailProduct";
 import MyAdvertisement from "./pages/My-Advertisement";
 import Profile from "./pages/Profile";
 import FormlMobilBekas from "./pages/form-jual/FormUsedCars";
+import ForgotPassword from "./components/ForgotPassword";
 
 function App() {
 
@@ -35,6 +36,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/login' element={<LoginCard />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path='/register' element={<RegisterCard />} />
           <Route path='/edit-profile' element={<EditProfile />} />
           <Route path='/pilih-kategori' element={<PageKategori />} />
