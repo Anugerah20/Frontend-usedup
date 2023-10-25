@@ -80,9 +80,7 @@ const LoginCard = () => {
             {errors.passwordRequired && errors.passwordRequired.type === "minLength" && <span className="text-sm text-red-error">Password min 6 character</span>}
           </div>
           <div className="text-end">
-            <a href="#" className=" text-blue-link underline">
-              Lupa Password?
-            </a>
+            <Link to="/forgot-password" className=" text-blue-link underline">Lupa Password?</Link>
           </div>
         </div>
         <Button type="submit" color="dark" className="btn w-full p-1 my-6">
