@@ -10,7 +10,6 @@ import { updateSearchTerm } from "../features/liveSearchSlice";
 const Navigation = () => {
      // Check Token User
      const useToken = localStorage.getItem("useToken");
-     console.log("useToken", useToken)
      const userLogin = useToken ? true : false;
 
      // Live Search

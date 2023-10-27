@@ -15,6 +15,7 @@ import MyAdvertisement from "./pages/My-Advertisement";
 import Profile from "./pages/Profile";
 import FormlMobilBekas from "./pages/form-jual/FormUsedCars";
 import ForgotPassword from "./components/ForgotPassword";
+import ResetPassword from "./components/ResetPassword";
 
 function App() {
 
@@ -37,6 +38,7 @@ function App() {
           <Route path='/' element={<Home />} />
           <Route path='/login' element={<LoginCard />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset" element={<ResetPassword />} />
           <Route path='/register' element={<RegisterCard />} />
           <Route path='/edit-profile' element={<EditProfile />} />
           <Route path='/pilih-kategori' element={<PageKategori />} />

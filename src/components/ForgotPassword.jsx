@@ -1,27 +1,81 @@
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { useForm } from "react-hook-form"
-import { Button } from "flowbite-react";
+import { Alert, Button } from "flowbite-react";
 import { ToastContainer } from "react-toastify";
+import { useApiPost } from "../services/apiService";
 // import { toastError, toastSuccess } from "../services/toatsService";
 
 const ForgotPassword = () => {
+     const [loading, setLoading] = useState(false)
+     const [isSuccess, setIsSuccess] = useState(false)
+     const [isError, setIsError] = useState(false)
+
      const {
           register,
           handleSubmit,
           formState: { errors },
      } = useForm()
 
-     const onSubmit = (data) => { console.log(data) }
+     const onSubmit = async (data) => {
+          const datas = {
+               email: data.email
+          }
+          try {
+               setLoading(true)
+               const response = await useApiPost("/user/forgot-password", datas);
+
+               if (response.status === 200) {
+                    setIsSuccess(true)
+               }
+
+               setLoading(false)
+          } catch (error) {
+               console.log(error)
+               if (error.response.status === 400) {
+                    setIsError(true)
+               }
+
+               setLoading(false)
+          }
+     }
      return (
           <>
                <Fragment>
-                    <form onSubmit={handleSubmit(onSubmit)} className="card card-login">
-                         <div className="mb-5">
+                    <form onSubmit={handleSubmit(onSubmit)} className="card card-login space-y-4">
+                         <div>
                               <p className="text-[30px] font-bold">Lupa Password</p>
                               <p className="text-[14px] text-btn-grey">
                                    Masukkan email terdaftar kamu
                               </p>
                          </div>
+                         {isSuccess &&
+                              <div className="alert">
+                                   <Alert
+                                        color="success"
+                                        onDismiss={() => setIsSuccess(false)}
+                                   >
+                                        <span>
+                                             <p>
+                                                  Link reset password telah dikirim ke email, silahkan cek email kamu.
+                                             </p>
+                                        </span>
+                                   </Alert>
+                              </div>
+                         }
+                         {isError &&
+                              <div className="alert">
+                                   <Alert
+                                        color="failure"
+                                        onDismiss={() => setIsError(false)}
+                                   >
+                                        <span>
+                                             <p>
+                                                  Email yang kamu masukkan tidak terdaftar.
+                                             </p>
+                                        </span>
+                                   </Alert>
+                              </div>
+                         }
                          <div className="space-y-4">
                               <div>
                                    <label htmlFor="Email" className="text-sm font-semibold">
@@ -31,14 +85,17 @@ const ForgotPassword = () => {
                                         type="email"
                                         className="w-full border border-shadow mt-2"
                                         id="Email"
-                                        {...register("emailRequired", { required: true, pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i, })}
+                                        {...register("email", {
+                                             required: true,
+                                             pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
+                                        })}
                                    />
-                                   {errors.emailRequired && errors.emailRequired.type === "required" && <span className="text-sm text-red-error">Email required</span>}
-                                   {errors.emailRequired && errors.emailRequired.type === "pattern" && <span className="text-sm text-red-error">Invalid Email</span>}
+                                   {errors.email && errors.email.type === "required" && <span className="text-sm text-red-error">Email required</span>}
+                                   {errors.email && errors.email.type === "pattern" && <span className="text-sm text-red-error">Invalid Email</span>}
                               </div>
                          </div>
-                         <Button type="submit" color="dark" className="btn w-full p-1 my-6">
-                              Send Reset Password Link
+                         <Button type="submit" color="dark" isProcessing={loading} disabled={loading} className={`btn w-full p-1 my-6 disabled:bg-gray-500`}>
+                              {!loading ? "Send Reset Password Link" : "Please Wait..."}
                          </Button>
                          <ToastContainer />
                     </form>
