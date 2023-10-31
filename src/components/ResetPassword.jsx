@@ -3,7 +3,7 @@ import { Fragment, useEffect, useState } from "react";
 import { useForm } from "react-hook-form"
 import { Button } from "flowbite-react";
 import { ToastContainer } from "react-toastify";
-import { useApiGet, useApiPost } from "../services/apiService";
+import { useApiPost } from "../services/apiService";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import { BsFillCheckCircleFill } from "react-icons/bs";
@@ -40,7 +40,7 @@ const ResetPassword = () => {
             token
         }
         try {
-            const response = await useApiGet('/user/check-token', data)
+            const response = await useApiPost('/user/check-token', data)
 
             if (response.data.status === false) {
                 navigate('/login')
