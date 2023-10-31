@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { Fragment, useState } from "react";
 import { useForm } from "react-hook-form"
 import { Alert, Button } from "flowbite-react";
@@ -24,7 +25,7 @@ const ForgotPassword = () => {
                setLoading(true)
                const response = await useApiPost("/user/forgot-password", datas);
 
-               if (response.status === 200) {
+               if (response.status === 200 && response.data.status === true) {
                     setIsSuccess(true)
                }
 

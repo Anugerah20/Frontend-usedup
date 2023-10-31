@@ -38,7 +38,7 @@ function App() {
           <Route path='/' element={<Home />} />
           <Route path='/login' element={<LoginCard />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/reset" element={<ResetPassword />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
           <Route path='/register' element={<RegisterCard />} />
           <Route path='/edit-profile' element={<EditProfile />} />
           <Route path='/pilih-kategori' element={<PageKategori />} />
