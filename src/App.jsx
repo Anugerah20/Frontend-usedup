@@ -19,7 +19,6 @@ import ResetPassword from "./components/ResetPassword";
 import PrivateRoute from "./utils/PrivateRoute";
 
 function App() {
-  const auth = true;
 
   const pathname = useLocation().pathname
 
