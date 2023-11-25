@@ -19,6 +19,7 @@ import ResetPassword from "./components/ResetPassword";
 import PrivateRoute from "./utils/PrivateRoute";
 
 function App() {
+  const auth = true;
 
   const pathname = useLocation().pathname
 
@@ -28,9 +29,10 @@ function App() {
   const isUrlContainSlash = regex.test(pathname)
 
   const isAuthenticated = () => {
-    const userToken = localStorage.getItem('useToken');
-    return !!userToken;
+    const userToken = localStorage.getItem('userToken');
+    return !!userToken
   };
+
 
   return (
     <>
@@ -52,7 +54,7 @@ function App() {
               <PrivateRoute
                 authenticated={isAuthenticated()}
                 path='/edit-profile'
-                element={<EditProfile />}
+                element={EditProfile}
               />
             }
           />
@@ -62,7 +64,7 @@ function App() {
               <PrivateRoute
                 authenticated={isAuthenticated()}
                 path='/pilih-kategori'
-                element={<PageKategori />}
+                element={PageKategori}
               />
             }
           />
@@ -72,7 +74,7 @@ function App() {
               <PrivateRoute
                 authenticated={isAuthenticated()}
                 path='/favorite-product'
-                element={<FavoriteProduct />}
+                element={FavoriteProduct}
               />
             }
           />
@@ -82,7 +84,7 @@ function App() {
               <PrivateRoute
                 authenticated={isAuthenticated()}
                 path='/detail'
-                element={<DetailProduct />}
+                element={DetailProduct}
               />
             }
           />
@@ -92,7 +94,7 @@ function App() {
               <PrivateRoute
                 authenticated={isAuthenticated()}
                 path='/my-advertisement'
-                element={<MyAdvertisement />}
+                element={MyAdvertisement}
               />
             }
           />
@@ -102,7 +104,7 @@ function App() {
               <PrivateRoute
                 authenticated={isAuthenticated()}
                 path='/profile'
-                element={<Profile />}
+                element={Profile}
               />
             }
           />
@@ -112,7 +114,7 @@ function App() {
               <PrivateRoute
                 authenticated={isAuthenticated()}
                 path='/form-jual'
-                element={<FormlMobilBekas />}
+                element={FormlMobilBekas}
               />
             }
           />
