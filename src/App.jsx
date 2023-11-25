@@ -16,6 +16,7 @@ import Profile from "./pages/Profile";
 import FormlMobilBekas from "./pages/form-jual/FormUsedCars";
 import ForgotPassword from "./components/ForgotPassword";
 import ResetPassword from "./components/ResetPassword";
+import PrivateRoute from "./utils/PrivateRoute";
 
 function App() {
 
@@ -25,6 +26,11 @@ function App() {
   const regex = new RegExp('^/$')
 
   const isUrlContainSlash = regex.test(pathname)
+
+  const isAuthenticated = () => {
+    const userToken = localStorage.getItem('useToken');
+    return !!userToken;
+  };
 
   return (
     <>
@@ -40,14 +46,77 @@ function App() {
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path='/register' element={<RegisterCard />} />
-          <Route path='/edit-profile' element={<EditProfile />} />
-          <Route path='/pilih-kategori' element={<PageKategori />} />
+          <Route
+            path='/edit-profile'
+            element={
+              <PrivateRoute
+                authenticated={isAuthenticated()}
+                path='/edit-profile'
+                element={<EditProfile />}
+              />
+            }
+          />
+          <Route
+            path='/pilih-kategori'
+            element={
+              <PrivateRoute
+                authenticated={isAuthenticated()}
+                path='/pilih-kategori'
+                element={<PageKategori />}
+              />
+            }
+          />
+          <Route
+            path='/favorite-product'
+            element={
+              <PrivateRoute
+                authenticated={isAuthenticated()}
+                path='/favorite-product'
+                element={<FavoriteProduct />}
+              />
+            }
+          />
+          <Route
+            path='/detail'
+            element={
+              <PrivateRoute
+                authenticated={isAuthenticated()}
+                path='/detail'
+                element={<DetailProduct />}
+              />
+            }
+          />
+          <Route
+            path='/my-advertisement'
+            element={
+              <PrivateRoute
+                authenticated={isAuthenticated()}
+                path='/my-advertisement'
+                element={<MyAdvertisement />}
+              />
+            }
+          />
+          <Route
+            path='/profile'
+            element={
+              <PrivateRoute
+                authenticated={isAuthenticated()}
+                path='/profile'
+                element={<Profile />}
+              />
+            }
+          />
+          <Route
+            path='/form-jual'
+            element={
+              <PrivateRoute
+                authenticated={isAuthenticated()}
+                path='/form-jual'
+                element={<FormlMobilBekas />}
+              />
+            }
+          />
           <Route path='/search-product' element={<SearchProduct />} />
-          <Route path='/favorite-product' element={<FavoriteProduct />} />
-          <Route path='/detail' element={<DetailProduct />} />
-          <Route path='/my-advertisement' element={<MyAdvertisement />} />
-          <Route path='/profile' element={<Profile />} />
-          <Route path='/form-jual' element={<FormlMobilBekas />} />
           <Route path='*' element={<NotFound />} />
         </Routes>
       </div>
