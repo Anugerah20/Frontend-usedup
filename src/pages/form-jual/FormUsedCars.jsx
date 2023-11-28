@@ -1,91 +1,300 @@
-import { FaPlus } from "react-icons/fa"
+import { useState, useEffect } from "react"
+import { FaPlus, FaTimes } from "react-icons/fa"
 import { useForm } from "react-hook-form"
+import ImageUploading from "react-images-uploading"
+import Modal from "react-modal"
+import axios from "axios"
+import { ToastContainer } from "react-toastify"
+import { toastSuccess, toastError } from "../../services/toatsService"
 
 const FormUsedCars = () => {
      const {
           register,
           handleSubmit,
           formState: { errors },
+          reset,
      } = useForm()
 
-     const onSubmit = (data) => {
-          console.log(data);
+     const [images, setImages] = useState([])
+     const [modalIsOpen, setModalIsOpen] = useState(false)
+     const [selectedImage, setSelectedImage] = useState(null)
+     const [selectCategory, setSelectCategory] = useState("")
+     const [categories, setCategories] = useState([])
+     const maxNumber = 6
+
+     useEffect(() => {
+          const fetchCategory = async () => {
+               try {
+                    const res = await axios.get('http://localhost:3000/api/category')
+                    setCategories(res.data.data)
+               } catch (error) {
+                    console.log('error my category:', error);
+               }
+          }
+
+          fetchCategory()
+     }, [])
+
+     /* Buat ENV */
+     // const uploadPreset = import.meta.env.CLOUDINARY_UPLOAD_PRESET
+     // const apiKey = import.meta.env.CLOUDINARY_API_KEY
+     // const cloudName = import.meta.env.CLOUDINARY_CLOUD_NAME
+
+     // formData.append('file', images[i]?.file)
+     // for (let i = 0; i < images.length; i++) {
+     // }
+
+     const uploadImage = async (imageFile) => {
+          const formData = new FormData()
+          formData.append('file', imageFile)
+          formData.append("upload_preset", "opllxhqb");
+          formData.append("api_key", 389128686364638);
+
+          try {
+               const response = await axios.post('https://api.cloudinary.com/v1_1/dn3fr1wck/image/upload', formData)
+               return response.data
+               // console.log(response)
+          } catch (e) {
+               alert(e)
+          }
      }
 
+     const onChange = (imageList, addUpdateIndex) => {
+          console.log(imageList, addUpdateIndex);
+          setImages(imageList);
+     };
+
+     const openModal = (index) => {
+          setSelectedImage(index);
+          setModalIsOpen(true);
+     };
+
+     const closeModal = () => {
+          setSelectedImage(null);
+          setModalIsOpen(false);
+     };
+
+     const onSubmit = async (data) => {
+          try {
+               const cloudinaryUrl = await Promise.all(
+                    images.map((image) => uploadImage(image.file))
+               )
+
+               const formData = new FormData();
+               formData.append('title', data.title);
+               formData.append('description', data.description);
+               formData.append('price', data.price);
+               formData.append('category', selectCategory);
+               formData.append('image', cloudinaryUrl);
+
+               // Cek data yang berisi gambar
+               // if (Array.isArray(data.images)) {
+               //      data.images.forEach((image) => {
+               //           formData.append('images', image.file)
+               //      })
+               // }
+
+               const url = 'http://localhost:3000/api/user/advert'
+               const res = await axios.post(url, formData, {
+                    headers: {
+                         'Content-Type': 'multipart/form-data',
+                    },
+               });
+               console.log(res.data)
+               reset()
+               toastSuccess('Iklan sukses dibuat')
+          } catch (error) {
+               console.error(error);
+               toastError('Iklan gagal dibuat!')
+          }
+     };
+
      return (
-          <div className="max-w-4xl mx-auto md:py-0 px-5">
+          <div className="max-w-5xl h-auto mx-auto md:py-0 px-5">
                <div className="bg-primary p-6 text-white-breadcrumb">
-                    <h1 className="text-2xl font-bold mb-2">KAMU INGIN MENJUAL MOBIL</h1>
-                    <p className="text-md">Kategori: <span className="text-blue-link font-bold">Mobil Bekas</span></p>
+                    <h1 className="text-2xl font-bold mb-2">KAMU INGIN MENJUAL</h1>
                </div>
-               <p className="my-4 font-medium text-xs">SILAHKAN ISI FORM DIBAWAH INI DENGAN BENAR</p>
+               <p className="my-4 font-medium text-xs">
+                    SILAHKAN ISI FORM DIBAWAH INI DENGAN BENAR
+               </p>
 
                <form onSubmit={handleSubmit(onSubmit)} className="w-full flex flex-wrap">
                     <div className="w-full sm:w-1/2">
+
                          <div className="mb-2">
-                              <label htmlFor="merk" className="font-bold">Judul Iklan *</label>
+                              <label htmlFor="category" className="font-bold">
+                                   Kategori *
+                              </label>
+                              <select
+                                   id="category"
+                                   className="flex border-2 w-[260px] h-[42px] border-gray-200 outline-none mt-2"
+                                   {...register("category", { required: true })}
+                                   onChange={(e) => setSelectCategory(e.target.value)}
+                              >
+                                   <option value="">-- Pilih Kategori --</option>
+                                   {categories?.map((category) => (
+                                        <option key={category.id}>{category.name}</option>
+                                   ))}
+                              </select>
+                              {errors.category && errors.category.type === "required" && (
+                                   <span className="flex text-sm text-red-error">Category required</span>
+                              )}
+                         </div>
+
+                         <div className="mb-2">
+                              <label htmlFor="merk" className="font-bold">
+                                   Judul Iklan *
+                              </label>
                               <input
                                    type="merk"
                                    id="merk"
                                    className="flex border-2 w-[260px] h-[35px] outline-none mt-2"
                                    {...register("title", { required: true, minLength: 10 })}
                               />
-                              {errors.title && errors.title.type === "required" && <span className="text-sm text-red-error">Title required</span>}
-                              {errors.title && errors.title.type === "minLength" && <span className="text-sm text-red-error">Title min 10 character</span>}
+                              {errors.title && errors.title.type === "required" && (
+                                   <span className="text-sm text-red-error">Title required</span>
+                              )}
+                              {errors.title && errors.title.type === "minLength" && (
+                                   <span className="text-sm text-red-error">
+                                        Title min 10 characters
+                                   </span>
+                              )}
                          </div>
                          <div className="mb-2">
-                              <label htmlFor="deksripsiIklan" className="font-bold">Deskripsi Iklan *</label>
+                              <label htmlFor="deskripsiIklan" className="font-bold">
+                                   Deskripsi Iklan *
+                              </label>
                               <textarea
-                                   id="deksripsiIklan"
-                                   cols="0" rows="4"
+                                   id="deskripsiIklan"
+                                   cols="0"
+                                   rows="4"
                                    className="flex border-2 border-gray-200 outline-none focus:border-2 mt-2 w-[260px] p-0 rounded-none"
                                    {...register("description", { required: true, minLength: 30 })}
-                              >
-                              </textarea>
-                              {errors.description && errors.description.type === "required" && <span className="text-sm text-red-error">Description required</span>}
-                              {errors.description && errors.description.type === "minLength" && <span className="text-sm text-red-error"> Description min 30 character</span>}
+                              ></textarea>
+                              {errors.description && errors.description.type === "required" && (
+                                   <span className="text-sm text-red-error">
+                                        Description required
+                                   </span>
+                              )}
+                              {errors.description && errors.description.type === "minLength" && (
+                                   <span className="text-sm text-red-error">
+                                        Description min 30 characters
+                                   </span>
+                              )}
                          </div>
+
                          <hr className="w-[260px] mt-5" />
                          <h3 className="font-bold my-4">PASANG HARGA</h3>
                          <div className="mb-2">
-                              <label htmlFor="harga" className="font-bold">Harga *</label>
+                              <label htmlFor="harga" className="font-bold">
+                                   Harga *
+                              </label>
                               <input
                                    type="harga"
                                    id="harga"
                                    className="flex border-2 w-[260px] h-[35px] outline-none mt-2"
                                    {...register("price", { required: true, minLength: 5 })}
                               />
-                              {errors.price && errors.price.type === "required" && <span className="text-sm text-red-error">Price required</span>}
-                              {errors.price && errors.price.type === "minLength" && <span className="text-sm text-red-error"> Price min 5 number </span>}
+                              {errors.price && errors.price.type === "required" && (
+                                   <span className="text-sm text-red-error">Price required</span>
+                              )}
+                              {errors.price && errors.price.type === "minLength" && (
+                                   <span className="text-sm text-red-error">
+                                        Price min 5 numbers
+                                   </span>
+                              )}
                          </div>
                          <hr className="w-[260px] mt-5" />
                     </div>
 
                     <div className="w-1/2">
+                         {/* <button onClick={() => uploadImage()}>Upload Foto</button> */}
                          <div className="mb-2">
-                              <label htmlFor="foto" className="font-bold">UNGGAH FOTO</label>
-                              <div className="grid grid-cols-3 mr-0 sm:mr-60 mt-2 gap-4">
-                                   {Array.from({ length: 6 }).map((_, index) => (
-                                        <label key={index} htmlFor={`fileInput-${index}`} className="relative p-5 cursor-pointer border-2 border-black">
-                                             <input
-                                                  type="file"
-                                                  id={`fileInput-${index}`}
-                                                  className="hidden"
-                                                  {...register("photo", { required: true })}
-                                             />
-                                             <FaPlus className="text-2xl absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-black" />
-                                        </label>
-                                   ))}
-                              </div>
-                              {errors.photo && errors.photo.type === "required" && <span className="text-sm text-red-error">Photo required</span>}
+                              <label htmlFor="foto" className="font-bold">
+                                   UNGGAH FOTO
+                              </label>
+                              <ImageUploading
+                                   multiple
+                                   value={images}
+                                   onChange={onChange}
+                                   maxNumber={maxNumber}
+                                   dataURLKey="dataURL"
+                                   acceptType={["png", "jpg", "jpeg"]}
+                              >
+                                   {({ imageList, onImageUpload, onImageRemove }) => (
+                                        <div className="grid grid-cols-3 mr-0 sm:mr-60 mt-5 gap-4">
+                                             {imageList?.map((image, index) => (
+                                                  <div
+                                                       key={index}
+                                                       className="relative cursor-pointer border-2 border-btn-grey"
+                                                  >
+                                                       <img
+                                                            src={image.dataURL}
+                                                            alt={`Preview-${index}`}
+                                                            className="relative object-cover h-full w-full flex justify-center items-center"
+                                                            onClick={() => openModal(index)}
+                                                       />
+
+                                                       <div className="flex justify-center items-center">
+                                                            <span
+                                                                 className="text-red-500 bg-gray-breadcrumb rounded-full absolute -right-2 -top-2 sm:-right-2 sm:-top-2 md:-right-2 md:-top-2 flex justify-center items-center w-5 h-5"
+                                                                 title="Hapus"
+                                                                 onClick={() => onImageRemove(index)}
+                                                            >
+                                                                 <FaTimes />
+                                                            </span>
+                                                       </div>
+                                                  </div>
+                                             ))}
+                                             {imageList.length < maxNumber && (
+                                                  <label
+                                                       onClick={onImageUpload}
+                                                       className="relative p-5 cursor-pointer border-2 border-black"
+                                                       {...register("photo", { required: true })}
+                                                  >
+                                                       <FaPlus className="text-2xl absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-black" />
+                                                  </label>
+                                             )}
+                                        </div>
+                                   )}
+                              </ImageUploading>
+                              {errors.photo && errors.photo.type === "required" && (
+                                   <span className="text-sm text-red-error">Photo required</span>
+                              )}
                               <div className="mt-6">
-                                   <button type="submit" className="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none font-medium text-sm px-5 py-2.5 mr-2 mb-2">JUAL SEKARANG</button>
+                                   <button
+                                        type="submit"
+                                        className="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none font-medium text-sm px-3 py-2.5 mr-2 mb-2"
+                                   >
+                                        JUAL SEKARANG
+                                   </button>
                               </div>
+
+                              <Modal
+                                   isOpen={modalIsOpen}
+                                   onRequestClose={closeModal}
+                                   contentLabel="Gambar Detail"
+                              >
+                                   <div className="flex justify-end">
+                                        <span onClick={closeModal} className="flex cursor-pointer">
+                                             <FaTimes title="Close" />
+                                        </span>
+                                   </div>
+                                   {selectedImage !== null && (
+                                        <img
+                                             src={images[selectedImage].dataURL}
+                                             alt={`Detail-${selectedImage}`}
+                                             className="mx-auto w-full h-full object-contain"
+                                        />
+                                   )}
+                              </Modal>
+
                          </div>
                     </div>
+                    <ToastContainer />
                </form>
-          </div >
-     )
-}
+          </div>
+     );
+};
 
 export default FormUsedCars
