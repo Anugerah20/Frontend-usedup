@@ -79,13 +79,7 @@ function App() {
           />
           <Route
             path='/detail'
-            element={
-              <PrivateRoute
-                authenticated={isAuthenticated()}
-                path='/detail'
-                element={DetailProduct}
-              />
-            }
+            element={<DetailProduct />}
           />
           <Route
             path='/my-advertisement'
