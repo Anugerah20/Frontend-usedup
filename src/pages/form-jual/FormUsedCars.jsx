@@ -127,7 +127,7 @@ const FormUsedCars = () => {
                               </label>
                               <select
                                    id="category"
-                                   className="flex border-2 w-[260px] h-[42px] border-gray-200 outline-none mt-2"
+                                   className="mt-2"
                                    {...register("category", { required: true })}
                                    onChange={(e) => setSelectCategory(e.target.value)}
                               >
@@ -146,9 +146,9 @@ const FormUsedCars = () => {
                                    Judul Iklan *
                               </label>
                               <input
-                                   type="merk"
+                                   type="text"
                                    id="merk"
-                                   className="flex border-2 w-[260px] h-[35px] outline-none mt-2"
+                                   className="mt-2"
                                    {...register("title", { required: true, minLength: 10 })}
                               />
                               {errors.title && errors.title.type === "required" && (
@@ -168,7 +168,7 @@ const FormUsedCars = () => {
                                    id="deskripsiIklan"
                                    cols="0"
                                    rows="4"
-                                   className="flex border-2 border-gray-200 outline-none focus:border-2 mt-2 w-[260px] p-0 rounded-none"
+                                   className="mt-2"
                                    {...register("description", { required: true, minLength: 30 })}
                               ></textarea>
                               {errors.description && errors.description.type === "required" && (
@@ -190,9 +190,9 @@ const FormUsedCars = () => {
                                    Harga *
                               </label>
                               <input
-                                   type="harga"
+                                   type="number"
                                    id="harga"
-                                   className="flex border-2 w-[260px] h-[35px] outline-none mt-2"
+                                   className="mt-2"
                                    {...register("price", { required: true, minLength: 5 })}
                               />
                               {errors.price && errors.price.type === "required" && (
@@ -209,7 +209,7 @@ const FormUsedCars = () => {
 
                     <div className="w-1/2">
                          {/* <button onClick={() => uploadImage()}>Upload Foto</button> */}
-                         <div className="mb-2">
+                         <div className="mb-2 sm:mx-8 md:mx-8 lg:mx-8">
                               <label htmlFor="foto" className="font-bold">
                                    UNGGAH FOTO
                               </label>
@@ -222,22 +222,22 @@ const FormUsedCars = () => {
                                    acceptType={["png", "jpg", "jpeg"]}
                               >
                                    {({ imageList, onImageUpload, onImageRemove }) => (
-                                        <div className="grid grid-cols-3 mr-0 sm:mr-60 mt-5 gap-4">
+                                        <div className="grid grid-cols-3 mr-0 sm:mr-60 mt-2 gap-4">
                                              {imageList?.map((image, index) => (
                                                   <div
                                                        key={index}
-                                                       className="relative cursor-pointer border-2 border-btn-grey"
+                                                       className="relative cursor-pointer border-2 border-gray-300 rounded-lg"
                                                   >
                                                        <img
                                                             src={image.dataURL}
                                                             alt={`Preview-${index}`}
-                                                            className="relative object-cover h-full w-full flex justify-center items-center"
+                                                            className="object-cover h-full w-full flex justify-center items-center rounded-lg"
                                                             onClick={() => openModal(index)}
                                                        />
 
                                                        <div className="flex justify-center items-center">
                                                             <span
-                                                                 className="text-red-500 bg-gray-breadcrumb rounded-full absolute -right-2 -top-2 sm:-right-2 sm:-top-2 md:-right-2 md:-top-2 flex justify-center items-center w-5 h-5"
+                                                                 className="text-red-500 bg-gray-300 rounded-full absolute -right-2 -top-2 sm:-right-2 sm:-top-2 md:-right-2 md:-top-2 flex justify-center items-center w-5 h-5"
                                                                  title="Hapus"
                                                                  onClick={() => onImageRemove(index)}
                                                             >
@@ -249,7 +249,7 @@ const FormUsedCars = () => {
                                              {imageList.length < maxNumber && (
                                                   <label
                                                        onClick={onImageUpload}
-                                                       className="relative p-5 cursor-pointer border-2 border-black"
+                                                       className="relative p-5 cursor-pointer border-2 border-gray-300 rounded-lg"
                                                        {...register("photo", { required: true })}
                                                   >
                                                        <FaPlus className="text-2xl absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-black" />
