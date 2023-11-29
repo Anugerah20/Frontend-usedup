@@ -30,15 +30,15 @@ const RegisterCard = () => {
 
       const res = await useApiPost('/user/register', registerData)
 
-      if (res) {
+      if (res && res.data.token) {
+        localStorage.setItem("useToken", res.data.token)
         toastSuccess("Registration Successful");
+
         setTimeout(() => {
           navigate("/");
-        }, 100)
+        }, 1000)
         reset();
       }
-
-      console.log("Data registrasi:", registerData)
 
       const { user, token } = res.data;
 
@@ -46,9 +46,22 @@ const RegisterCard = () => {
       console.log("Token JWT:", token);
 
     } catch (error) {
-      console.log("Register Failed", error)
-      toastError("Email already registered, use another email address");
-      reset();
+      if (error.message === "Network Error") {
+        toastError("Internal server error!");
+      }
+
+      if (error.response && error.response.data) {
+        const responseData = error.response.data
+
+        if (responseData.error === "Email already registered") {
+          toastError("Email already registered, use another email address");
+          reset();
+          return;
+        }
+      }
+      // console.log("Register Failed", error)
+      // toastError("Email already registered, use another email address");
+      // reset();
     }
   }
 
