@@ -77,7 +77,10 @@ function App() {
               />
             }
           />
-          <Route path='/detail' element={<DetailProduct />} />
+          <Route
+            path='/detail'
+            element={<DetailProduct />}
+          />
           <Route
             path='/my-advertisement'
             element={
