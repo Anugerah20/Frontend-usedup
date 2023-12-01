@@ -32,6 +32,7 @@ const RegisterCard = () => {
 
       if (res && res.data.token) {
         localStorage.setItem("useToken", res.data.token)
+        localStorage.setItem("userId", res.data.checkUser.id)
         toastSuccess("Registration Successful");
 
         setTimeout(() => {

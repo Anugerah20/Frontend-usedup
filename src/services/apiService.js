@@ -5,7 +5,13 @@ import axios from "axios";
 
 const apiService = axios.create({
      baseURL: "http://localhost:3000/api",
+     headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${localStorage.getItem("useToken")}`,
+     },
 });
+
+
 
 // Register
 export const useApiPost = async (url, userData) => {
@@ -33,6 +39,7 @@ export const useApiGet = async (url) => {
 export const userLogout = () => {
      try {
           localStorage.removeItem("useToken")
+          localStorage.removeItem("userId")
           window.location.replace("/login");
      } catch (error) {
           console.error("Error logout", error);

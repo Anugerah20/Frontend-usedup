@@ -26,9 +26,9 @@ const LoginCard = () => {
       };
 
       const res = await useApiPost('/user/login', loginData)
-
       if (res && res.data.token) {
         localStorage.setItem("useToken", res.data.token)
+        localStorage.setItem("userId", res.data.checkUser.id)
         toastSuccess("Login Successful")
 
         setTimeout(() => {
