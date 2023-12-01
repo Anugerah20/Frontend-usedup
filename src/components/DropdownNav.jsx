@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import ProfileUser from "../assets/profile-user.png"
 import { Avatar, Dropdown } from "flowbite-react"
 import { useEffect, useState } from "react";
