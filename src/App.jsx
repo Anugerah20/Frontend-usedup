@@ -28,7 +28,7 @@ function App() {
   const isUrlContainSlash = regex.test(pathname)
 
   const isAuthenticated = () => {
-    const userToken = localStorage.getItem('userToken');
+    const userToken = localStorage.getItem('useToken');
     return !!userToken
   };
 
