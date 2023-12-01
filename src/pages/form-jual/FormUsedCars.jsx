@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { useState, useEffect } from "react"
 import { FaPlus, FaTimes } from "react-icons/fa"
 import { useForm } from "react-hook-form"
@@ -6,6 +7,8 @@ import Modal from "react-modal"
 import axios from "axios"
 import { ToastContainer } from "react-toastify"
 import { toastSuccess, toastError } from "../../services/toatsService"
+import { Spinner } from "flowbite-react"
+import { useApiPost } from "../../services/apiService"
 
 const FormUsedCars = () => {
      const {
@@ -18,9 +21,11 @@ const FormUsedCars = () => {
      const [images, setImages] = useState([])
      const [modalIsOpen, setModalIsOpen] = useState(false)
      const [selectedImage, setSelectedImage] = useState(null)
-     const [selectCategory, setSelectCategory] = useState("")
      const [categories, setCategories] = useState([])
+     const [loading, setLoading] = useState(false)
      const maxNumber = 6
+
+     let urlImageUploaded = []
 
      useEffect(() => {
           const fetchCategory = async () => {
@@ -52,15 +57,13 @@ const FormUsedCars = () => {
 
           try {
                const response = await axios.post('https://api.cloudinary.com/v1_1/dn3fr1wck/image/upload', formData)
-               return response.data
-               // console.log(response)
+               urlImageUploaded.push(response.data.secure_url)
           } catch (e) {
                alert(e)
           }
      }
 
-     const onChange = (imageList, addUpdateIndex) => {
-          console.log(imageList, addUpdateIndex);
+     const onChange = (imageList) => {
           setImages(imageList);
      };
 
@@ -74,38 +77,41 @@ const FormUsedCars = () => {
           setModalIsOpen(false);
      };
 
-     const onSubmit = async (data) => {
+     const submitForm = async (data) => {
           try {
-               const cloudinaryUrl = await Promise.all(
-                    images.map((image) => uploadImage(image.file))
-               )
 
-               const formData = new FormData();
-               formData.append('title', data.title);
-               formData.append('description', data.description);
-               formData.append('price', data.price);
-               formData.append('category', selectCategory);
-               formData.append('image', cloudinaryUrl);
+               const dataForm = {
+                    title: data.title,
+                    description: data.description,
+                    price: data.price,
+                    categoryId: data.category,
+                    image: urlImageUploaded
+               }
 
-               // Cek data yang berisi gambar
-               // if (Array.isArray(data.images)) {
-               //      data.images.forEach((image) => {
-               //           formData.append('images', image.file)
-               //      })
-               // }
+               await useApiPost('/user/advert', dataForm);
 
-               const url = 'http://localhost:3000/api/user/advert'
-               const res = await axios.post(url, formData, {
-                    headers: {
-                         'Content-Type': 'multipart/form-data',
-                    },
-               });
-               console.log(res.data)
                reset()
+               setImages([])
                toastSuccess('Iklan sukses dibuat')
+               urlImageUploaded = []
           } catch (error) {
                console.error(error);
                toastError('Iklan gagal dibuat!')
+          }
+     }
+
+     const onSubmit = async (data) => {
+          try {
+               setLoading(true)
+               await Promise.all(
+                    images.map((image) => uploadImage(image.file))
+               )
+               await submitForm(data)
+               setLoading(false)
+          } catch (error) {
+               console.error(error);
+               toastError('Iklan gagal dibuat!')
+               setLoading(false)
           }
      };
 
@@ -129,11 +135,11 @@ const FormUsedCars = () => {
                                    id="category"
                                    className="mt-2"
                                    {...register("category", { required: true })}
-                                   onChange={(e) => setSelectCategory(e.target.value)}
+                                   disabled={loading}
                               >
-                                   <option value="">-- Pilih Kategori --</option>
+                                   <option value="" selected disabled>-- Pilih Kategori --</option>
                                    {categories?.map((category) => (
-                                        <option key={category.id}>{category.name}</option>
+                                        <option key={category.id} value={category.id}>{category.name}</option>
                                    ))}
                               </select>
                               {errors.category && errors.category.type === "required" && (
@@ -149,6 +155,7 @@ const FormUsedCars = () => {
                                    type="text"
                                    id="merk"
                                    className="mt-2"
+                                   disabled={loading}
                                    {...register("title", { required: true, minLength: 10 })}
                               />
                               {errors.title && errors.title.type === "required" && (
@@ -169,6 +176,7 @@ const FormUsedCars = () => {
                                    cols="0"
                                    rows="4"
                                    className="mt-2"
+                                   disabled={loading}
                                    {...register("description", { required: true, minLength: 30 })}
                               ></textarea>
                               {errors.description && errors.description.type === "required" && (
@@ -193,6 +201,7 @@ const FormUsedCars = () => {
                                    type="number"
                                    id="harga"
                                    className="mt-2"
+                                   disabled={loading}
                                    {...register("price", { required: true, minLength: 5 })}
                               />
                               {errors.price && errors.price.type === "required" && (
@@ -212,12 +221,11 @@ const FormUsedCars = () => {
                          <div className="mb-2 sm:mx-8 md:mx-8 lg:mx-8">
                               <label htmlFor="foto" className="font-bold">
                                    UNGGAH FOTO
-                              </label>
+                              </label><br />
                               <ImageUploading
                                    multiple
                                    value={images}
                                    onChange={onChange}
-                                   maxNumber={maxNumber}
                                    dataURLKey="dataURL"
                                    acceptType={["png", "jpg", "jpeg"]}
                               >
@@ -262,12 +270,16 @@ const FormUsedCars = () => {
                                    <span className="text-sm text-red-error">Photo required</span>
                               )}
                               <div className="mt-6">
-                                   <button
-                                        type="submit"
-                                        className="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none font-medium text-sm px-3 py-2.5 mr-2 mb-2"
-                                   >
-                                        JUAL SEKARANG
-                                   </button>
+                                   {loading ?
+                                        <Spinner />
+                                        :
+                                        <button
+                                             type="submit"
+                                             className="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none font-medium text-sm px-3 py-2.5 mr-2 mb-2"
+                                        >
+                                             JUAL SEKARANG
+                                        </button>
+                                   }
                               </div>
 
                               <Modal
