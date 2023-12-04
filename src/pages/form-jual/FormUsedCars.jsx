@@ -8,7 +8,7 @@ import axios from "axios"
 import { ToastContainer } from "react-toastify"
 import { toastSuccess, toastError } from "../../services/toatsService"
 import { Spinner } from "flowbite-react"
-import { useApiPost } from "../../services/apiService"
+import { useApiGet, useApiPost } from "../../services/apiService"
 
 const FormUsedCars = () => {
      const {
@@ -30,33 +30,28 @@ const FormUsedCars = () => {
      useEffect(() => {
           const fetchCategory = async () => {
                try {
-                    const res = await axios.get('http://localhost:3000/api/category')
-                    setCategories(res.data.data)
+                    const res = await useApiGet('/category');
+                    setCategories(res.data?.data);
                } catch (error) {
                     console.log('error my category:', error);
                }
           }
-
           fetchCategory()
      }, [])
 
      /* Buat ENV */
-     // const uploadPreset = import.meta.env.CLOUDINARY_UPLOAD_PRESET
-     // const apiKey = import.meta.env.CLOUDINARY_API_KEY
-     // const cloudName = import.meta.env.CLOUDINARY_CLOUD_NAME
-
-     // formData.append('file', images[i]?.file)
-     // for (let i = 0; i < images.length; i++) {
-     // }
+     const uploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET
+     const apiKey = import.meta.env.VITE_CLOUDINARY_API_KEY
+     const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME
 
      const uploadImage = async (imageFile) => {
           const formData = new FormData()
           formData.append('file', imageFile)
-          formData.append("upload_preset", "opllxhqb");
-          formData.append("api_key", 389128686364638);
+          formData.append("upload_preset", uploadPreset);
+          formData.append("api_key", apiKey);
 
           try {
-               const response = await axios.post('https://api.cloudinary.com/v1_1/dn3fr1wck/image/upload', formData)
+               const response = await axios.post(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, formData)
                urlImageUploaded.push(response.data.secure_url)
           } catch (e) {
                alert(e)
@@ -103,10 +98,19 @@ const FormUsedCars = () => {
      const onSubmit = async (data) => {
           try {
                setLoading(true)
-               await Promise.all(
+
+               if (images.length === 0 || images.length > maxNumber) {
+                    throw Error('Tolong minimal 1 gambar dan maksimal 6 gambar')
+               }
+
+               const uploadedImage = await Promise.all(
                     images.map((image) => uploadImage(image.file))
                )
-               await submitForm(data)
+
+               await submitForm({
+                    ...data,
+                    photos: uploadedImage,
+               })
                setLoading(false)
           } catch (error) {
                console.error(error);
@@ -217,7 +221,6 @@ const FormUsedCars = () => {
                     </div>
 
                     <div className="w-1/2">
-                         {/* <button onClick={() => uploadImage()}>Upload Foto</button> */}
                          <div className="mb-2 sm:mx-8 md:mx-8 lg:mx-8">
                               <label htmlFor="foto" className="font-bold">
                                    UNGGAH FOTO
@@ -254,15 +257,14 @@ const FormUsedCars = () => {
                                                        </div>
                                                   </div>
                                              ))}
-                                             {imageList.length < maxNumber && (
-                                                  <label
-                                                       onClick={onImageUpload}
-                                                       className="relative p-5 cursor-pointer border-2 border-gray-300 rounded-lg"
-                                                       {...register("photo", { required: true })}
-                                                  >
-                                                       <FaPlus className="text-2xl absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-black" />
-                                                  </label>
-                                             )}
+                                             <label
+                                                  onClick={onImageUpload}
+                                                  className="relative p-5 cursor-pointer border-2 border-gray-300 rounded-lg"
+                                                  {...register("photo", { required: imageList.length === 0 })}
+                                             >
+                                                  <FaPlus className="text-2xl absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-black" />
+                                             </label>
+
                                         </div>
                                    )}
                               </ImageUploading>
