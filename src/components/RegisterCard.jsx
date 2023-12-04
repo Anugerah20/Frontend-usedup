@@ -40,12 +40,6 @@ const RegisterCard = () => {
         }, 1000)
         reset();
       }
-
-      const { user, token } = res.data;
-
-      console.log("Register Success:", user);
-      console.log("Token JWT:", token);
-
     } catch (error) {
       if (error.message === "Network Error") {
         toastError("Internal server error!");
@@ -60,9 +54,6 @@ const RegisterCard = () => {
           return;
         }
       }
-      // console.log("Register Failed", error)
-      // toastError("Email already registered, use another email address");
-      // reset();
     }
   }
 
