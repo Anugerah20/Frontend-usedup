@@ -41,7 +41,7 @@ export const Home = () => {
                 {dataAdvert.map((item) => (
                     <Link key={item.id} to={`/detail/${item.id}`} className="hover:cursor-pointer">
                         <CardProduct
-                            image={item.image}
+                            image={item.image[1]}
                             title={item.title}
                             price={item.price}
                             location={item.location}

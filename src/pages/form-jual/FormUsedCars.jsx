@@ -83,7 +83,7 @@ const FormUsedCars = () => {
                     image: urlImageUploaded
                }
 
-               await useApiPost('/user/advert', dataForm);
+               await useApiPost('/advert', dataForm);
 
                reset()
                setImages([])

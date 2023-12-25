@@ -1,11 +1,59 @@
+import { useState, useEffect, useRef } from 'react'
 import { Alert, Tabs, Tooltip } from 'flowbite-react'
 import { AiFillHeart, AiFillHome, AiFillWarning } from 'react-icons/ai'
 import { BiChevronRight } from 'react-icons/bi'
 import { HiBadgeCheck, HiLocationMarker } from 'react-icons/hi'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import Profile from '../assets/profile-user.png'
+import { useApiGet } from '../services/apiService'
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
+
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/navigation';
+
+// import required modules
+import { Navigation } from 'swiper/modules';
+import { formatToIDR } from '../utils/FormatRupiah'
 
 export const DetailProduct = () => {
+    let { id } = useParams();
+    const [adverts, setAdverts] = useState([]);
+
+    const getDetailAdvert = async () => {
+        try {
+            const response = await useApiGet(`/advert/getDetailAdvert/${id}`);
+            setAdverts(response.data.detailAdvert)
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    useEffect(() => {
+        getDetailAdvert()
+    }, [])
+
+    const [zoomStyle, setZoomStyle] = useState({ transform: 'scale(1)' });
+    const imgRef = useRef(null);
+
+    const handleMouseMove = (e) => {
+        const img = imgRef.current;
+        const x = e.clientX - img.offsetLeft;
+        const y = e.clientY - img.offsetTop;
+
+        if (window.innerWidth > 1023) {
+            setZoomStyle({
+                transformOrigin: `${x}px ${y}px`,
+                transform: 'scale(2)',
+            });
+        }
+
+    };
+
+    const handleMouseLeave = () => {
+        setZoomStyle({ transform: 'scale(1)' });
+    };
     return (
         <div className='max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-y-4 gap-x-0 md:gap-x-6'>
             <div className="left space-y-4 ">
@@ -16,26 +64,39 @@ export const DetailProduct = () => {
                     <BiChevronRight className='text-secondary' />
                     <span className='text-blue-link font-semibold'>Hyundai Palisade</span>
                 </div>
-                <div className="image-swiper relative w-fit">
-                    <div className="absolute w-full h-full flex text-white items-center justify-center">
-                        This Is Carousel Image
-                    </div>
-                    <img src="https://images.pexels.com/photos/11194510/pexels-photo-11194510.jpeg?auto=compress&cs=tinysrgb&w=600" alt="mobil" />
+                <div className="image-swiper relative w-full">
+                    <Swiper navigation={true} modules={[Navigation]} className="mySwiper">
+                        {adverts?.image?.map((image, index) => ( // Added parentheses and an index
+                            <SwiperSlide key={index}> {/* Assuming you have unique keys for each slide */}
+                                <div className="img-detail overflow-hidden"
+                                    onMouseMove={handleMouseMove}
+                                    onMouseLeave={handleMouseLeave}
+                                    ref={imgRef}>
+                                    <img
+                                        src={image} alt='carousel-image'
+                                        className='object-cover cursor-zoom-in'
+                                        style={zoomStyle} />
+                                </div>
+
+                            </SwiperSlide>
+                        ))}
+                    </Swiper>
+
                 </div>
                 <div className="location space-x-2 w-fit px-3 py-2 md:text-base shadow-sm text-secondary text-sm flex items-center">
                     <HiLocationMarker />
                     <p className='uppercase font-semibold'>
-                        Jakarta Selatan, DKI Jakarta
+                        {adverts?.province?.name}
                     </p>
                 </div>
                 <div className="title">
                     <h2 className='font-bold text-2xl md:text-3xl'>
-                        Hyundai Palisade
+                        {adverts.title}
                     </h2>
                 </div>
                 <div className="price">
                     <p className='text-blue-link font-bold text-xl'>
-                        Rp 120.000.000
+                        {formatToIDR(adverts.price)}
                     </p>
                 </div>
                 <div className="tabs">
@@ -48,15 +109,7 @@ export const DetailProduct = () => {
                             title="Catatan Penjual"
                         >
                             <p>
-                                Catatan Penjual
-                            </p>
-                        </Tabs.Item>
-                        <Tabs.Item
-                            active
-                            title="Spesiikasi"
-                        >
-                            <p>
-                                Spesifikasi
+                                {adverts.description}
                             </p>
                         </Tabs.Item>
                     </Tabs.Group>
@@ -73,7 +126,7 @@ export const DetailProduct = () => {
                         <img src={Profile} alt="" />
                         <div className="flex flex-col space-y-1">
                             <div className="penjual-name flex items-center space-x-1">
-                                <h2 className='font-semibold'>Hyundai Jakarta Selatan</h2>
+                                <h2 className='font-semibold'>{adverts?.user?.fullname}</h2>
                                 <Tooltip content="Penjual sudah ter-verifikasi">
                                     <div className="verified_badge">
                                         <HiBadgeCheck className='text-xl text-blue-link' />

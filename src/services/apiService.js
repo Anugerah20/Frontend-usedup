@@ -4,13 +4,13 @@ import axios from "axios";
 // const navigation = useNavigate();
 
 // dev
-// const dev = "http://localhost:3000/api";
+const dev = "http://localhost:3000/api";
 
 // prod
 const prod = "https://api-usedup.cyclic.app/api"
 
 const apiService = axios.create({
-     baseURL: prod,
+     baseURL: dev,
      headers: {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${localStorage.getItem("useToken")}`,
