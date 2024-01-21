@@ -17,6 +17,7 @@ import FormlMobilBekas from "./pages/form-jual/FormUsedCars";
 import ForgotPassword from "./components/ForgotPassword";
 import ResetPassword from "./components/ResetPassword";
 import PrivateRoute from "./utils/PrivateRoute";
+import { ProtectRouteLogin } from "./utils/ProtectLogin";
 
 function App() {
 
@@ -43,10 +44,8 @@ function App() {
       <div className='App px-4 sm:my-10 my-5'>
         <Routes>
           <Route path='/' element={<Home />} />
-          <Route path='/login' element={<LoginCard />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password" element={<ResetPassword />} />
-          <Route path='/register' element={<RegisterCard />} />
           <Route
             path='/edit-profile'
             element={
@@ -113,6 +112,11 @@ function App() {
           />
           <Route path='/search-product' element={<SearchProduct />} />
           <Route path='*' element={<NotFound />} />
+
+          <Route element={<ProtectRouteLogin />}>
+            <Route path='/login' element={<LoginCard />} />
+            <Route path='/register' element={<RegisterCard />} />
+          </Route>
         </Routes>
       </div>
       <FooterComponent />
