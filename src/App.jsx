@@ -42,39 +42,13 @@ function App() {
 
           {/* protect route-route yang hanya bisa diakses ketika sudah login */}
           <Route element={<ProtectPath />}>
-            <Route
-              path='/edit-profile'
-              element={<EditProfile />
-              }
-            />
-            <Route
-              path='/pilih-kategori'
-              element={<PageKategori />
-              }
-            />
-            <Route
-              path='/favorite-product'
-              element={<FavoriteProduct />
-              }
-            />
-            <Route
-              path='/my-advertisement'
-              element={<MyAdvertisement />
-              }
-            />
-            <Route
-              path='/profile'
-              element={<Profile />
-              }
-            />
-            <Route
-              path='/form-jual'
-              element={<FormlMobilBekas />
-              }
-            />
+            <Route path='/edit-profile' element={<EditProfile />} />
+            <Route path='/pilih-kategori' element={<PageKategori />} />
+            <Route path='/favorite-product' element={<FavoriteProduct />} />
+            <Route path='/my-advertisement' element={<MyAdvertisement />} />
+            <Route path='/profile' element={<Profile />} />
+            <Route path='/form-jual' element={<FormlMobilBekas />} />
           </Route>
-
-
 
           {/* ketika sudah login maka tidak bisa akses route login dan register sebelum logout */}
           <Route element={<AlreadyLogin />}>
