@@ -16,8 +16,7 @@ import Profile from "./pages/Profile";
 import FormlMobilBekas from "./pages/form-jual/FormUsedCars";
 import ForgotPassword from "./components/ForgotPassword";
 import ResetPassword from "./components/ResetPassword";
-import PrivateRoute from "./utils/PrivateRoute";
-import { ProtectRouteLogin } from "./utils/ProtectLogin";
+import { AlreadyLogin, ProtectPath } from "./utils/ProtectRoute"
 
 function App() {
 
@@ -27,12 +26,6 @@ function App() {
   const regex = new RegExp('^/$')
 
   const isUrlContainSlash = regex.test(pathname)
-
-  const isAuthenticated = () => {
-    const userToken = localStorage.getItem('useToken');
-    return !!userToken
-  };
-
 
   return (
     <>
@@ -46,77 +39,55 @@ function App() {
           <Route path='/' element={<Home />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password" element={<ResetPassword />} />
-          <Route
-            path='/edit-profile'
-            element={
-              <PrivateRoute
-                authenticated={isAuthenticated()}
-                path='/edit-profile'
-                element={EditProfile}
-              />
-            }
-          />
-          <Route
-            path='/pilih-kategori'
-            element={
-              <PrivateRoute
-                authenticated={isAuthenticated()}
-                path='/pilih-kategori'
-                element={PageKategori}
-              />
-            }
-          />
-          <Route
-            path='/favorite-product'
-            element={
-              <PrivateRoute
-                authenticated={isAuthenticated()}
-                path='/favorite-product'
-                element={FavoriteProduct}
-              />
-            }
-          />
+
+          {/* protect route-route yang hanya bisa diakses ketika sudah login */}
+          <Route element={<ProtectPath />}>
+            <Route
+              path='/edit-profile'
+              element={<EditProfile />
+              }
+            />
+            <Route
+              path='/pilih-kategori'
+              element={<PageKategori />
+              }
+            />
+            <Route
+              path='/favorite-product'
+              element={<FavoriteProduct />
+              }
+            />
+            <Route
+              path='/my-advertisement'
+              element={<MyAdvertisement />
+              }
+            />
+            <Route
+              path='/profile'
+              element={<Profile />
+              }
+            />
+            <Route
+              path='/form-jual'
+              element={<FormlMobilBekas />
+              }
+            />
+          </Route>
+
+
+
+          {/* ketika sudah login maka tidak bisa akses route login dan register sebelum logout */}
+          <Route element={<AlreadyLogin />}>
+            <Route path='/login' element={<LoginCard />} />
+            <Route path='/register' element={<RegisterCard />} />
+          </Route>
+
           <Route
             path='/detail/:id'
             element={<DetailProduct />}
           />
-          <Route
-            path='/my-advertisement'
-            element={
-              <PrivateRoute
-                authenticated={isAuthenticated()}
-                path='/my-advertisement'
-                element={MyAdvertisement}
-              />
-            }
-          />
-          <Route
-            path='/profile'
-            element={
-              <PrivateRoute
-                authenticated={isAuthenticated()}
-                path='/profile'
-                element={Profile}
-              />
-            }
-          />
-          <Route
-            path='/form-jual'
-            element={
-              <PrivateRoute
-                authenticated={isAuthenticated()}
-                path='/form-jual'
-                element={FormlMobilBekas}
-              />
-            }
-          />
           <Route path='/search-product' element={<SearchProduct />} />
           <Route path='*' element={<NotFound />} />
-
-          <Route element={<ProtectRouteLogin />}>
-            <Route path='/login' element={<LoginCard />} />
-            <Route path='/register' element={<RegisterCard />} />
-          </Route>
         </Routes>
       </div>
       <FooterComponent />
