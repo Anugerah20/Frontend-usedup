@@ -26,13 +26,13 @@ const LoginCard = () => {
       };
 
       const res = await useApiPost('/user/login', loginData)
-      if (res && res.data.token) {
+      if (res) {
         localStorage.setItem("useToken", res.data.token)
         localStorage.setItem("userId", res.data.checkUser.id)
         toastSuccess("Login Successful")
 
         setTimeout(() => {
-          navigate("/")
+          window.location.href = '/'
         }, 1000)
         reset()
       }

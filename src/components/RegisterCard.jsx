@@ -29,14 +29,15 @@ const RegisterCard = () => {
       };
 
       const res = await useApiPost('/user/register', registerData)
+      console.log(res);
 
-      if (res && res.data.token) {
+      if (res) {
         localStorage.setItem("useToken", res.data.token)
-        localStorage.setItem("userId", res.data.checkUser.id)
+        localStorage.setItem("userId", res.data.user.id)
         toastSuccess("Registration Successful");
 
         setTimeout(() => {
-          navigate("/");
+          window.location.href = '/'
         }, 1000)
         reset();
       }
