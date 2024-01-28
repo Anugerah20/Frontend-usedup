@@ -3,12 +3,11 @@ import { useForm } from "react-hook-form"
 import { useApiPost } from "../services/apiService";
 import { ToastContainer } from "react-toastify";
 import { toastError, toastSuccess } from "../services/toatsService";
-import { Link, useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 import { Fragment } from "react";
 import { Button } from "flowbite-react";
 
 const RegisterCard = () => {
-  const navigate = useNavigate();
 
   const {
     register,
@@ -28,33 +27,28 @@ const RegisterCard = () => {
         password: data.passwordRequired,
       };
 
-      const res = await useApiPost('/user/register', registerData)
-      console.log(res);
+      const response = await useApiPost('/user/register', registerData)
+      console.log(response);
 
-      if (res) {
-        localStorage.setItem("useToken", res.data.token)
-        localStorage.setItem("userId", res.data.user.id)
-        toastSuccess("Registration Successful");
+      if (response) {
+        localStorage.setItem("useToken", response.data.token)
+        localStorage.setItem("userId", response.data.user.id)
+        toastSuccess("Registration Successful")
 
         setTimeout(() => {
           window.location.href = '/'
         }, 1000)
-        reset();
+        reset()
       }
     } catch (error) {
-      if (error.message === "Network Error") {
-        toastError("Internal server error!");
-      }
+      console.log('Login error', error);
 
-      if (error.response && error.response.data) {
-        const responseData = error.response.data
-
-        if (responseData.error === "Email already registered") {
-          toastError("Email already registered, use another email address");
-          reset();
-          return;
-        }
+      if (error.response && error.response.data && error.response.data.error) {
+        toastError(`Login Failed: ${error.response.data.error}`)
+      } else {
+        toastError("Internal server error")
       }
+      reset()
     }
   }
 
