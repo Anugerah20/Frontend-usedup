@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { Link, useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 import { useForm } from "react-hook-form"
 import { ToastContainer } from "react-toastify";
 import { toastError, toastSuccess } from "../services/toatsService";
@@ -8,8 +8,6 @@ import { Fragment } from "react";
 import { Button } from "flowbite-react";
 
 const LoginCard = () => {
-
-  const navigate = useNavigate();
 
   const {
     register,
@@ -25,10 +23,10 @@ const LoginCard = () => {
         password: data.passwordRequired,
       };
 
-      const res = await useApiPost('/user/login', loginData)
-      if (res) {
-        localStorage.setItem("useToken", res.data.token)
-        localStorage.setItem("userId", res.data.checkUser.id)
+      const response = await useApiPost('/user/login', loginData)
+      if (response) {
+        localStorage.setItem("useToken", response.data.token)
+        localStorage.setItem("userId", response.data.checkUser.id)
         toastSuccess("Login Successful")
 
         setTimeout(() => {
@@ -37,9 +35,14 @@ const LoginCard = () => {
         reset()
       }
     } catch (error) {
-      console.error('Login error', error)
-      toastError("Wrong email or password");
-      reset();
+      console.log('Login error', error);
+
+      if (error.response && error.response.data && error.response.data.error) {
+        toastError(`Login Failed: ${error.response.data.error}`)
+      } else {
+        toastError("Internal server error")
+      }
+      reset()
     }
   }
 
