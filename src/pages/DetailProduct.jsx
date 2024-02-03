@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { useState, useEffect, useRef } from 'react'
-import { Alert, Tabs, Tooltip } from 'flowbite-react'
+import { Tabs, Tooltip } from 'flowbite-react'
 import { AiFillHeart, AiFillHome, AiFillWarning } from 'react-icons/ai'
 import { BiChevronRight } from 'react-icons/bi'
 import { HiBadgeCheck, HiLocationMarker } from 'react-icons/hi'
@@ -7,7 +8,6 @@ import { Link, useParams } from 'react-router-dom'
 import Profile from '../assets/profile-user.png'
 import { useApiGet } from '../services/apiService'
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 
 // Import Swiper styles
 import 'swiper/css';
@@ -20,6 +20,7 @@ import { formatToIDR } from '../utils/FormatRupiah'
 export const DetailProduct = () => {
     let { id } = useParams();
     const [adverts, setAdverts] = useState([]);
+    const [isNoTelpVisible, setIsNoTelpVisible] = useState(false);
 
     const getDetailAdvert = async () => {
         try {
@@ -56,13 +57,15 @@ export const DetailProduct = () => {
     };
     return (
         <div className='max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-y-4 gap-x-0 md:gap-x-6'>
-            <div className="left space-y-4 ">
+            <div className="left space-y-4">
                 <div className="breadcrumb flex items-center space-x-1">
-                    <AiFillHome className='text-secondary' />
+                    <Link to="/" className='text-secondary font-semibold'>
+                        <AiFillHome className='text-secondary' />
+                    </Link>
                     <BiChevronRight className='text-secondary' />
-                    <span className='text-secondary font-semibold'>Mobil Bekas</span>
+                    <span className='text-secondary font-semibold'>{adverts?.category?.name}</span>
                     <BiChevronRight className='text-secondary' />
-                    <span className='text-blue-link font-semibold'>Hyundai Palisade</span>
+                    <span className='text-blue-link font-semibold'>{adverts?.title}</span>
                 </div>
                 <div className="image-swiper relative w-full">
                     <Swiper navigation={true} modules={[Navigation]} className="mySwiper">
@@ -85,35 +88,31 @@ export const DetailProduct = () => {
                 </div>
                 <div className="location space-x-2 w-fit px-3 py-2 md:text-base shadow-sm text-secondary text-sm flex items-center">
                     <HiLocationMarker />
-                    <p className='uppercase font-semibold'>
+                    <p className='uppercase font-semibold break-words'>
                         {adverts?.province?.name}
                     </p>
                 </div>
                 <div className="title">
-                    <h2 className='font-bold text-2xl md:text-3xl'>
+                    <h2 className='font-bold text-2xl md:text-3xl break-words'>
                         {adverts.title}
                     </h2>
                 </div>
                 <div className="price">
-                    <p className='text-blue-link font-bold text-xl'>
-                        {formatToIDR(adverts.price)}
+                    <p className='text-blue-link font-bold text-xl break-words'>
+                        {formatToIDR(adverts?.price)}
                     </p>
                 </div>
-                <div className="tabs">
-                    <Tabs.Group
-                        aria-label="Tabs with underline"
-                        style="underline"
-                    >
-                        <Tabs.Item
-                            active
-                            title="Catatan Penjual"
-                        >
-                            <p>
-                                {adverts.description}
-                            </p>
-                        </Tabs.Item>
-                    </Tabs.Group>
-                </div>
+                <Tabs.Group
+                    aria-label="Tabs with underline"
+                    // eslint-disable-next-line react/style-prop-object
+                    style='underline'
+                >
+                    <Tabs.Item title="Catatan Penjual" >
+                        <p className='break-words'>
+                            {adverts?.description}
+                        </p>
+                    </Tabs.Item>
+                </Tabs.Group>
             </div>
             <div className="right w-full lg:w-2/3 ml-auto mt-9 space-y-6">
                 <h1
@@ -155,12 +154,13 @@ export const DetailProduct = () => {
                             Kontak Penjual
                         </h2>
                         <p>
-                            *** **** ****
+                            {isNoTelpVisible ? adverts?.user?.no_telp : '************'}
                         </p>
-                        <button>
-                            <p className='text-blue-link underline'>
-                                Tampilkan
-                            </p>
+                        <button
+                            className='text-blue-link underline'
+                            onClick={() => setIsNoTelpVisible(!isNoTelpVisible)}
+                        >
+                            {isNoTelpVisible ? 'Sembunyikan' : 'Tampilkan'}
                         </button>
                     </div>
                 </div>
