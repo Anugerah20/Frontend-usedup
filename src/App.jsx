@@ -17,6 +17,7 @@ import FormlMobilBekas from "./pages/form-jual/FormUsedCars";
 import ForgotPassword from "./components/ForgotPassword";
 import ResetPassword from "./components/ResetPassword";
 import { AlreadyLogin, ProtectPath } from "./utils/ProtectRoute";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   const pathname = useLocation().pathname;
@@ -28,6 +29,7 @@ function App() {
 
   return (
     <>
+      <ToastContainer />
       <Navigation />
 
       {/* Tampilkan banner hanya di halaman utama */}
@@ -45,7 +47,7 @@ function App() {
 
           {/* protect route-route yang hanya bisa diakses ketika sudah login */}
           <Route element={<ProtectPath />}>
-            <Route path="/edit-profile" element={<EditProfile />} />
+            <Route path="/edit-profile/:id" element={<EditProfile />} />
             <Route path="/pilih-kategori" element={<PageKategori />} />
             <Route path="/favorite-product" element={<FavoriteProduct />} />
             <Route path="/my-advertisement" element={<MyAdvertisement />} />
