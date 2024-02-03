@@ -1,6 +1,40 @@
 import { BiChevronRight } from "react-icons/bi"
+import { useEffect } from "react";
+import { useApiGet, useApiPut } from "../services/apiService";
+import { useForm } from "react-hook-form";
+import { toastError, toastSuccess } from "../services/toatsService";
 
 const EditProfile = () => {
+     const { register, handleSubmit, setValue } = useForm();
+     const userId = localStorage.getItem("userId");
+
+
+     const fetchUser = async () => {
+          try {
+               const res = await useApiGet(`/user/${userId}`);
+               setValue('fullname', res.data.fullname)
+               setValue('no_telp', res.data.no_telp)
+               setValue('bio', res.data.bio)
+          } catch (error) {
+               console.log(error);
+          }
+     }
+
+     useEffect(() => {
+          fetchUser();
+     }, []);
+
+     const onUpdate = async (data) => {
+          try {
+               const res = await useApiPut(`/user/edit-profile/${userId}`, data)
+               console.log(res);
+               toastSuccess(`sukses ${res.data.message}`)
+          } catch (error) {
+               toastError('gagal')
+               console.log(error);
+          }
+     }
+
      return (
           <div className="my-14 mx-10">
 
@@ -13,12 +47,25 @@ const EditProfile = () => {
                <h1 className="text-3xl font-bold mt-10 black-breadcrumb">Edit Profil</h1>
                <p className="text-md mt-1 mb-5 text-gray-breadcrumb-secondary">Dibawah ini merupakan informasi yang bisa diubah</p>
 
-               <form>
+               <form onSubmit={handleSubmit(onUpdate)}>
                     <label htmlFor="fullname">Nama lengkap</label>
-                    <input type="text" className="input-profile border-input-gray" name="fullname" id="fullname" />
-
+                    <input type="text" className="input-profile border-input-gray max-w-lg" name="fullname" id="fullname"
+                         {...register('fullname', {
+                              required: true
+                         })}
+                    />
+                    <label htmlFor="no_telp">Nomor Telpon</label>
+                    <input type="text" className="input-profile border-input-gray max-w-lg" name="no_telp" id="no_telp"
+                         {...register('no_telp', {
+                              required: true
+                         })}
+                    />
                     <label htmlFor="bio">Tentang saya</label>
-                    <textarea name="bio" id="bio" className="textarea-profile border-input-gray" cols="40" rows="10"></textarea>
+                    <textarea name="bio" id="bio" className="textarea-profile border-input-gray sm:w-[45%] w-[100%]"
+                         {...register('bio', {
+                              required: true
+                         })}
+                    ></textarea>
                     <button className="btn-profile bg-black-breadcrumb text-white-breadcrumb hover:bg-black-breadcrumb-secondary">simpan</button>
                     <div className="border-bottom text-input-gray"></div>
                </form >
