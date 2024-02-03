@@ -63,9 +63,9 @@ export const DetailProduct = () => {
                         <AiFillHome className='text-secondary' />
                     </Link>
                     <BiChevronRight className='text-secondary' />
-                    <span className='text-secondary font-semibold'>{adverts?.category?.name}</span>
+                    <span className='text-secondary font-semibold whitespace-nowrap'>{adverts?.category?.name}</span>
                     <BiChevronRight className='text-secondary' />
-                    <span className='text-blue-link font-semibold'>{adverts?.title}</span>
+                    <p className='text-blue-link font-semibold line-clamp-1'>{adverts?.title}</p>
                 </div>
                 <div className="image-swiper relative w-full">
                     <Swiper navigation={true} modules={[Navigation]} className="mySwiper">
@@ -77,7 +77,7 @@ export const DetailProduct = () => {
                                     ref={imgRef}>
                                     <img
                                         src={image} alt='carousel-image'
-                                        className='object-cover cursor-zoom-in'
+                                        className='object-cover cursor-zoom-in w-full'
                                         style={zoomStyle} />
                                 </div>
 
