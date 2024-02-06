@@ -23,20 +23,11 @@
 
      /* Button edit profile */
      .btn-profile {
-          @apply w-[20rem] h-[2.5rem] font-normal rounded transition-all duration-300 ease-in uppercase
+          @apply w-full h-[2.5rem] mt-2 font-normal rounded transition-all duration-300 ease-in uppercase
      }
 
      .border-bottom {
-          @apply border-solid border-b-2 w-[20rem] pt-8
-     }
-
-     /* Input edit profile */
-     .input-profile {
-          @apply flex w-[20rem] h-[2rem] mb-[1rem] border-solid border-2 outline-none
-     }
-
-     .textarea-profile {
-          @apply flex w-[20rem] h-[4rem] mb-[1rem] border-solid border-2 outline-none
+          @apply border-solid border-b-2 w-full pt-8
      }
 }
 
