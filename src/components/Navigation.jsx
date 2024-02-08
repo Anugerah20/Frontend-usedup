@@ -73,7 +73,7 @@ const Navigation = () => {
                          <div className="flex items-center justify-start space-x-4 sm:mt-0 mt-4">
                               {userLogin ? (
                                    <>
-                                        <Link to='/pilih-kategori'>
+                                        <Link to='/form-jual'>
                                              <Button outline color="dark" className="btn-nav">
                                                   Jual
                                              </Button>
@@ -91,7 +91,7 @@ const Navigation = () => {
                                              </Button>
                                         </Link>
                                         <Button outline color="dark" className="btn-nav">
-                                             <Link to='/pilih-kategori'>
+                                             <Link to='/form-jual'>
                                                   Jual
                                              </Link>
                                         </Button>
