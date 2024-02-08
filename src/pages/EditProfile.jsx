@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { BiChevronRight } from "react-icons/bi"
 import { useEffect } from "react";
 import { useApiGet, useApiPut } from "../services/apiService";
@@ -48,26 +49,34 @@ const EditProfile = () => {
                <p className="text-md mt-1 mb-5 text-gray-breadcrumb-secondary">Dibawah ini merupakan informasi yang bisa diubah</p>
 
                <form onSubmit={handleSubmit(onUpdate)}>
-                    <label htmlFor="fullname">Nama lengkap</label>
-                    <input type="text" className="input-profile border-input-gray max-w-lg" name="fullname" id="fullname"
-                         {...register('fullname', {
-                              required: true
-                         })}
-                    />
-                    <label htmlFor="no_telp">Nomor Telpon</label>
-                    <input type="text" className="input-profile border-input-gray max-w-lg" name="no_telp" id="no_telp"
-                         {...register('no_telp', {
-                              required: true
-                         })}
-                    />
-                    <label htmlFor="bio">Tentang saya</label>
-                    <textarea name="bio" id="bio" className="textarea-profile border-input-gray sm:w-[45%] w-[100%]"
-                         {...register('bio', {
-                              required: true
-                         })}
-                    ></textarea>
-                    <button className="btn-profile bg-black-breadcrumb text-white-breadcrumb hover:bg-black-breadcrumb-secondary">simpan</button>
-                    <div className="border-bottom text-input-gray"></div>
+                    <div className="space-y-4 w-full md:w-1/2">
+                         <div>
+                              <label htmlFor="fullname">Nama lengkap</label>
+                              <input type="text" className="" name="fullname" id="fullname"
+                                   {...register('fullname', {
+                                        required: true
+                                   })}
+                              />
+                         </div>
+                         <div>
+                              <label htmlFor="no_telp">Nomor Telpon</label>
+                              <input type="text" className="" name="no_telp" id="no_telp"
+                                   {...register('no_telp', {
+                                        required: true
+                                   })}
+                              />
+                         </div>
+                         <div>
+                              <label htmlFor="bio">Tentang saya</label>
+                              <textarea name="bio" id="bio" className=""
+                                   {...register('bio', {
+                                        required: true
+                                   })}
+                              ></textarea>
+                         </div>
+                         <button className="btn-profile bg-black-breadcrumb text-white-breadcrumb hover:bg-black-breadcrumb-secondary">simpan</button>
+                         <div className="border-bottom text-input-gray"></div>
+                    </div>
                </form >
           </div >
      )
