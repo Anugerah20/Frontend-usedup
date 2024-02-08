@@ -1,12 +1,13 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 import { AiFillHeart } from "react-icons/ai";
+import { Link } from "react-router-dom";
 
-const CardProduct = ({ title, image, price, location }) => {
+const CardProduct = ({ id , title, image, price, location }) => {
     const [isFavorite, setIsFavorite] = useState(false);
 
     return (
-        <div className="card rounded overflow-hidden relative">
+        <Link to={`detail/${id}`} className="card rounded overflow-hidden relative">
             <img src={image} alt={title} className='max-w-full object-contain mx-auto' />
             <div className="px-4 md:px-6 py-4">
                 <div className="font-bold text-base md:text-lg mb-1 line-clamp-1">{title}</div>
@@ -21,7 +22,7 @@ const CardProduct = ({ title, image, price, location }) => {
                     className={`text-xl ${isFavorite ? 'text-red-500' : 'text-gray-300'}`}
                 />
             </button>
-        </div>
+        </Link>
     );
 };
 
