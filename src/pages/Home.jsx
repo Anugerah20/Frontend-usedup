@@ -41,7 +41,7 @@ export const Home = () => {
                 {dataAdvert.map((item) => (
                     <CardProduct
                         key={item.id}
-                        image={item.image[1]}
+                        image={item.image[0]}
                         id={item.id}
                         title={item.title}
                         price={item.price}

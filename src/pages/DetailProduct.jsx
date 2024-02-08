@@ -71,7 +71,7 @@ export const DetailProduct = () => {
                     <Swiper navigation={true} modules={[Navigation]} className="mySwiper">
                         {adverts?.image?.map((image, index) => ( // Added parentheses and an index
                             <SwiperSlide key={index}> {/* Assuming you have unique keys for each slide */}
-                                <div className="img-detail overflow-hidden"
+                                <div className="img-detail overflow-hidden bg-black"
                                     onMouseMove={handleMouseMove}
                                     onMouseLeave={handleMouseLeave}
                                     ref={imgRef}>
