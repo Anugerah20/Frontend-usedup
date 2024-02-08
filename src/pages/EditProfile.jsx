@@ -53,12 +53,17 @@ const EditProfile = () => {
                <p className="text-md mt-1 mb-5 text-gray-breadcrumb-secondary">Dibawah ini merupakan informasi yang bisa diubah</p>
 
                <form onSubmit={handleSubmit(onUpdate)} className="lg:w-1/2 md:w-1/2 sm:w-3/5">
-                    <label htmlFor="fullname">Nama lengkap</label>
-                    <input type="text" className="mt-2" name="fullname" id="fullname"
-                         {...register('fullname', {
-                              required: true
-                         })}
-                    />
+                    <div>
+                         <label htmlFor="fullname">Nama lengkap</label>
+                         <input type="text" className="mt-2" name="fullname" id="fullname"
+                              {...register('fullname', {
+                                   required: "Fullname required"
+                              })}
+                         />
+                         {errors.fullname && (
+                              <span className="text-sm text-red-error">{errors.fullname.message}</span>
+                         )}
+                    </div>
 
                     <div>
                          <label htmlFor="no_telp">Nomor Telpon</label>
