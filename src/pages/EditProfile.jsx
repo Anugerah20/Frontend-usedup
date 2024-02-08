@@ -6,9 +6,14 @@ import { useForm } from "react-hook-form";
 import { toastError, toastSuccess } from "../services/toatsService";
 
 const EditProfile = () => {
-     const { register, handleSubmit, setValue } = useForm();
-     const userId = localStorage.getItem("userId");
+     const {
+          register,
+          handleSubmit,
+          setValue,
+          formState: { errors },
+     } = useForm();
 
+     const userId = localStorage.getItem("userId");
 
      const fetchUser = async () => {
           try {
