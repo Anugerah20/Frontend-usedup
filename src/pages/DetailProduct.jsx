@@ -77,7 +77,7 @@ export const DetailProduct = () => {
                                     ref={imgRef}>
                                     <img
                                         src={image} alt='carousel-image'
-                                        className='object-cover cursor-zoom-in w-full'
+                                        className='max-w-full h-56 sm:h-64 xl:h-80 2xl:h-96 object-contain mx-auto'
                                         style={zoomStyle} />
                                 </div>
 
