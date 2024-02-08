@@ -139,7 +139,7 @@ const FormUsedCars = () => {
      return (
           <div className="max-w-5xl h-auto mx-auto md:py-0 px-5">
                <div className="bg-primary p-6 text-white-breadcrumb">
-                    <h1 className="text-2xl font-bold mb-2">KAMU INGIN MENJUAL</h1>
+                    <h1 className="text-2xl font-bold mb-2">FORM JUAL</h1>
                </div>
                <p className="my-4 font-medium text-xs">
                     SILAHKAN ISI FORM DIBAWAH INI DENGAN BENAR
