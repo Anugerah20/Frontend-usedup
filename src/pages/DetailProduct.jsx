@@ -71,13 +71,13 @@ export const DetailProduct = () => {
                     <Swiper navigation={true} modules={[Navigation]} className="mySwiper">
                         {adverts?.image?.map((image, index) => ( // Added parentheses and an index
                             <SwiperSlide key={index}> {/* Assuming you have unique keys for each slide */}
-                                <div className="img-detail overflow-hidden"
+                                <div className="img-detail overflow-hidden bg-black"
                                     onMouseMove={handleMouseMove}
                                     onMouseLeave={handleMouseLeave}
                                     ref={imgRef}>
                                     <img
                                         src={image} alt='carousel-image'
-                                        className='object-cover cursor-zoom-in w-full'
+                                        className='max-w-full h-56 sm:h-64 xl:h-80 2xl:h-96 object-contain mx-auto'
                                         style={zoomStyle} />
                                 </div>
 
@@ -108,7 +108,7 @@ export const DetailProduct = () => {
                     style='underline'
                 >
                     <Tabs.Item title="Catatan Penjual" >
-                        <p className='break-words'>
+                        <p className='whitespace-pre-line'>
                             {adverts?.description}
                         </p>
                     </Tabs.Item>

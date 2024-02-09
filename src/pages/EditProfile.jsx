@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { BiChevronRight } from "react-icons/bi"
 import { useEffect } from "react";
 import { useApiGet, useApiPut } from "../services/apiService";

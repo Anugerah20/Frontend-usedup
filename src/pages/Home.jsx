@@ -39,14 +39,14 @@ export const Home = () => {
             {/* Card */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {dataAdvert.map((item) => (
-                    <Link key={item.id} to={`/detail/${item.id}`} className="hover:cursor-pointer">
-                        <CardProduct
-                            image={item.image[1]}
-                            title={item.title}
-                            price={item.price}
-                            location={item.location}
-                        />
-                    </Link>
+                    <CardProduct
+                        key={item.id}
+                        image={item.image[0]}
+                        id={item.id}
+                        title={item.title}
+                        price={item.price}
+                        location={item.location}
+                    />
                 ))}
             </div>
 

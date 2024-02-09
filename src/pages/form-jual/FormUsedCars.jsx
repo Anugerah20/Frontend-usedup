@@ -9,6 +9,7 @@ import { ToastContainer } from "react-toastify"
 import { toastSuccess, toastError } from "../../services/toatsService"
 import { Spinner } from "flowbite-react"
 import { useApiGet, useApiPost } from "../../services/apiService"
+import { BsEyeFill } from "react-icons/bs"
 
 const FormUsedCars = () => {
      const {
@@ -22,21 +23,35 @@ const FormUsedCars = () => {
      const [modalIsOpen, setModalIsOpen] = useState(false)
      const [selectedImage, setSelectedImage] = useState(null)
      const [categories, setCategories] = useState([])
+     const [provinces, setProvinces] = useState([])
      const [loading, setLoading] = useState(false)
      const maxNumber = 6
 
      let urlImageUploaded = []
 
-     useEffect(() => {
-          const fetchCategory = async () => {
-               try {
-                    const res = await useApiGet('/category');
-                    setCategories(res.data?.data);
-               } catch (error) {
-                    console.log('error my category:', error);
-               }
+     const userId = localStorage.getItem('userId')
+
+     const fetchCategory = async () => {
+          try {
+               const res = await useApiGet('/additional/category');
+               setCategories(res.data?.data);
+          } catch (error) {
+               console.log('error my category:', error);
           }
+     }
+
+     const fetchProvince = async () => {
+          try {
+               const res = await useApiGet('/additional/province');
+               setProvinces(res.data?.data);
+          } catch (error) {
+               console.log('error while fetch province:', error);
+          }
+     }
+
+     useEffect(() => {
           fetchCategory()
+          fetchProvince()
      }, [])
 
      /* Buat ENV */
@@ -80,10 +95,12 @@ const FormUsedCars = () => {
                     description: data.description,
                     price: data.price,
                     categoryId: data.category,
-                    image: urlImageUploaded
+                    image: urlImageUploaded,
+                    userId,
+                    provinceId: data.provinsi
                }
 
-               await useApiPost('/advert', dataForm);
+               await useApiPost('/advert/advert', dataForm);
 
                reset()
                setImages([])
@@ -122,7 +139,7 @@ const FormUsedCars = () => {
      return (
           <div className="max-w-5xl h-auto mx-auto md:py-0 px-5">
                <div className="bg-primary p-6 text-white-breadcrumb">
-                    <h1 className="text-2xl font-bold mb-2">KAMU INGIN MENJUAL</h1>
+                    <h1 className="text-2xl font-bold mb-2">FORM JUAL</h1>
                </div>
                <p className="my-4 font-medium text-xs">
                     SILAHKAN ISI FORM DIBAWAH INI DENGAN BENAR
@@ -148,6 +165,26 @@ const FormUsedCars = () => {
                               </select>
                               {errors.category && errors.category.type === "required" && (
                                    <span className="flex text-sm text-red-error">Category required</span>
+                              )}
+                         </div>
+
+                         <div className="mb-2">
+                              <label htmlFor="provinsi" className="font-bold">
+                                   Provinsi *
+                              </label>
+                              <select
+                                   id="category"
+                                   className="mt-2"
+                                   {...register("provinsi", { required: true })}
+                                   disabled={loading}
+                              >
+                                   <option value="" selected disabled>-- Pilih Provinsi --</option>
+                                   {provinces?.map((province) => (
+                                        <option key={province.id} value={province.id}>{province.name}</option>
+                                   ))}
+                              </select>
+                              {errors.provinsi && errors.provinsi.type === "required" && (
+                                   <span className="flex text-sm text-red-error">Provinsi required</span>
                               )}
                          </div>
 
@@ -230,20 +267,26 @@ const FormUsedCars = () => {
                                    value={images}
                                    onChange={onChange}
                                    dataURLKey="dataURL"
-                                   acceptType={["png", "jpg", "jpeg"]}
+                                   acceptType={["png", "jpg", "jpeg", "webp"]}
                               >
                                    {({ imageList, onImageUpload, onImageRemove }) => (
-                                        <div className="grid grid-cols-3 mr-0 sm:mr-60 mt-2 gap-4">
+                                        <div className="grid grid-cols-3 place-items-stretch mt-2 gap-4">
                                              {imageList?.map((image, index) => (
                                                   <div
                                                        key={index}
-                                                       className="relative cursor-pointer border-2 border-gray-300 rounded-lg"
+                                                       className="relative cursor-pointer rounded-lg group transition"
                                                   >
+                                                       <div 
+                                                       className="absolute invisible group-hover:visible bg-black/20 w-full h-full rounded-lg flex justify-center items-center"
+                                                       onClick={() => openModal(index)}
+                                                       >
+                                                            <BsEyeFill className="text-white"/>
+                                                       </div>
+
                                                        <img
                                                             src={image.dataURL}
                                                             alt={`Preview-${index}`}
                                                             className="object-cover h-full w-full flex justify-center items-center rounded-lg"
-                                                            onClick={() => openModal(index)}
                                                        />
 
                                                        <div className="flex justify-center items-center">
