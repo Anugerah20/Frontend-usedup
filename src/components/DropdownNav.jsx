@@ -51,7 +51,7 @@ const DropdownNav = () => {
                     <Dropdown.Item>
                          <span className="text-sm py-1 text-gray-600 hover:bg-gray-50 flex items-center w-full text-left">
                               <FaHeart className='mr-2' />
-                              Favorit Saya
+                              <Link to={userData ? `favorite-product/${userData?.id}` : "/"}>favorit produk</Link>
                          </span>
                     </Dropdown.Item>
                     <Dropdown.Divider />
