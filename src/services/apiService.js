@@ -39,6 +39,7 @@ export const useApiGet = async (url) => {
   }
 };
 
+// Edit Data User
 export const useApiPut = async (url, data) => {
   try {
     const res = await apiService.put(url, data);
@@ -48,6 +49,16 @@ export const useApiPut = async (url, data) => {
     throw error;
   }
 };
+
+// Delete Api
+export const useApiDelete = async (url) => {
+  try {
+    const res = await apiService.delete(url);
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+}
 
 // User Logout
 export const userLogout = () => {

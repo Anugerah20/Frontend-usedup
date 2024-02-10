@@ -1,6 +1,5 @@
 import { Pagination } from "flowbite-react"
 import CardProduct from "../components/CardProduct"
-import { Link } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { current } from "@reduxjs/toolkit"
 import { useApiGet } from "../services/apiService"
@@ -46,6 +45,7 @@ export const Home = () => {
                         title={item.title}
                         price={item.price}
                         location={item.location}
+                        isLiked={item.likes.length === 0 ? false : true}
                     />
                 ))}
             </div>
