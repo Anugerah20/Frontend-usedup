@@ -4,10 +4,11 @@ import { Tabs, Tooltip } from 'flowbite-react'
 import { AiFillHeart, AiFillHome, AiFillWarning } from 'react-icons/ai'
 import { BiChevronRight } from 'react-icons/bi'
 import { HiBadgeCheck, HiLocationMarker } from 'react-icons/hi'
-import { Link, useParams } from 'react-router-dom'
+import { Link, redirect, useNavigate, useParams } from 'react-router-dom'
 import Profile from '../assets/profile-user.png'
-import { useApiGet } from '../services/apiService'
+import { useApiDelete, useApiGet, useApiPost } from '../services/apiService'
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { toast } from 'react-toastify';
 
 // Import Swiper styles
 import 'swiper/css';
@@ -21,11 +22,51 @@ export const DetailProduct = () => {
     let { id } = useParams();
     const [adverts, setAdverts] = useState([]);
     const [isNoTelpVisible, setIsNoTelpVisible] = useState(false);
+    const [isFavorite, setIsFavorite] = useState(false);
+    const [isLogin, setIsLogin] = useState(false);
+
+    const navigate = useNavigate();
+
+    // Check button isLogin into favorit produk
+    useEffect(() => {
+        const userId = localStorage.getItem('userId');
+        setIsLogin(!!userId);
+    }, [])
+
+    // Function add favorite Produk
+    const addFavoriteAdvert = async (advertId) => {
+        try {
+            if (!isLogin) {
+                return navigate('/login');
+            }
+
+            const userId = localStorage.getItem('userId');
+            // Get userId & AdvertId
+            if (isFavorite) {
+                await useApiDelete(`/likeAdvert/deleteLikeAdvert/${advertId}`)
+                setIsFavorite(false);
+                toast.error('Berhasil dihapus ke favorit');
+            } else {
+                await useApiPost('/likeAdvert/likeAdvert', { userId, advertId: id });
+                setIsFavorite(true);
+                toast.success('Berhasil ditambahkan ke favorit');
+            }
+
+        } catch (error) {
+            console.log('Error Add Favorite Advert: ', error);
+        }
+    }
 
     const getDetailAdvert = async () => {
         try {
             const response = await useApiGet(`/advert/getDetailAdvert/${id}`);
             setAdverts(response.data.detailAdvert)
+            if (response.data.detailAdvert.likes.length === 0) {
+                setIsFavorite(false)
+            } else {
+                setIsFavorite(true)
+            }
+
         } catch (error) {
             console.log(error);
         }
@@ -51,6 +92,8 @@ export const DetailProduct = () => {
         }
 
     };
+
+    console.log(adverts.likes)
 
     const handleMouseLeave = () => {
         setZoomStyle({ transform: 'scale(1)' });
@@ -164,9 +207,10 @@ export const DetailProduct = () => {
                         </button>
                     </div>
                 </div>
-                <button className="card w-full py-3 group flex items-center hover:bg-gray-50 active:bg-gray-100 justify-center transition">
-                    <AiFillHeart className='mr-2 group-hover:text-red-500 text-secondary transition' />
-                    Tambah ke Favorit
+                <button className="card w-full py-3 group flex items-center hover:bg-gray-50 active:bg-gray-100 justify-center transition" onClick={() => addFavoriteAdvert(adverts?.likes[0]?.id)}>
+                    <AiFillHeart className={`mr-2 ${isFavorite ? 'text-red-500' : 'text-secondary'} transition`}
+                    />
+                    {isFavorite ? 'Hapus favorit' : 'Tambah favorit'}
                 </button>
             </div>
         </div>
