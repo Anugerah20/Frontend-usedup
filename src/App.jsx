@@ -49,7 +49,7 @@ function App() {
           <Route element={<ProtectPath />}>
             <Route path="/edit-profile/:id" element={<EditProfile />} />
             <Route path="/pilih-kategori" element={<PageKategori />} />
-            <Route path="/favorite-product" element={<FavoriteProduct />} />
+            <Route path="/favorite-product/:id" element={<FavoriteProduct />} />
             <Route path="/my-advertisement" element={<MyAdvertisement />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/form-jual" element={<FormlMobilBekas />} />
