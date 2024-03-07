@@ -3,15 +3,17 @@ import { BiSolidUserCircle } from 'react-icons/bi';
 import { BsFillShareFill } from 'react-icons/bs';
 import { AiOutlineWarning } from 'react-icons/ai';
 import CardProduct from './CardProduct';
-import DataDummy from "../Data/DataDummy"
 import { useApiGet } from '../services/apiService';
 import { toast } from 'react-toastify';
+import { useParams } from 'react-router-dom';
 
 
 
 const ProfilePenjual = () => {
     const [data, setData] = useState({})
-    const userId = localStorage.getItem('userId')
+    // const userId = localStorage.getItem('userId')
+    const params = useParams()
+    const userId = params.id
 
     const getUser = async () => {
         try {

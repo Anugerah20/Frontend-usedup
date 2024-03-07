@@ -51,7 +51,7 @@ function App() {
             <Route path="/pilih-kategori" element={<PageKategori />} />
             <Route path="/favorite-product" element={<FavoriteProduct />} />
             <Route path="/my-advertisement" element={<MyAdvertisement />} />
-            <Route path="/profile" element={<Profile />} />
+            <Route path="/profile/:id" element={<Profile />} />
             <Route path="/form-jual" element={<FormlMobilBekas />} />
           </Route>
 
