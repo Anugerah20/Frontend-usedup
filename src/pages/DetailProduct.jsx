@@ -175,7 +175,7 @@ export const DetailProduct = () => {
                                     </div>
                                 </Tooltip>
                             </div>
-                            <Link className="underline text-blue-link">
+                            <Link to={`/profile/${adverts?.user?.id}`} className="underline text-blue-link">
                                 Lihat Profile
                             </Link>
                         </div>
