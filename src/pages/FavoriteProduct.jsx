@@ -1,13 +1,10 @@
 import { useState, useEffect, Fragment } from "react";
 import { useApiGet, useApiDelete } from "../services/apiService";
 import CardProduct from "../components/CardProduct";
-import { useNavigate } from "react-router-dom";
 import ImageNotFound from "../assets/not-found.svg";
 
 const FavoriteProduct = () => {
      const [favoriteProducts, setFavoriteProducts] = useState(null);
-
-     const navigate = useNavigate();
 
      const fetchFavoriteProducts = async () => {
           try {
@@ -34,7 +31,6 @@ const FavoriteProduct = () => {
                await useApiDelete(`/likeAdvert/deleteLikeAdvert/${advertId}`)
 
                fetchFavoriteProducts()
-
           } catch (error) {
                console.error('Error removing favorite product:', error);
           }
@@ -56,7 +52,7 @@ const FavoriteProduct = () => {
                                    <CardProduct
                                         id={item?.advert?.id}
                                         image={item?.advert?.image[0]}
-                                        name={item?.advert?.title}
+                                        title={item?.advert?.title}
                                         price={item?.advert?.price}
                                         location={item?.advert?.province.name} />
                                    <button hidden onClick={() => deleteFavoriteProduct(item?.id)}>Hapus</button>
