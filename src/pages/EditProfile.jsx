@@ -53,19 +53,24 @@ const EditProfile = () => {
                <h1 className="text-3xl font-bold mt-10 black-breadcrumb">Edit Profil</h1>
                <p className="text-md mt-1 mb-5 text-gray-breadcrumb-secondary">Dibawah ini merupakan informasi yang bisa diubah</p>
 
-               <form onSubmit={handleSubmit(onUpdate)} className="lg:w-1/2 md:w-1/2 sm:w-3/5">
-                    <label htmlFor="fullname">Nama lengkap</label>
-                    <input type="text" className="mt-2" name="fullname" id="fullname"
-                         {...register('fullname', {
-                              required: true
-                         })}
-                    />
+               <form onSubmit={handleSubmit(onUpdate)} className="space-y-4 w-full md:w-1/2">
+                    <div>
+                         <label htmlFor="fullname">Nama lengkap</label>
+                         <input type="text" className="mt-2" name="fullname" id="fullname"
+                              {...register('fullname', {
+                                   required: "Nama lengkap harus diisi"
+                              })}
+                         />
+                         {errors.fullname && (
+                              <span className="text-sm text-red-error">{errors.fullname.message}</span>
+                         )}
+                    </div>
 
                     <div>
                          <label htmlFor="no_telp">Nomor Telpon</label>
                          <input type="text" className="mt-2" name="no_telp" id="no_telp"
                               {...register('no_telp', {
-                                   required: "Phone number required"
+                                   required: "Nomor telpon harus diisi"
                               })}
                          />
                          {errors.no_telp && (
@@ -77,7 +82,7 @@ const EditProfile = () => {
                          <label htmlFor="bio" className="mb-2">Tentang saya</label>
                          <textarea name="bio" id="bio" className="mt-2"
                               {...register('bio', {
-                                   required: "About me must be filled"
+                                   required: "Tentang saya harus diisi"
                               })}
                          ></textarea>
                          {errors.bio && (
