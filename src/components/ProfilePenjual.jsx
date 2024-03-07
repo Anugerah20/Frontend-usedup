@@ -63,7 +63,7 @@ const ProfilePenjual = () => {
                 </div>
                 <div className='barang-penjualan'>
                     <p className='justify-start my-4 font-semibold'>
-                        Ada <span className='text-blue-link'>{data?.advert?.length}</span> item yang dijual sama <span className='text-blue-link'>Elon Musk</span>
+                        Ada <span className='text-blue-link'>{data?.advert?.length}</span> item yang dijual sama <span className='text-blue-link'>{data?.fullname}</span>
                     </p>
                     {data?.advert?.length === 0 ? 
                         <p className='text-center my-10 text-gray-500'>
@@ -76,7 +76,7 @@ const ProfilePenjual = () => {
                                 key={item.id}
                                 id={item.id}
                                 image={item.image[0]}
-                                name={item.title}
+                                title={item.title}
                                 price={item.price}
                                 location={item.province?.name}
                             />
