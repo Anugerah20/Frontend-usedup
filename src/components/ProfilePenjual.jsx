@@ -3,15 +3,17 @@ import { BiSolidUserCircle } from 'react-icons/bi';
 import { BsFillShareFill } from 'react-icons/bs';
 import { AiOutlineWarning } from 'react-icons/ai';
 import CardProduct from './CardProduct';
-import DataDummy from "../Data/DataDummy"
 import { useApiGet } from '../services/apiService';
 import { toast } from 'react-toastify';
+import { useParams } from 'react-router-dom';
 
 
 
 const ProfilePenjual = () => {
     const [data, setData] = useState({})
-    const userId = localStorage.getItem('userId')
+    // const userId = localStorage.getItem('userId')
+    const params = useParams()
+    const userId = params.id
 
     const getUser = async () => {
         try {
@@ -61,7 +63,7 @@ const ProfilePenjual = () => {
                 </div>
                 <div className='barang-penjualan'>
                     <p className='justify-start my-4 font-semibold'>
-                        Ada <span className='text-blue-link'>{data?.advert?.length}</span> item yang dijual sama <span className='text-blue-link'>Elon Musk</span>
+                        Ada <span className='text-blue-link'>{data?.advert?.length}</span> item yang dijual sama <span className='text-blue-link'>{data?.fullname}</span>
                     </p>
                     {data?.advert?.length === 0 ? 
                         <p className='text-center my-10 text-gray-500'>
@@ -74,7 +76,7 @@ const ProfilePenjual = () => {
                                 key={item.id}
                                 id={item.id}
                                 image={item.image[0]}
-                                name={item.title}
+                                title={item.title}
                                 price={item.price}
                                 location={item.province?.name}
                             />

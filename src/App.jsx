@@ -47,11 +47,11 @@ function App() {
 
           {/* protect route-route yang hanya bisa diakses ketika sudah login */}
           <Route element={<ProtectPath />}>
-            <Route path="/edit-profile/:id" element={<EditProfile />} />
+            <Route path="/edit-profile" element={<EditProfile />} />
             <Route path="/pilih-kategori" element={<PageKategori />} />
-            <Route path="/favorite-product" element={<FavoriteProduct />} />
-            <Route path="/my-advertisement" element={<MyAdvertisement />} />
-            <Route path="/profile" element={<Profile />} />
+            <Route path="/favorit" element={<FavoriteProduct />} />
+            <Route path="/iklan" element={<MyAdvertisement />} />
+            <Route path="/profile/:id" element={<Profile />} />
             <Route path="/form-jual" element={<FormlMobilBekas />} />
           </Route>
 
