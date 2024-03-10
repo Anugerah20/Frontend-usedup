@@ -6,6 +6,7 @@ import Categories from "./Categories"
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { updateSearchTerm } from "../features/liveSearchSlice";
+import { IoChatbox } from "react-icons/io5";
 
 const Navigation = () => {
      // Check Token User
@@ -77,6 +78,9 @@ const Navigation = () => {
                                              <Button outline color="dark" className="btn-nav">
                                                   Jual
                                              </Button>
+                                        </Link>
+                                        <Link to='/chats' >
+                                             <IoChatbox className="text-2xl" />
                                         </Link>
                                         {/* Dropdown Desktop */}
                                         <div className="sm:visible invisible">

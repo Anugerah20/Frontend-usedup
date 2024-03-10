@@ -18,6 +18,7 @@ import ForgotPassword from "./components/ForgotPassword";
 import ResetPassword from "./components/ResetPassword";
 import { AlreadyLogin, ProtectPath } from "./utils/ProtectRoute";
 import { ToastContainer } from "react-toastify";
+import Chat from "./pages/Chat";
 
 function App() {
   const pathname = useLocation().pathname;
@@ -53,6 +54,7 @@ function App() {
             <Route path="/iklan" element={<MyAdvertisement />} />
             <Route path="/profile/:id" element={<Profile />} />
             <Route path="/form-jual" element={<FormlMobilBekas />} />
+            <Route path="/chats" element={<Chat />} />
           </Route>
 
           {/* ketika sudah login maka tidak bisa akses route login dan register sebelum logout */}
