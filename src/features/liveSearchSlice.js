@@ -1,10 +1,9 @@
 // src/features/liveSearchSlice.js
 import { createSlice } from "@reduxjs/toolkit";
-import DataDummy from "../Data/DataDummy";
 
 const initialState = {
-  product: DataDummy,
-  searchTerm: "", 
+  product: [], 
+  searchTerm: "",
 };
 
 const productSlice = createSlice({
@@ -17,5 +16,5 @@ const productSlice = createSlice({
   },
 });
 
-export const { updateSearchTerm } = productSlice.actions;
+export const { updateSearchTerm, updateProductData } = productSlice.actions;
 export default productSlice.reducer;
