@@ -15,7 +15,7 @@ export const Home = () => {
             console.log(getData);
 
             setTotalPages(getData.data.totalPages);
-            setDataAdvert(getData.data.showAdvert);
+            setDataAdvert(getData.data.adverts);
 
         } catch (error) {
             console.log("Get data advert", error);
