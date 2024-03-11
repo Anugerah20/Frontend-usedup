@@ -3,16 +3,18 @@ import CardProduct from "../components/CardProduct"
 import { useSelector } from "react-redux"
 import { useState, useEffect } from "react"
 import { useApiGet } from "../services/apiService"
+import { useDebounce } from "@uidotdev/usehooks";
 
 const SearchProduct = () => {
      const [currentPage, setCurrentPage] = useState(1);
      const [totalPages, setTotalPages] = useState(1);
      const { searchTerm } = useSelector((store) => store.product);
      const [filterProduct, setFilterProduct] = useState([]);
+     const debouncedSearchTerm = useDebounce(searchTerm, 300);
 
      const getDataAdvert = async () => {
           try {
-               const getData = await useApiGet(`/advert/getAdvert?page=${currentPage}&pageSize=5&search=${searchTerm}`);
+               const getData = await useApiGet(`/advert/getAdvert?page=${currentPage}&pageSize=5&search=${debouncedSearchTerm}`);
                setFilterProduct(getData.data.adverts);
                console.log("data filter", filterProduct)
           } catch (error) {
@@ -24,12 +26,12 @@ const SearchProduct = () => {
           getDataAdvert()
 
           window.scrollTo(0, 0);
-     }, [currentPage, searchTerm])
+     }, [currentPage, debouncedSearchTerm])
 
      return (
           <div className="max-w-6xl mx-auto">
                <h2 className="font-bold text-primary text-xl md:text-2xl mb-4">
-                    KAMU MENCARI:<span className="text-blue-link ml-2">{searchTerm}</span>
+                    KAMU MENCARI:<span className="text-blue-link ml-2">{debouncedSearchTerm}</span>
                </h2>
                {/* Card */}
                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
