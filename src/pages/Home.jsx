@@ -1,7 +1,6 @@
 import { Pagination } from "flowbite-react"
 import CardProduct from "../components/CardProduct"
 import { useEffect, useState } from "react"
-import { current } from "@reduxjs/toolkit"
 import { useApiGet } from "../services/apiService"
 
 export const Home = () => {
