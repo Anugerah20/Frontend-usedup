@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useApiGet } from '../services/apiService';
+import { useApiGet, useApiDelete } from '../services/apiService';
 
 const MyAdvertisement = () => {
      const [dataAdvert, setDataAdvert] = useState([]);
      const userId = localStorage.getItem("userId");
 
+     // Menampilkan Iklan yang dibuat oleh user
      const getDataAdvert = async () => {
           try {
                const getData = await useApiGet(`/user/${userId}`);
@@ -15,9 +16,22 @@ const MyAdvertisement = () => {
           }
      }
 
+     console.log(dataAdvert)
+
      useEffect(() => {
           getDataAdvert();
      }, []);
+
+     // Menghapus Iklan yang dibuat oleh user
+     const deleteAdvert = async (id) => {
+          try {
+               await useApiDelete(`/advert/deleteAdvert/${id}`);
+               getDataAdvert();
+
+          } catch (error) {
+               console.log("Delete Data Advert", error);
+          }
+     }
 
      return (
           <div className="max-w-6xl mx-auto">
@@ -46,7 +60,7 @@ const MyAdvertisement = () => {
                               </div>
                          </div>
                          <div className="ml-12 md:ml-10 lg:ml-0 flex sm:justify-start md:justify-end lg:justify-end">
-                              <button className="flex justify-center items-center text-sm w-28 h-10 bg-red-500 hover:bg-red-600 text-white transition rounded">Hapus Iklan</button>
+                              <button onClick={() => deleteAdvert(item.id)} className="flex justify-center items-center text-sm w-28 h-10 bg-red-500 hover:bg-red-600 text-white transition rounded">Hapus Iklan</button>
                          </div>
                     </div>
                ))}
