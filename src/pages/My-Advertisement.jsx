@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useApiGet, useApiDelete } from '../services/apiService';
+import { toastSuccess } from '../services/toatsService';
 
 const MyAdvertisement = () => {
      const [dataAdvert, setDataAdvert] = useState([]);
@@ -27,6 +28,7 @@ const MyAdvertisement = () => {
           try {
                await useApiDelete(`/advert/deleteAdvert/${id}`);
                getDataAdvert();
+               toastSuccess("Iklan saya berhasil dihapus");
 
           } catch (error) {
                console.log("Delete Data Advert", error);
