@@ -2,9 +2,13 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useApiGet, useApiDelete } from '../services/apiService';
 import { toastSuccess } from '../services/toatsService';
+import { Button, Modal } from "flowbite-react";
+import { HiOutlineExclamationCircle } from "react-icons/hi";
 
 const MyAdvertisement = () => {
      const [dataAdvert, setDataAdvert] = useState([]);
+     const [openModal, setOpenModal] = useState(false);
+     const [deleteItemId, setDeleteItemId] = useState(null);
      const userId = localStorage.getItem("userId");
 
      // Menampilkan Iklan yang dibuat oleh user
@@ -23,12 +27,29 @@ const MyAdvertisement = () => {
           getDataAdvert();
      }, []);
 
+     // Fungsi untuk menampilkan modal konfirmasi hapus iklan
+     const openDeleteModal = (id) => {
+          setDeleteItemId(id)
+          setOpenModal(true);
+     }
+
+     // Fungsi untuk menutup modal konfirmasi hapus iklan
+     const closeDeleteModal = () => {
+          setOpenModal(false);
+     }
+
      // Menghapus Iklan yang dibuat oleh user
-     const deleteAdvert = async (id) => {
+     const deleteAdvert = async () => {
           try {
-               await useApiDelete(`/advert/deleteAdvert/${id}`);
-               getDataAdvert();
-               toastSuccess("Iklan saya berhasil dihapus");
+               if (deleteItemId) {
+                    await useApiDelete(`/advert/deleteAdvert/${deleteItemId}`);
+                    getDataAdvert();
+                    toastSuccess("Iklan saya berhasil dihapus");
+                    closeDeleteModal();
+                    setDeleteItemId(null);
+               } else {
+                    console.log("ID iklan tidak valid");
+               }
 
           } catch (error) {
                console.log("Delete Data Advert", error);
@@ -62,10 +83,30 @@ const MyAdvertisement = () => {
                               </div>
                          </div>
                          <div className="ml-12 md:ml-10 lg:ml-0 flex sm:justify-start md:justify-end lg:justify-end">
-                              <button onClick={() => deleteAdvert(item.id)} className="flex justify-center items-center text-sm w-28 h-10 bg-red-500 hover:bg-red-600 text-white transition rounded">Hapus Iklan</button>
+                              <button onClick={() => openDeleteModal(item.id)} className="flex justify-center items-center text-sm w-28 h-10 bg-red-500 hover:bg-red-600 text-white transition rounded">Hapus Iklan</button>
                          </div>
                     </div>
                ))}
+
+               {/* Modal Konfirmasi Hapus Iklan */}
+               <Modal show={openModal} size="md" className="my-2" onClose={closeDeleteModal} popup>
+                    <Modal.Body>
+                         <div className="text-center">
+                              <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
+                              <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+                                   Apakah anda yakin mau menghapus iklan ini?
+                              </h3>
+                              <div className="flex justify-center gap-4">
+                                   <Button color="failure" onClick={deleteAdvert}>
+                                        Iya, hapus iklan
+                                   </Button>
+                                   <Button color="gray" onClick={closeDeleteModal}>
+                                        Batal
+                                   </Button>
+                              </div>
+                         </div>
+                    </Modal.Body>
+               </Modal>
           </div>
      )
 }
