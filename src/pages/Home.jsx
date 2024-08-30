@@ -1,22 +1,25 @@
 import { Pagination } from "flowbite-react"
 import CardProduct from "../components/CardProduct"
-import { useEffect, useState } from "react"
+import { Fragment, useEffect, useState } from "react"
 import { useApiGet } from "../services/apiService"
+import CardSkeleton from "../components/CardSkeleton"
 
 export const Home = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [dataAdvert, setDataAdvert] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     const getDataAdvert = async () => {
         try {
+            setLoading(true);
             const getData = await useApiGet(`/advert/getAdvert?page=${currentPage}&pageSize=5`);
-            console.log(getData);
 
             setTotalPages(getData.data.totalPages);
             setDataAdvert(getData.data.adverts);
-
+            setLoading(false);
         } catch (error) {
+            setLoading(false);
             console.log("Get data advert", error);
         }
     }
@@ -35,19 +38,23 @@ export const Home = () => {
                 Jangan sampai keduluan
             </h2>
             {/* Card */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {dataAdvert.map((item) => (
-                    <CardProduct
-                        key={item.id}
-                        image={item.image[0]}
-                        id={item.id}
-                        title={item.title}
-                        price={item.price}
-                        location={item.location}
-                        isLiked={item.likes.length === 0 ? false : true}
-                    />
-                ))}
-            </div>
+            {loading ? (
+                <CardSkeleton />
+            ) :
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    {dataAdvert.map((item) => (
+                        <CardProduct
+                            key={item.id}
+                            image={item.image[0]}
+                            id={item.id}
+                            title={item.title}
+                            price={item.price}
+                            location={item.location}
+                            isLiked={item.likes.length === 0 ? false : true}
+                        />
+                    ))}
+                </div>
+            }
 
             <div className="flex justify-center items-center my-5">
                 <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={onPageChange} showIcons />
