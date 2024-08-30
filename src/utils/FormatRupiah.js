@@ -1,5 +1,6 @@
 // Define a function to format amount into IDR currency
 export const formatToIDR = (amount) => {
+  amount = Number(amount);
   // Ensure amount is a number
   if (typeof amount !== 'number') {
     return 'Invalid amount';
