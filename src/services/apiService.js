@@ -7,10 +7,10 @@ import axios from "axios";
 const dev = "http://localhost:3000/api";
 
 // prod
-const prod = "https://api-usedup.cyclic.app/api";
+const prod = "https://api-usedup-production.up.railway.app/api";
 
 const apiService = axios.create({
-  baseURL: dev,
+  baseURL: prod,
   headers: {
     "Content-Type": "application/json",
     Authorization: `Bearer ${localStorage.getItem("useToken")}`,
