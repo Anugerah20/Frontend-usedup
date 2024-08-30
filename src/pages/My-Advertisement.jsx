@@ -41,14 +41,19 @@ const MyAdvertisement = () => {
      // Menghapus Iklan yang dibuat oleh user
      const deleteAdvert = async () => {
           try {
-               if (deleteItemId) {
-                    await useApiDelete(`/advert/deleteAdvert/${deleteItemId}`);
+               const res = await useApiDelete(`/advert/deleteAdvert/${deleteItemId}`);
+
+               console.log(res)
+
+               if (res.status === 'success') {
                     getDataAdvert();
-                    toastSuccess("Iklan saya berhasil dihapus");
+                    toastSuccess("Iklan berhasil dihapus");
                     closeDeleteModal();
                     setDeleteItemId(null);
                } else {
-                    console.log("ID iklan tidak valid");
+                    console.log("Something went wrong");
+                    closeDeleteModal();
+                    setDeleteItemId(null);
                }
 
           } catch (error) {
@@ -75,7 +80,7 @@ const MyAdvertisement = () => {
                          <div className="ml-12 md:ml-5 lg:ml-0">
                               <h5 className="text-primary text-xl font-bold">{item.title}</h5>
                               <p className="text-sm mt-2 text-gray-breadcrumb">
-                                   {item.id}
+                                   ID Iklan : {item.id}
                               </p>
                               <div className="flex flex-wrap my-5 gap-4">
                                    <Link to={`/detail/${item.id}`} className="text-md text-blue-link underline">Lihat Iklan</Link>
