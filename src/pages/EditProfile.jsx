@@ -33,8 +33,8 @@ const EditProfile = () => {
      const onUpdate = async (data) => {
           try {
                const res = await useApiPut(`/user/edit-profile/${userId}`, data)
-               console.log(res);
                toastSuccess(`sukses ${res.data.message}`)
+               window.location.reload()
           } catch (error) {
                toastError('gagal')
                console.log(error);

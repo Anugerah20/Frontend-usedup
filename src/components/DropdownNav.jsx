@@ -7,6 +7,7 @@ import { useApiGet, userLogout } from "../services/apiService";
 import { Link } from "react-router-dom";
 const DropdownNav = () => {
      const [userData, setUserData] = useState(null);
+     const [isComplete, setIsComplete] = useState(false);
      // Get Data User
      useEffect(() => {
           const fetchUser = async () => {
@@ -14,12 +15,19 @@ const DropdownNav = () => {
                     const userId = localStorage.getItem("userId");
                     const res = await useApiGet(`/user/${userId}`);
                     setUserData(res.data);
+                    if (res.data.fullname !== null && res.data.no_telp !== null && res.data.bio !== null) {
+                         setIsComplete(true);
+                    } else {
+                         setIsComplete(false);
+                    }
                } catch (error) {
                     console.log(error);
                }
           }
           fetchUser();
      }, []);
+
+     console.log(isComplete)
 
      return (
           <div className="flex">
@@ -30,7 +38,7 @@ const DropdownNav = () => {
                     label={<Avatar alt="user" img={ProfileUser} />}
                >
                     <Dropdown.Header>
-                         <div className="bg-red-200 text-red-500 p-3 font-normal rounded-md">Lengkapi profil di edit profil</div>
+                         <div className={`bg-red-200 text-red-500 p-3 font-normal rounded-md ${isComplete ? 'hidden' : 'visible'}`}>Lengkapi profil di edit profil</div>
                          <div className="flex items-center my-2 space-x-2">
                               <img src={ProfileUser} alt="Profile User" className="w-12 h-12 rounded-full" />
                               <span className="text-sm text-primary mt-2 ml-2">
