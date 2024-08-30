@@ -89,10 +89,10 @@ const MyAdvertisement = () => {
                ))}
 
                {/* Modal Konfirmasi Hapus Iklan */}
-               <Modal show={openModal} size="md" className="my-2" onClose={closeDeleteModal} popup>
+               <Modal show={openModal} size="md" onClose={closeDeleteModal} popup>
                     <Modal.Body>
                          <div className="text-center">
-                              <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
+                              <HiOutlineExclamationCircle className="mx-auto my-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
                               <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
                                    Apakah anda yakin mau menghapus iklan ini?
                               </h3>
