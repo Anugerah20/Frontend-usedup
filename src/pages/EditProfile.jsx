@@ -4,6 +4,8 @@ import { useEffect } from "react";
 import { useApiGet, useApiPut } from "../services/apiService";
 import { useForm } from "react-hook-form";
 import { toastError, toastSuccess } from "../services/toatsService";
+import { HiInformationCircle } from "react-icons/hi";
+import { Alert } from "flowbite-react";
 
 const EditProfile = () => {
      const {
@@ -54,6 +56,12 @@ const EditProfile = () => {
                <p className="text-md mt-1 mb-5 text-gray-breadcrumb-secondary">Dibawah ini merupakan informasi yang bisa diubah</p>
 
                <form onSubmit={handleSubmit(onUpdate)} className="space-y-4 w-full md:w-1/2">
+                    <Alert color="failure" icon={HiInformationCircle} >
+                         <p>
+                              Akun anda belum terverifikasi.
+                         </p>
+                         <button className="font-semibold underline">Verifikasi sekarang.</button>
+                    </Alert>
                     <div>
                          <label htmlFor="fullname">Nama lengkap</label>
                          <input type="text" className="mt-2" name="fullname" id="fullname"
