@@ -19,6 +19,7 @@ import ResetPassword from "./components/ResetPassword";
 import { AlreadyLogin, ProtectPath } from "./utils/ProtectRoute";
 import { ToastContainer } from "react-toastify";
 import Chat from "./pages/Chat";
+import PageCategory from "./pages/PageCategory";
 
 function App() {
   const pathname = useLocation().pathname;
@@ -63,6 +64,7 @@ function App() {
             <Route path="/register" element={<RegisterCard />} />
           </Route>
 
+          <Route path="/kategori/:id" element={<PageCategory />} />
           <Route path="/detail/:id" element={<DetailProduct />} />
           <Route path="/search-product" element={<SearchProduct />} />
           <Route path="*" element={<NotFound />} />

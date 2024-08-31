@@ -24,11 +24,11 @@ const Categories = () => {
         <div className="categories shadow-sm">
             <div className="group-categories ">
                 <ul className="flex gap-4 text-sm sm:pl-0 pl-4 text-primary">
-                {categories.map((category) => 
-                    <li key={category.id} className="mb-5 mr-0 hover:underline">
-                    <Link to={`${category.id}`}>{category.name}</Link>
-                    </li>
-                )}
+                    {categories.map((category) =>
+                        <li key={category.id} className="mb-5 mr-0 hover:underline">
+                            <Link to={`kategori/${category.id}`}>{category.name}</Link>
+                        </li>
+                    )}
                 </ul>
             </div>
         </div>
