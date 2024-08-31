@@ -20,6 +20,7 @@ import { AlreadyLogin, ProtectPath } from "./utils/ProtectRoute";
 import { ToastContainer } from "react-toastify";
 import Chat from "./pages/Chat";
 import PageCategory from "./pages/PageCategory";
+import SuksesVerif from "./pages/profile-page/SuksesVerif";
 
 function App() {
   const pathname = useLocation().pathname;
@@ -56,6 +57,7 @@ function App() {
             <Route path="/profile/:id" element={<Profile />} />
             <Route path="/form-jual" element={<FormlMobilBekas />} />
             <Route path="/chats" element={<Chat />} />
+            <Route path="/verifikasi/:token" element={<SuksesVerif />} />
           </Route>
 
           {/* ketika sudah login maka tidak bisa akses route login dan register sebelum logout */}
