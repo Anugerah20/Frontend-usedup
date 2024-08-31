@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { BiChevronRight } from "react-icons/bi"
-import { useEffect } from "react";
-import { useApiGet, useApiPut } from "../services/apiService";
+import { useEffect, useState } from "react";
+import { useApiGet, useApiPost, useApiPut } from "../services/apiService";
 import { useForm } from "react-hook-form";
 import { toastError, toastSuccess } from "../services/toatsService";
 import { HiInformationCircle } from "react-icons/hi";
@@ -14,6 +14,7 @@ const EditProfile = () => {
           setValue,
           formState: { errors },
      } = useForm();
+     const [isVerified, setIsVerified] = useState(false)
 
      const userId = localStorage.getItem("userId");
 
@@ -23,6 +24,7 @@ const EditProfile = () => {
                setValue('fullname', res.data.fullname)
                setValue('no_telp', res.data.no_telp)
                setValue('bio', res.data.bio)
+               setIsVerified(res.data.isVerified)
           } catch (error) {
                console.log(error);
           }
@@ -43,6 +45,18 @@ const EditProfile = () => {
           }
      }
 
+     const handleVerifAccount = async (e) => {
+          e.preventDefault();
+          try {
+               const userId = localStorage.getItem('userId');
+               const res = await useApiPost(`/user/verifAccount`, { id: userId })
+               toastSuccess(`email verifikasi sukses dikirim`)
+          } catch (error) {
+               toastError('email verifikasi gagal dikirim')
+               console.log(error);
+          }
+     }
+
      return (
           <div className="my-14 mx-10">
 
@@ -56,12 +70,14 @@ const EditProfile = () => {
                <p className="text-md mt-1 mb-5 text-gray-breadcrumb-secondary">Dibawah ini merupakan informasi yang bisa diubah</p>
 
                <form onSubmit={handleSubmit(onUpdate)} className="space-y-4 w-full md:w-1/2">
-                    <Alert color="failure" icon={HiInformationCircle} >
-                         <p>
-                              Akun anda belum terverifikasi.
-                         </p>
-                         <button className="font-semibold underline">Verifikasi sekarang.</button>
-                    </Alert>
+                    {isVerified === false &&
+                         <Alert color="failure" icon={HiInformationCircle} >
+                              <p>
+                                   Akun anda belum terverifikasi.
+                              </p>
+                              <button onClick={handleVerifAccount} className="font-semibold underline">Verifikasi sekarang.</button>
+                         </Alert>
+                    }
                     <div>
                          <label htmlFor="fullname">Nama lengkap</label>
                          <input type="text" className="mt-2" name="fullname" id="fullname"
