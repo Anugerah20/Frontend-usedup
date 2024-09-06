@@ -31,8 +31,11 @@ const LoginCard = () => {
         localStorage.setItem("userId", response.data.checkUser.id);
         toastSuccess("Login Successful");
 
+        const redirectUrl = localStorage.getItem('redirectAfterLogin') || '/';
+
         setTimeout(() => {
-          window.location.href = '/';
+          window.location.href = redirectUrl;
+          localStorage.removeItem('redirectAfterLogin');
         }, 1000);
         reset();
       }
