@@ -20,6 +20,8 @@ export default {
         'btn-grey': '#A4A4A4',
         'shadow': '#ECECEC',
         'btn-search': '#EFEFEF',
+        'check-green': '#32CD32',
+        'check-red': '#FF0000',
       }
     },
   },

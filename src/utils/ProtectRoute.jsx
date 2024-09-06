@@ -1,5 +1,5 @@
 import React from 'react'
-import { Navigate, Outlet } from 'react-router-dom'
+import { Navigate, Outlet, useLocation } from 'react-router-dom'
 
 const user = localStorage.getItem('useToken');
 
@@ -11,8 +11,10 @@ export const AlreadyLogin = () => {
 };
 
 export const ProtectPath = () => {
+    const location = useLocation();
     if (!user) {
-        return <Navigate to='/login' />
+        localStorage.setItem('redirectAfterLogin', location.pathname);
+        return <Navigate to='/login' />;
     }
     return <Outlet />
 }
