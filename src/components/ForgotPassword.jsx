@@ -10,6 +10,7 @@ const ForgotPassword = () => {
      const [loading, setLoading] = useState(false)
      const [isSuccess, setIsSuccess] = useState(false)
      const [isError, setIsError] = useState(false)
+     const [errorMsg, setErrorMsg] = useState('')
 
      const {
           register,
@@ -34,7 +35,14 @@ const ForgotPassword = () => {
                console.log(error)
                if (error.response.status === 400) {
                     setIsError(true)
+                    setErrorMsg("Email yang kamu masukkan tidak terdaftar.")
                }
+
+               if (error.response.status === 500) {
+                    setIsError(true)
+                    setErrorMsg("Lu login pake gmail kocak")
+               }
+
 
                setLoading(false)
           }
@@ -71,7 +79,7 @@ const ForgotPassword = () => {
                                    >
                                         <span>
                                              <p>
-                                                  Email yang kamu masukkan tidak terdaftar.
+                                                  {errorMsg}
                                              </p>
                                         </span>
                                    </Alert>
