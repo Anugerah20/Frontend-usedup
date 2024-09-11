@@ -11,12 +11,14 @@ import { Spinner } from "flowbite-react"
 import { useApiGet, useApiPost } from "../../services/apiService"
 import { BsEyeFill } from "react-icons/bs"
 
+import Map from "../../map/Map";
+
 const FormUsedCars = () => {
      const {
           register,
           handleSubmit,
           formState: { errors },
-          reset,
+          reset
      } = useForm()
 
      const [images, setImages] = useState([])
@@ -54,6 +56,7 @@ const FormUsedCars = () => {
           fetchProvince()
      }, [])
 
+
      /* Buat ENV */
      const uploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET
      const apiKey = import.meta.env.VITE_CLOUDINARY_API_KEY
@@ -90,6 +93,9 @@ const FormUsedCars = () => {
      const submitForm = async (data) => {
           try {
 
+
+               setLoading(true)
+
                const dataForm = {
                     title: data.title,
                     description: data.description,
@@ -97,7 +103,8 @@ const FormUsedCars = () => {
                     categoryId: data.category,
                     image: urlImageUploaded,
                     userId,
-                    provinceId: data.provinsi
+                    provinceId: data.provinsi,
+                    // location
                }
 
                await useApiPost('/advert/advert', dataForm);
@@ -129,6 +136,7 @@ const FormUsedCars = () => {
                     photos: uploadedImage,
                })
                setLoading(false)
+
           } catch (error) {
                console.error(error);
                toastError('Iklan gagal dibuat!')
@@ -257,8 +265,30 @@ const FormUsedCars = () => {
                          <hr className="w-[260px] mt-5" />
                     </div>
 
+
+
                     <div className="w-1/2">
-                         <div className="mb-2 sm:mx-8 md:mx-8 lg:mx-8">
+
+                         <div className="mb-2 mt-4 sm:mx-8 md:mx-8 lg:mx-8">
+                              {/* <label htmlFor="location" className="font-bold">
+                                   Pilih Lokasi *
+                              </label> */}
+
+                              <Map />
+
+                              {/* <input
+                                   type="hidden"
+                                   id="location"
+                                   className="mt-2"
+                                   disabled={loading}
+                                   {...register("location", { required: true })}
+                              />
+                              {errors.location && errors.location.type === "required" && (
+                                   <span className="text-sm text-red-error">location required</span>
+                              )} */}
+                         </div>
+
+                         <div className="mb-2 mt-4 sm:mx-8 md:mx-8 lg:mx-8">
                               <label htmlFor="foto" className="font-bold">
                                    UNGGAH FOTO
                               </label><br />
@@ -276,11 +306,11 @@ const FormUsedCars = () => {
                                                        key={index}
                                                        className="relative cursor-pointer rounded-lg group transition"
                                                   >
-                                                       <div 
-                                                       className="absolute invisible group-hover:visible bg-black/20 w-full h-full rounded-lg flex justify-center items-center"
-                                                       onClick={() => openModal(index)}
+                                                       <div
+                                                            className="absolute invisible group-hover:visible bg-black/20 w-full h-full rounded-lg flex justify-center items-center"
+                                                            onClick={() => openModal(index)}
                                                        >
-                                                            <BsEyeFill className="text-white"/>
+                                                            <BsEyeFill className="text-white" />
                                                        </div>
 
                                                        <img
