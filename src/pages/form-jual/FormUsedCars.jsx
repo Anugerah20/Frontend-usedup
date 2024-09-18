@@ -266,15 +266,39 @@ const FormUsedCars = () => {
                     </div>
 
 
-
                     <div className="w-1/2">
+                         <div className="mb-2 sm:mx-8 md:mx-8 lg:mx-8">
+                              <label htmlFor="detailAddress" className="font-bold">
+                                   Alamat Lengkap *
+                              </label>
+                              <textarea
+                                   id="detailAddress"
+                                   cols="0"
+                                   rows="4"
+                                   className="mt-2"
+                                   disabled={loading}
+                                   {...register("address", { required: true, minLength: 30 })}
+                              ></textarea>
+                              {errors.address && errors.address.type === "required" && (
+                                   <span className="text-sm text-red-error">
+                                        Address required
+                                   </span>
+                              )}
+                              {errors.address && errors.address.type === "minLength" && (
+                                   <span className="text-sm text-red-error">
+                                        Address min 30 characters
+                                   </span>
+                              )}
+                         </div>
 
-                         <div className="mb-2 mt-4 sm:mx-8 md:mx-8 lg:mx-8">
-                              {/* <label htmlFor="location" className="font-bold">
-                                   Pilih Lokasi *
-                              </label> */}
 
-                              <Map />
+                         <div className="mb-2 sm:mx-8 md:mx-8 lg:mx-8">
+                              <label htmlFor="location" className="font-bold">
+                                   Pilih Lokasi
+                              </label>
+                              <div className="mt-2">
+                                   <Map />
+                              </div>
 
                               {/* <input
                                    type="hidden"
