@@ -21,6 +21,7 @@ import { ToastContainer } from "react-toastify";
 import Chat from "./pages/Chat";
 import PageCategory from "./pages/PageCategory";
 import SuksesVerif from "./pages/profile-page/SuksesVerif";
+import { Fragment } from "react";
 
 function App() {
   const pathname = useLocation().pathname;
@@ -31,49 +32,51 @@ function App() {
   const isUrlContainSlash = regex.test(pathname);
 
   return (
-    <>
+    <Fragment>
       <ToastContainer />
-      <Navigation />
+      <div className="flex flex-col h-screen justify-between">
+        <Navigation />
 
-      {/* Tampilkan banner hanya di halaman utama */}
-      <img
-        src={Banner}
-        alt="banner"
-        className={`${isUrlContainSlash ? "md:block hidden " : "hidden"}`}
-      />
+          <img
+            src={Banner}
+            alt="banner"
+            className={`${isUrlContainSlash ? "md:block hidden " : "hidden"}`}
+          />
 
-      <div className="App px-4 sm:my-10 my-5">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/reset-password" element={<ResetPassword />} />
+        <div className="App px-4 sm:my-10 my-5 grow">
+          {/* Tampilkan banner hanya di halaman utama */}
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
 
-          {/* protect route-route yang hanya bisa diakses ketika sudah login */}
-          <Route element={<ProtectPath />}>
-            <Route path="/edit-profile" element={<EditProfile />} />
-            <Route path="/pilih-kategori" element={<PageKategori />} />
-            <Route path="/favorit" element={<FavoriteProduct />} />
-            <Route path="/iklan" element={<MyAdvertisement />} />
-            <Route path="/profile/:id" element={<Profile />} />
-            <Route path="/form-jual" element={<FormlMobilBekas />} />
-            <Route path="/chats" element={<Chat />} />
-            <Route path="/verifikasi/:token" element={<SuksesVerif />} />
-          </Route>
+            {/* protect route-route yang hanya bisa diakses ketika sudah login */}
+            <Route element={<ProtectPath />}>
+              <Route path="/edit-profile" element={<EditProfile />} />
+              <Route path="/pilih-kategori" element={<PageKategori />} />
+              <Route path="/favorit" element={<FavoriteProduct />} />
+              <Route path="/iklan" element={<MyAdvertisement />} />
+              <Route path="/profile/:id" element={<Profile />} />
+              <Route path="/form-jual" element={<FormlMobilBekas />} />
+              <Route path="/chats" element={<Chat />} />
+              <Route path="/verifikasi/:token" element={<SuksesVerif />} />
+            </Route>
 
-          {/* ketika sudah login maka tidak bisa akses route login dan register sebelum logout */}
-          <Route element={<AlreadyLogin />}>
-            <Route path="/login" element={<LoginCard />} />
-            <Route path="/register" element={<RegisterCard />} />
-          </Route>
+            {/* ketika sudah login maka tidak bisa akses route login dan register sebelum logout */}
+            <Route element={<AlreadyLogin />}>
+              <Route path="/login" element={<LoginCard />} />
+              <Route path="/register" element={<RegisterCard />} />
+            </Route>
 
-          <Route path="/kategori/:id" element={<PageCategory />} />
-          <Route path="/detail/:id" element={<DetailProduct />} />
-          <Route path="/search-product" element={<SearchProduct />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+            <Route path="/kategori/:id" element={<PageCategory />} />
+            <Route path="/detail/:id" element={<DetailProduct />} />
+            <Route path="/search-product" element={<SearchProduct />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </div>
+        <FooterComponent />
       </div>
-      <FooterComponent />
-    </>
+    </Fragment>
   );
 }
 

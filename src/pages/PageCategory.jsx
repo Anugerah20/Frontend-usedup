@@ -37,7 +37,7 @@ const PageCategory = () => {
   }, [id])
 
   return (
-    <div>
+    <div className="max-w-6xl mx-auto">
       {loading ?
         <div className="h-6 w-60 mb-4 animate-pulse rounded-lg bg-gray-200"></div>
         :
