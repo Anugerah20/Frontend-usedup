@@ -308,22 +308,11 @@ const FormUsedCars = () => {
 
                          <div className="mb-2 sm:mx-8 md:mx-8 lg:mx-8">
                               <label htmlFor="location" className="font-bold">
-                                   Pilih Lokasi
+                                   Lokasi Anda
                               </label>
                               <div className="mt-2">
                                    <Map onLocationChange={handleLocationChange} />
                               </div>
-
-                              {/* <input
-                                   type="hidden"
-                                   id="location"
-                                   className="mt-2"
-                                   disabled={loading}
-                                   {...register("location", { required: true })}
-                              />
-                              {errors.location && errors.location.type === "required" && (
-                                   <span className="text-sm text-red-error">location required</span>
-                              )} */}
                          </div>
 
                          <div className="mb-2 mt-4 sm:mx-8 md:mx-8 lg:mx-8">
