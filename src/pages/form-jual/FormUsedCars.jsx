@@ -27,11 +27,18 @@ const FormUsedCars = () => {
      const [categories, setCategories] = useState([])
      const [provinces, setProvinces] = useState([])
      const [loading, setLoading] = useState(false)
+     const [location, setLocation] = useState({ latitude: '', longitude: '' })
      const maxNumber = 6
+
 
      let urlImageUploaded = []
 
      const userId = localStorage.getItem('userId')
+
+     // Function update location & get latitude and longitude
+     const handleLocationChange = (lat, lng) => {
+          setLocation({ latitude: lat, longitude: lng });
+     }
 
      const fetchCategory = async () => {
           try {
@@ -93,7 +100,6 @@ const FormUsedCars = () => {
      const submitForm = async (data) => {
           try {
 
-
                setLoading(true)
 
                const dataForm = {
@@ -104,8 +110,12 @@ const FormUsedCars = () => {
                     image: urlImageUploaded,
                     userId,
                     provinceId: data.provinsi,
-                    // location
+                    address: data.address,
+                    longitude: location.longitude,
+                    latitude: location.latitude
                }
+
+               console.log('dataForm:', dataForm);
 
                await useApiPost('/advert/advert', dataForm);
 
@@ -116,6 +126,8 @@ const FormUsedCars = () => {
           } catch (error) {
                console.error(error);
                toastError('Iklan gagal dibuat!')
+          } finally {
+               setLoading(false)
           }
      }
 
@@ -140,6 +152,8 @@ const FormUsedCars = () => {
           } catch (error) {
                console.error(error);
                toastError('Iklan gagal dibuat!')
+               setLoading(false)
+          } finally {
                setLoading(false)
           }
      };
@@ -297,7 +311,7 @@ const FormUsedCars = () => {
                                    Pilih Lokasi
                               </label>
                               <div className="mt-2">
-                                   <Map />
+                                   <Map onLocationChange={handleLocationChange} />
                               </div>
 
                               {/* <input
