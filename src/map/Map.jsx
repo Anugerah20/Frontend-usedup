@@ -127,7 +127,7 @@ const Map = ({ onLocationChange }) => {
                {/* Menampilkan detail alamat user */}
                {address && (
                     <div className="mt-4">
-                         <h4 className="font-bold">Detail Lokasi:</h4>
+                         <h4 className="font-bold">Detail Lokasi</h4>
                          <p>{address}</p>
                     </div>
                )}
