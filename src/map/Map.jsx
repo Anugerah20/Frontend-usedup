@@ -5,7 +5,7 @@ import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 
-const Map = () => {
+const Map = ({ onLocationChange }) => {
      const mapContainerRef = useRef(null);
      const mapRef = useRef(null);
      const markerRef = useRef(null);
@@ -63,6 +63,9 @@ const Map = () => {
                          // detail alamat user
                          const address = await fetchAddress(longitude, latitude);
                          setAddress(address);
+
+                         // Kirim latitude dan longitude ke parent component
+                         onLocationChange(latitude, longitude);
                     }, (error) => {
                          console.error('Error getting user location:', error);
                     });
@@ -101,7 +104,13 @@ const Map = () => {
                // Ambil detail alamat
                const address = await fetchAddress(lng, lat);
                setAddress(address);
+               // setCurrentLocation([lng, lat]);
+
+               // Kirim latitude dan longitude ke parent component
+               onLocationChange(lat, lng);
           });
+
+          console.log(currentLocation)
 
           // Cleanup saat komponen dibongkar
           return () => {
