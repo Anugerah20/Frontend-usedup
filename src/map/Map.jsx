@@ -131,20 +131,6 @@ const Map = ({ onLocationChange }) => {
                          <p>{address}</p>
                     </div>
                )}
-
-
-               {/*
-                    EDITOR: NABIL
-                    DESCRIPTION: melihat longitude dan latitude user, boleh dihapus karena cuma untuk debugging
-               */}
-
-               {/* {currentLocation && (
-                    <div className="mt-4">
-                         <h4 className="font-bold">Lokasi Saat Ini:</h4>
-                         <p>Longitude: {currentLocation[0]}</p>
-                         <p>Latitude: {currentLocation[1]}</p>
-                    </div>
-               )} */}
           </div>
      );
 };
