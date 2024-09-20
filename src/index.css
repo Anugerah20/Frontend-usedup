@@ -107,3 +107,16 @@ textarea, select {
 .google-btn {
      @apply w-full p-1 my-6 flex justify-center !shadow-none !border !border-gray-300 !font-semibold !text-black
 }
+
+/* Custom styling for the Mapbox Geocoder search input */
+.mapboxgl-ctrl-geocoder--input {
+  @apply !pl-[30px]
+}
+
+.mapboxgl-ctrl-geocoder {
+ @apply !w-full !max-w-none
+}
+
+.mapboxgl-ctrl-geocoder--suggestions {
+  @apply z-10
+}

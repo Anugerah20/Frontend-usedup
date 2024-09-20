@@ -11,12 +11,14 @@ import { Spinner } from "flowbite-react"
 import { useApiGet, useApiPost } from "../../services/apiService"
 import { BsEyeFill } from "react-icons/bs"
 
+import Map from "../../map/Map";
+
 const FormUsedCars = () => {
      const {
           register,
           handleSubmit,
           formState: { errors },
-          reset,
+          reset
      } = useForm()
 
      const [images, setImages] = useState([])
@@ -25,11 +27,18 @@ const FormUsedCars = () => {
      const [categories, setCategories] = useState([])
      const [provinces, setProvinces] = useState([])
      const [loading, setLoading] = useState(false)
+     const [location, setLocation] = useState({ latitude: '', longitude: '' })
      const maxNumber = 6
+
 
      let urlImageUploaded = []
 
      const userId = localStorage.getItem('userId')
+
+     // Function update location & get latitude and longitude
+     const handleLocationChange = (lat, lng) => {
+          setLocation({ latitude: lat, longitude: lng });
+     }
 
      const fetchCategory = async () => {
           try {
@@ -53,6 +62,7 @@ const FormUsedCars = () => {
           fetchCategory()
           fetchProvince()
      }, [])
+
 
      /* Buat ENV */
      const uploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET
@@ -90,6 +100,8 @@ const FormUsedCars = () => {
      const submitForm = async (data) => {
           try {
 
+               setLoading(true)
+
                const dataForm = {
                     title: data.title,
                     description: data.description,
@@ -97,8 +109,13 @@ const FormUsedCars = () => {
                     categoryId: data.category,
                     image: urlImageUploaded,
                     userId,
-                    provinceId: data.provinsi
+                    provinceId: data.provinsi,
+                    address: data.address,
+                    longitude: location.longitude,
+                    latitude: location.latitude
                }
+
+               console.log('dataForm:', dataForm);
 
                await useApiPost('/advert/advert', dataForm);
 
@@ -109,6 +126,8 @@ const FormUsedCars = () => {
           } catch (error) {
                console.error(error);
                toastError('Iklan gagal dibuat!')
+          } finally {
+               setLoading(false)
           }
      }
 
@@ -129,9 +148,12 @@ const FormUsedCars = () => {
                     photos: uploadedImage,
                })
                setLoading(false)
+
           } catch (error) {
                console.error(error);
                toastError('Iklan gagal dibuat!')
+               setLoading(false)
+          } finally {
                setLoading(false)
           }
      };
@@ -257,8 +279,43 @@ const FormUsedCars = () => {
                          <hr className="w-[260px] mt-5" />
                     </div>
 
+
                     <div className="w-1/2">
                          <div className="mb-2 sm:mx-8 md:mx-8 lg:mx-8">
+                              <label htmlFor="detailAddress" className="font-bold">
+                                   Alamat Lengkap *
+                              </label>
+                              <textarea
+                                   id="detailAddress"
+                                   cols="0"
+                                   rows="4"
+                                   className="mt-2"
+                                   disabled={loading}
+                                   {...register("address", { required: true, minLength: 30 })}
+                              ></textarea>
+                              {errors.address && errors.address.type === "required" && (
+                                   <span className="text-sm text-red-error">
+                                        Address required
+                                   </span>
+                              )}
+                              {errors.address && errors.address.type === "minLength" && (
+                                   <span className="text-sm text-red-error">
+                                        Address min 30 characters
+                                   </span>
+                              )}
+                         </div>
+
+
+                         <div className="mb-2 sm:mx-8 md:mx-8 lg:mx-8">
+                              <label htmlFor="location" className="font-bold">
+                                   Lokasi Anda
+                              </label>
+                              <div className="mt-2">
+                                   <Map onLocationChange={handleLocationChange} />
+                              </div>
+                         </div>
+
+                         <div className="mb-2 mt-4 sm:mx-8 md:mx-8 lg:mx-8">
                               <label htmlFor="foto" className="font-bold">
                                    UNGGAH FOTO
                               </label><br />
@@ -276,11 +333,11 @@ const FormUsedCars = () => {
                                                        key={index}
                                                        className="relative cursor-pointer rounded-lg group transition"
                                                   >
-                                                       <div 
-                                                       className="absolute invisible group-hover:visible bg-black/20 w-full h-full rounded-lg flex justify-center items-center"
-                                                       onClick={() => openModal(index)}
+                                                       <div
+                                                            className="absolute invisible group-hover:visible bg-black/20 w-full h-full rounded-lg flex justify-center items-center"
+                                                            onClick={() => openModal(index)}
                                                        >
-                                                            <BsEyeFill className="text-white"/>
+                                                            <BsEyeFill className="text-white" />
                                                        </div>
 
                                                        <img
