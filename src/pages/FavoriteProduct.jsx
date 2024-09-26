@@ -10,7 +10,6 @@ const FavoriteProduct = () => {
           try {
                const userId = localStorage.getItem('userId');
                const response = await useApiGet(`/likeAdvert/getLikeAdvert/${userId}`);
-               console.log(response);
                const { likedAdverts } = response.data.user;
 
                setFavoriteProducts(likedAdverts);
@@ -35,10 +34,6 @@ const FavoriteProduct = () => {
                console.error('Error removing favorite product:', error);
           }
      }
-
-     useEffect(() => {
-          deleteFavoriteProduct();
-     }, []);
 
      return (
           <div className="max-w-6xl mx-auto">
