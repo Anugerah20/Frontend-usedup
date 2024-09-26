@@ -27,8 +27,6 @@ const DropdownNav = () => {
           fetchUser();
      }, []);
 
-     console.log(isComplete)
-
      return (
           <div className="flex">
                <Dropdown
