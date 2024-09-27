@@ -25,12 +25,13 @@ export const DetailProduct = () => {
     const [isNoTelpVisible, setIsNoTelpVisible] = useState(false);
     const [isFavorite, setIsFavorite] = useState(false);
     const [isLogin, setIsLogin] = useState(false);
+    const [idLike, setIdLike] = useState(null);
 
     const navigate = useNavigate();
+    const userId = localStorage.getItem('userId');
 
     // Check button isLogin into favorit produk
     useEffect(() => {
-        const userId = localStorage.getItem('userId');
         setIsLogin(!!userId);
     }, [])
 
@@ -44,7 +45,7 @@ export const DetailProduct = () => {
             const userId = localStorage.getItem('userId');
             // Get userId & AdvertId
             if (isFavorite) {
-                await useApiDelete(`/likeAdvert/deleteLikeAdvert/${advertId}`)
+                await useApiDelete(`/likeAdvert/deleteLikeAdvert/${idLike}`)
                 setIsFavorite(false);
                 toast.error('Berhasil dihapus ke favorit');
             } else {
@@ -62,10 +63,16 @@ export const DetailProduct = () => {
         try {
             const response = await useApiGet(`/advert/getDetailAdvert/${id}`);
             setAdverts(response.data.detailAdvert)
-            if (response.data.detailAdvert.likes.length === 0) {
-                setIsFavorite(false)
-            } else {
-                setIsFavorite(true)
+            
+            if(userId !== null) {
+                response.data.detailAdvert.likes.map((item) => {
+                    if (item.userId === userId) {
+                        setIsFavorite(true);
+                        setIdLike(item.id);
+                    } else {
+                        setIsFavorite(false);
+                    }
+                });
             }
 
         } catch (error) {
