@@ -33,7 +33,7 @@ const DropdownNav = () => {
                     arrowIcon={true}
                     inline
                     className="mt-2 shadow-sm"
-                    label={<Avatar alt="user" img={ProfileUser} />}
+                    label={<Avatar alt="user" img={userData?.foto} className="w-full rounded-full" />}
                >
                     <Dropdown.Header>
                          <div className={`bg-red-200 text-red-500 p-3 font-normal rounded-md ${isComplete ? 'hidden' : 'visible'}`}>Lengkapi profil di edit profil</div>
