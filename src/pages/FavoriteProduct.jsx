@@ -10,7 +10,6 @@ const FavoriteProduct = () => {
           try {
                const userId = localStorage.getItem('userId');
                const response = await useApiGet(`/likeAdvert/getLikeAdvert/${userId}`);
-               console.log(response);
                const { likedAdverts } = response.data.user;
 
                setFavoriteProducts(likedAdverts);
@@ -36,10 +35,6 @@ const FavoriteProduct = () => {
           }
      }
 
-     useEffect(() => {
-          deleteFavoriteProduct();
-     }, []);
-
      return (
           <div className="max-w-6xl mx-auto">
                <h2 className="font-bold text-primary text-xl md:text-2xl mb-4">
@@ -54,7 +49,9 @@ const FavoriteProduct = () => {
                                         image={item?.advert?.image[0]}
                                         title={item?.advert?.title}
                                         price={item?.advert?.price}
-                                        location={item?.advert?.province.name} />
+                                        location={item?.advert?.province.name}
+                                        isLiked={favoriteProducts}
+                                   />
                                    <button hidden onClick={() => deleteFavoriteProduct(item?.id)}>Hapus</button>
                               </Fragment>
                          ))}

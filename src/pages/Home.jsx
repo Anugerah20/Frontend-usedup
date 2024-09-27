@@ -9,6 +9,7 @@ export const Home = () => {
     const [totalPages, setTotalPages] = useState(1);
     const [dataAdvert, setDataAdvert] = useState([]);
     const [loading, setLoading] = useState(false);
+    const loggedInUser = localStorage.getItem('userId');
 
     const getDataAdvert = async () => {
         try {
@@ -49,8 +50,8 @@ export const Home = () => {
                             id={item.id}
                             title={item.title}
                             price={item.price}
-                            location={item.location}
-                            isLiked={item.likes.length === 0 ? false : true}
+                            location={item.province.name}
+                            isLiked={item.likes}
                         />
                     ))}
                 </div>
