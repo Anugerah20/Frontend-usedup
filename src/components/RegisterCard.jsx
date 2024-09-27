@@ -4,11 +4,11 @@ import { useApiPost } from "../services/apiService";
 import { ToastContainer } from "react-toastify";
 import { toastError, toastSuccess } from "../services/toatsService";
 import { Link } from "react-router-dom"
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { Button } from "flowbite-react";
 
 const RegisterCard = () => {
-
+  const [loading, setLoading] = useState(false)
   const {
     register,
     handleSubmit,
@@ -21,6 +21,7 @@ const RegisterCard = () => {
 
   const onSubmit = async (data) => {
     try {
+      setLoading(true)
       const registerData = {
         fullname: data.nameRequired,
         email: data.emailRequired,
@@ -35,11 +36,10 @@ const RegisterCard = () => {
         localStorage.setItem("userId", response.data.user.id)
         toastSuccess("Registration Successful")
 
-        setTimeout(() => {
-          window.location.href = '/'
-        }, 1000)
+        window.location.href = '/'
         reset()
       }
+      setLoading(false)
     } catch (error) {
       console.log('Login error', error);
 
@@ -49,6 +49,7 @@ const RegisterCard = () => {
         toastError("Internal server error")
       }
       reset()
+      setLoading(false)
     }
   }
 
@@ -68,8 +69,9 @@ const RegisterCard = () => {
             </label>
             <input
               type="text"
-              className="w-full border border-shadow mt-2"
+              className="w-full border border-shadow mt-2 disabled:bg-gray-100 disabled:cursor-not-allowed"
               id="Nama"
+              disabled={loading}
               {...register("nameRequired", { required: true })}
             />
             {errors.nameRequired && <span className="text-sm text-red-error">Name required</span>}
@@ -80,8 +82,9 @@ const RegisterCard = () => {
             </label>
             <input
               type="email"
-              className="w-full border border-shadow mt-2"
+              className="w-full border border-shadow mt-2 disabled:bg-gray-100 disabled:cursor-not-allowed"
               id="Email"
+              disabled={loading}
               {...register("emailRequired", { required: true, pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i, })}
             />
             {errors.emailRequired && errors.emailRequired.type === "required" && <span className="text-sm text-red-error">Email required</span>}
@@ -93,8 +96,9 @@ const RegisterCard = () => {
             </label>
             <input
               type="password"
-              className="w-full border border-shadow mt-2"
+              className="w-full border border-shadow mt-2 disabled:bg-gray-100 disabled:cursor-not-allowed"
               id="Password"
+              disabled={loading}
               {...register("passwordRequired", { required: true, minLength: 6 })}
             />
             {errors.passwordRequired && errors.passwordRequired.type === "required" && <span className="text-sm text-red-error">Password required</span>}
@@ -109,8 +113,9 @@ const RegisterCard = () => {
             </label>
             <input
               type="password"
-              className="w-full border border-shadow mt-2"
+              className="w-full border border-shadow mt-2 disabled:bg-gray-100 disabled:cursor-not-allowed"
               id="ConfirmPassword"
+              disabled={loading}
               {...register("ConfirmPasswordRequired", {
                 required: true,
                 validate: (value) => value === password
@@ -122,9 +127,15 @@ const RegisterCard = () => {
             </span>}
           </div>
         </div>
-        <Button type="submit" color="dark" className="btn w-full p-1 my-6">
-          REGISTER
-        </Button>
+        {loading ?
+          <Button type="submit" color="dark" disabled className="btn transition w-full p-1 my-6">
+            Please wait...
+          </Button>
+          :
+          <Button type="submit" color="dark" className="btn transition w-full p-1 my-6">
+            REGISTER
+          </Button>
+        }
         <div className="text-center">
           <span className="text-black">
             Sudah memiliki akun?{" "}
