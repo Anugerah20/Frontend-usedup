@@ -151,9 +151,11 @@ export const DetailProduct = () => {
                     style='underline'
                 >
                     <Tabs.Item title="Catatan Penjual" >
-                        <p className='whitespace-pre-line'>
-                            {adverts?.description}
-                        </p>
+                        <div className="whitespace-normal">
+                            <p className='break-words'>
+                                {adverts?.description}
+                            </p>
+                        </div>
                     </Tabs.Item>
                 </Tabs.Group>
             </div>
