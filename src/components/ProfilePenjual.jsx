@@ -48,28 +48,29 @@ const ProfilePenjual = () => {
                     ) : (
                         <Avatar alt='user' img={data?.foto} size='xl' className='justify-start md:w-1/4 w-full' />
                     )}
-                    <div className='space-y-2'>
-                        <div className="header">
+                    <div className='space-y-2 md:pl-1 pl-0'>
+                        <div className="header ">
                             {loading ? (
                                 <Fragment>
                                     <div className='h-6 w-60 mb-4 animate-pulse rounded-lg bg-gray-200'></div>
                                     <div className='h-6 w-full mb-4 animate-pulse rounded-lg bg-gray-200'></div>
+                                    <div className='h-6 md:w-80 w-full mb-4 animate-pulse rounded-lg bg-gray-200'></div>
                                 </Fragment>
                             ) : (
                                 <Fragment>
                                     <h1 className='font-bold text-[32px]'>{data?.fullname}</h1>
-                                    <p className='text-sm text-gray-500'>{data?.bio}</p>
+                                    <p className='text-sm text-gray-500 text-justify'>{data?.bio}</p>
                                 </Fragment>
                             )}
                         </div>
-                        <div className='flex'>
-                            <button className='px-4 py-2 bg-slate-100 me-6 flex items-center rounded'>
+                        <div className='flex md:justify-normal justify-between'>
+                            <button className='px-4 py-2 bg-slate-100 md:me-6 flex items-center rounded'>
                                 <BsFillShareFill className='mr-3 text-blue-link' />
                                 <span className='text-sm text-gray-breadcrumb'>
                                     Bagikan Profil
                                 </span>
                             </button>
-                            <button className='px-4 py-2 bg-slate-100 me-6 flex items-center rounded'>
+                            <button className='px-4 py-2 bg-slate-100 md:me-6 flex items-center rounded'>
                                 <AiOutlineWarning className='mr-3 text-red-500' />
                                 <span className='text-sm text-gray-breadcrumb'>
                                     Laporkan Profil
