@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useState, useEffect, useRef } from 'react'
-import { Tabs, Tooltip } from 'flowbite-react'
+import { Alert, Avatar, Tabs, Tooltip } from 'flowbite-react'
 import { AiFillHeart, AiFillHome, AiFillWarning } from 'react-icons/ai'
 import { BiChevronRight } from 'react-icons/bi'
-import { HiBadgeCheck, HiLocationMarker } from 'react-icons/hi'
+import { HiBadgeCheck, HiInformationCircle, HiLocationMarker } from 'react-icons/hi'
 import { Link, redirect, useNavigate, useParams } from 'react-router-dom'
 import Profile from '../assets/profile-user.png'
 import { useApiDelete, useApiGet, useApiPost } from '../services/apiService'
@@ -17,6 +17,7 @@ import 'swiper/css/navigation';
 // import required modules
 import { Navigation } from 'swiper/modules';
 import { formatToIDR } from '../utils/FormatRupiah'
+import { IoWarning } from 'react-icons/io5'
 
 export const DetailProduct = () => {
     let { id } = useParams();
@@ -93,11 +94,10 @@ export const DetailProduct = () => {
 
     };
 
-    console.log(adverts.likes)
-
     const handleMouseLeave = () => {
         setZoomStyle({ transform: 'scale(1)' });
     };
+
     return (
         <div className='max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-y-4 gap-x-0 md:gap-x-6'>
             <div className="left space-y-4">
@@ -164,16 +164,30 @@ export const DetailProduct = () => {
                     Info Penjual
                 </h1>
                 <div className="card space-y-4 px-5 py-4">
+                    {adverts?.user?.isVerified === false && (
+                        <Alert color="failure" icon={IoWarning}>
+                            Hati - hati dengan penjual yang belum terverifikasi
+                        </Alert>
+                    )}
+
                     <div className="flex items-center space-x-4">
-                        <img src={Profile} alt="" />
+                        <Avatar img={adverts?.user?.foto} alt="profile-img" size='lg' />
                         <div className="flex flex-col space-y-1">
                             <div className="penjual-name flex items-center space-x-1">
                                 <h2 className='font-semibold'>{adverts?.user?.fullname}</h2>
-                                <Tooltip content="Penjual sudah ter-verifikasi">
-                                    <div className="verified_badge">
-                                        <HiBadgeCheck className='text-xl text-blue-link' />
-                                    </div>
-                                </Tooltip>
+                                {adverts?.user?.isVerified ? (
+                                    <Tooltip content="Penjual sudah ter-verifikasi">
+                                        <div className="verified_badge">
+                                            <HiBadgeCheck className='text-xl text-blue-link' />
+                                        </div>
+                                    </Tooltip>
+                                ) : (
+                                    <Tooltip content="Penjual belum ter-verifikasi">
+                                        <div className="verified_badge">
+                                            <IoWarning className='text-xl text-red-500' />
+                                        </div>
+                                    </Tooltip>
+                                )}
                             </div>
                             <Link to={`/profile/${adverts?.user?.id}`} className="underline text-blue-link">
                                 Lihat Profile
