@@ -4,13 +4,13 @@ import { useForm } from "react-hook-form";
 import { ToastContainer } from "react-toastify";
 import { toastError, toastSuccess } from "../services/toatsService";
 import { useApiPost } from "../services/apiService";
-import { Fragment, useEffect } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Button } from "flowbite-react";
 import GoogleLogin from "react-google-login";
 import { gapi } from "gapi-script";
 
 const LoginCard = () => {
-
+  const [loading, setLoading] = useState(false);
   const {
     register,
     handleSubmit,
@@ -20,6 +20,7 @@ const LoginCard = () => {
 
   const onSubmit = async (data) => {
     try {
+      setLoading(true);
       const loginData = {
         email: data.emailRequired,
         password: data.passwordRequired,
@@ -33,12 +34,11 @@ const LoginCard = () => {
 
         const redirectUrl = localStorage.getItem('redirectAfterLogin') || '/';
 
-        setTimeout(() => {
-          window.location.href = redirectUrl;
-          localStorage.removeItem('redirectAfterLogin');
-        }, 1000);
-        reset();
+        window.location.href = redirectUrl;
+        localStorage.removeItem('redirectAfterLogin');
       }
+
+      setLoading(false);
     } catch (error) {
       console.log('Login error', error);
 
@@ -48,6 +48,7 @@ const LoginCard = () => {
         toastError("Internal server error");
       }
       reset();
+      setLoading(false);
     }
   };
 
@@ -109,8 +110,9 @@ const LoginCard = () => {
             </label>
             <input
               type="email"
-              className="w-full border border-shadow mt-2"
+              className="w-full border  border-shadow mt-2 disabled:bg-gray-100 disabled:cursor-not-allowed"
               id="Email"
+              disabled={loading}
               {...register("emailRequired", { required: true, pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i })}
             />
             {errors.emailRequired && errors.emailRequired.type === "required" && (
@@ -126,8 +128,9 @@ const LoginCard = () => {
             </label>
             <input
               type="password"
-              className="w-full border border-shadow mt-2"
+              className="w-full border border-shadow mt-2 disabled:bg-gray-100 disabled:cursor-not-allowed"
               id="Password"
+              disabled={loading}
               {...register("passwordRequired", { required: true, minLength: 6 })}
             />
             {errors.passwordRequired && errors.passwordRequired.type === "required" && (
@@ -143,9 +146,15 @@ const LoginCard = () => {
             </Link>
           </div>
         </div>
-        <Button type="submit" color="dark" className="btn w-full p-1 my-6">
-          LOGIN
-        </Button>
+        {loading ?
+          <Button type="submit" color="dark" disabled className="btn transition w-full p-1 my-6">
+            Loggin in...
+          </Button>
+          :
+          <Button type="submit" color="dark" className="btn transition w-full p-1 my-6">
+            LOGIN
+          </Button>
+        }
         <div className="flex items-center text-center gap-3">
           <hr className="flex-grow border-gray-300" />
           <span className="text-black">atau</span>

@@ -9,6 +9,9 @@ import Profile from '../assets/profile-user.png'
 import { useApiDelete, useApiGet, useApiPost } from '../services/apiService'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { toast } from 'react-toastify';
+import mapboxgl from 'mapbox-gl';
+
+import 'mapbox-gl/dist/mapbox-gl.css';
 
 // Import Swiper styles
 import 'swiper/css';
@@ -18,21 +21,57 @@ import 'swiper/css/navigation';
 import { Navigation } from 'swiper/modules';
 import { formatToIDR } from '../utils/FormatRupiah'
 import { IoWarning } from 'react-icons/io5'
+import { animated } from '@cloudinary/url-gen/qualifiers/flag'
 
 export const DetailProduct = () => {
+    const mapContainerRef = useRef(null);
+    const mapRef = useRef(null);
+    const markerRef = useRef(null);
     let { id } = useParams();
     const [adverts, setAdverts] = useState([]);
     const [isNoTelpVisible, setIsNoTelpVisible] = useState(false);
     const [isFavorite, setIsFavorite] = useState(false);
     const [isLogin, setIsLogin] = useState(false);
+    const [idLike, setIdLike] = useState(null);
+    const [longitude, setLongitude] = useState(null);
+    const [latitude, setLatitude] = useState(null);
+    const MAPBOX_ACCESS_TOKEN = import.meta.env.VITE_TOKEN_MAPBOX;
 
     const navigate = useNavigate();
+    const userId = localStorage.getItem('userId');
 
     // Check button isLogin into favorit produk
     useEffect(() => {
-        const userId = localStorage.getItem('userId');
         setIsLogin(!!userId);
     }, [])
+
+    // Fungsi untuk reverse geocoding
+    const fetchAddress = async (lng, lat) => {
+        const response = await fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${lng},${lat}.json?access_token=${MAPBOX_ACCESS_TOKEN}`);
+        const data = await response.json();
+        if (data?.features?.length) {
+            return data.features[0].place_name;
+        }
+        return 'Address not found';
+    };
+
+    useEffect(() => {
+        // Set token Mapbox
+        mapboxgl.accessToken = MAPBOX_ACCESS_TOKEN;
+
+        // Inisialisasi Mapbox
+        mapRef.current = new mapboxgl.Map({
+            container: mapContainerRef.current,
+            style: 'mapbox://styles/mapbox/streets-v12',
+            zoom: 13
+        });
+
+        markerRef.current = new mapboxgl.Marker()
+            .setLngLat([longitude, latitude])
+            .addTo(mapRef.current);
+
+    }, [longitude, latitude]);
+
 
     // Function add favorite Produk
     const addFavoriteAdvert = async (advertId) => {
@@ -44,7 +83,7 @@ export const DetailProduct = () => {
             const userId = localStorage.getItem('userId');
             // Get userId & AdvertId
             if (isFavorite) {
-                await useApiDelete(`/likeAdvert/deleteLikeAdvert/${advertId}`)
+                await useApiDelete(`/likeAdvert/deleteLikeAdvert/${idLike}`)
                 setIsFavorite(false);
                 toast.error('Berhasil dihapus ke favorit');
             } else {
@@ -62,11 +101,30 @@ export const DetailProduct = () => {
         try {
             const response = await useApiGet(`/advert/getDetailAdvert/${id}`);
             setAdverts(response.data.detailAdvert)
-            if (response.data.detailAdvert.likes.length === 0) {
-                setIsFavorite(false)
-            } else {
-                setIsFavorite(true)
+
+            if (userId !== null) {
+                response.data.detailAdvert.likes.map((item) => {
+                    if (item.userId === userId) {
+                        setIsFavorite(true);
+                        setIdLike(item.id);
+                    } else {
+                        setIsFavorite(false);
+                    }
+                });
             }
+
+            setLongitude(response.data.detailAdvert.longitude);
+            setLatitude(response.data.detailAdvert.latitude);
+
+            fetchAddress(response.data.detailAdvert.longitude, response.data.detailAdvert.latitude).then((address) => {
+                mapRef.current.flyTo({
+                    center: [response.data.detailAdvert.longitude, response.data.detailAdvert.latitude],
+                    zoom: 14,
+                    essential: true
+                });
+                // createMarker(response.data.detailAdvert.longitude, response.data.detailAdvert.latitude);
+                // setAddress(address);
+            });
 
         } catch (error) {
             console.log(error);
@@ -99,8 +157,8 @@ export const DetailProduct = () => {
     };
 
     return (
-        <div className='max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-y-4 gap-x-0 md:gap-x-6'>
-            <div className="left space-y-4">
+        <div className='max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-y-4 gap-x-0 md:gap-x-2'>
+            <div className="left space-y-4 col-span-2">
                 <div className="breadcrumb flex items-center space-x-1">
                     <Link to="/" className='text-secondary font-semibold'>
                         <AiFillHome className='text-secondary' />
@@ -151,13 +209,15 @@ export const DetailProduct = () => {
                     style='underline'
                 >
                     <Tabs.Item title="Catatan Penjual" >
-                        <p className='whitespace-pre-line'>
-                            {adverts?.description}
-                        </p>
+                        <div className="whitespace-normal">
+                            <p className='break-words'>
+                                {adverts?.description}
+                            </p>
+                        </div>
                     </Tabs.Item>
                 </Tabs.Group>
             </div>
-            <div className="right w-full lg:w-2/3 ml-auto mt-9 space-y-6">
+            <div className="right w-full lg:w-5/6 ml-auto mt-9 space-y-6">
                 <h1
                     className='font-bold text-2xl md:text-3xl'
                 >
@@ -226,6 +286,14 @@ export const DetailProduct = () => {
                     />
                     {isFavorite ? 'Hapus favorit' : 'Tambah favorit'}
                 </button>
+                <div className="map space-y-2">
+                    <h1
+                        className='font-bold text-2xl md:text-xl'
+                    >
+                        Lokasi Barang/Unit
+                    </h1>
+                    <div ref={mapContainerRef} className="w-full h-56"></div>
+                </div>
             </div>
         </div>
 
