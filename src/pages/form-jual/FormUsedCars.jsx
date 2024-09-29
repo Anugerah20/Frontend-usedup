@@ -176,7 +176,7 @@ const FormUsedCars = () => {
                               </label>
                               <select
                                    id="category"
-                                   className="mt-2"
+                                   className="mt-2 border"
                                    {...register("category", { required: true })}
                                    disabled={loading}
                               >
@@ -196,7 +196,7 @@ const FormUsedCars = () => {
                               </label>
                               <select
                                    id="category"
-                                   className="mt-2"
+                                   className="mt-2 border"
                                    {...register("provinsi", { required: true })}
                                    disabled={loading}
                               >
@@ -217,7 +217,7 @@ const FormUsedCars = () => {
                               <input
                                    type="text"
                                    id="merk"
-                                   className="mt-2"
+                                   className="mt-2 border"
                                    disabled={loading}
                                    {...register("title", { required: true, minLength: 10 })}
                               />
@@ -238,7 +238,7 @@ const FormUsedCars = () => {
                                    id="deskripsiIklan"
                                    cols="0"
                                    rows="4"
-                                   className="mt-2"
+                                   className="mt-2 border"
                                    disabled={loading}
                                    {...register("description", { required: true, minLength: 30 })}
                               ></textarea>
@@ -263,7 +263,8 @@ const FormUsedCars = () => {
                               <input
                                    type="number"
                                    id="harga"
-                                   className="mt-2"
+                                   className="mt-2 border"
+                                   style={{borderWidth: "1px"}}
                                    disabled={loading}
                                    {...register("price", { required: true, minLength: 5 })}
                               />
@@ -289,7 +290,7 @@ const FormUsedCars = () => {
                                    id="detailAddress"
                                    cols="0"
                                    rows="4"
-                                   className="mt-2"
+                                   className="mt-2 border"
                                    disabled={loading}
                                    {...register("address", { required: true, minLength: 30 })}
                               ></textarea>
@@ -343,7 +344,7 @@ const FormUsedCars = () => {
                                                        <img
                                                             src={image.dataURL}
                                                             alt={`Preview-${index}`}
-                                                            className="object-cover h-full w-full flex justify-center items-center rounded-lg"
+                                                            className="object-cover h-28 w-36 flex justify-center items-center rounded-lg"
                                                        />
 
                                                        <div className="flex justify-center items-center">
@@ -359,7 +360,7 @@ const FormUsedCars = () => {
                                              ))}
                                              <label
                                                   onClick={onImageUpload}
-                                                  className="relative p-5 cursor-pointer border-2 border-gray-300 rounded-lg"
+                                                  className="relative p-5 cursor-pointer border border-gray-300 rounded-lg"
                                                   {...register("photo", { required: imageList.length === 0 })}
                                              >
                                                   <FaPlus className="text-2xl absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-black" />

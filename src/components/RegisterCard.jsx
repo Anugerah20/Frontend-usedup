@@ -72,6 +72,7 @@ const RegisterCard = () => {
               className="w-full border border-shadow mt-2 disabled:bg-gray-100 disabled:cursor-not-allowed"
               id="Nama"
               disabled={loading}
+              style={{ borderWidth: "1px" }}
               {...register("nameRequired", { required: true })}
             />
             {errors.nameRequired && <span className="text-sm text-red-error">Name required</span>}
@@ -85,6 +86,7 @@ const RegisterCard = () => {
               className="w-full border border-shadow mt-2 disabled:bg-gray-100 disabled:cursor-not-allowed"
               id="Email"
               disabled={loading}
+              style={{ borderWidth: "1px" }}
               {...register("emailRequired", { required: true, pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i, })}
             />
             {errors.emailRequired && errors.emailRequired.type === "required" && <span className="text-sm text-red-error">Email required</span>}
@@ -99,6 +101,7 @@ const RegisterCard = () => {
               className="w-full border border-shadow mt-2 disabled:bg-gray-100 disabled:cursor-not-allowed"
               id="Password"
               disabled={loading}
+              style={{ borderWidth: "1px" }}
               {...register("passwordRequired", { required: true, minLength: 6 })}
             />
             {errors.passwordRequired && errors.passwordRequired.type === "required" && <span className="text-sm text-red-error">Password required</span>}
@@ -116,6 +119,7 @@ const RegisterCard = () => {
               className="w-full border border-shadow mt-2 disabled:bg-gray-100 disabled:cursor-not-allowed"
               id="ConfirmPassword"
               disabled={loading}
+              style={{ borderWidth: "1px" }}
               {...register("ConfirmPasswordRequired", {
                 required: true,
                 validate: (value) => value === password
