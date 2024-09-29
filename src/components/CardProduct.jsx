@@ -63,7 +63,7 @@ const CardProduct = ({ id, title, image, price, location, isLiked }) => {
             <div className="absolute top-0 right-0 pt-2 pr-2">
                 {loggedInUser && (
                     <Tooltip
-                        content="Hapus dari favorit"
+                        content={`${isFavorite ? 'Hapus dari favorit' : 'Tambahkan ke favorit'}`}
                         animation="duration-300"
                         style='light'
                     >
