@@ -124,6 +124,7 @@ const FormUsedCars = () => {
                setImages([])
                toastSuccess('Iklan sukses dibuat')
                urlImageUploaded = []
+               window.location.href = '/berhasil-jual'
           } catch (error) {
                console.error(error);
                toastError('Iklan gagal dibuat!')
