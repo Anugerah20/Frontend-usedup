@@ -172,7 +172,7 @@ const FormUsedCars = () => {
 
                          <div className="mb-2">
                               <label htmlFor="category" className="font-bold">
-                                   Kategori *
+                                   Kategori <span className="text-red-500">*</span>
                               </label>
                               <select
                                    id="category"
@@ -192,7 +192,7 @@ const FormUsedCars = () => {
 
                          <div className="mb-2">
                               <label htmlFor="provinsi" className="font-bold">
-                                   Provinsi *
+                                   Provinsi <span className="text-red-500">*</span>
                               </label>
                               <select
                                    id="category"
@@ -212,13 +212,13 @@ const FormUsedCars = () => {
 
                          <div className="mb-2">
                               <label htmlFor="merk" className="font-bold">
-                                   Judul Iklan *
+                                   Judul Iklan <span className="text-red-500">*</span>
                               </label>
                               <input
                                    type="text"
                                    id="merk"
                                    className="mt-2 border"
-                                   style={{borderWidth: "1px"}}
+                                   style={{ borderWidth: "1px" }}
                                    disabled={loading}
                                    {...register("title", { required: true, minLength: 10 })}
                               />
@@ -233,7 +233,7 @@ const FormUsedCars = () => {
                          </div>
                          <div className="mb-2">
                               <label htmlFor="deskripsiIklan" className="font-bold">
-                                   Deskripsi Iklan *
+                                   Deskripsi Iklan <span className="text-red-500">*</span>
                               </label>
                               <textarea
                                    id="deskripsiIklan"
@@ -256,16 +256,16 @@ const FormUsedCars = () => {
                          </div>
 
                          <hr className="w-[260px] mt-5" />
-                         <h3 className="font-bold my-4">PASANG HARGA</h3>
+                         <h3 className="font-bold mt-4 mb-2">PASANG HARGA</h3>
                          <div className="mb-2">
                               <label htmlFor="harga" className="font-bold">
-                                   Harga *
+                                   Harga <span className="text-red-500">*</span>
                               </label>
                               <input
                                    type="number"
                                    id="harga"
                                    className="mt-2 border"
-                                   style={{borderWidth: "1px"}}
+                                   style={{ borderWidth: "1px" }}
                                    disabled={loading}
                                    {...register("price", { required: true, minLength: 5 })}
                               />
@@ -281,11 +281,10 @@ const FormUsedCars = () => {
                          <hr className="w-[260px] mt-5" />
                     </div>
 
-
                     <div className="w-1/2">
                          <div className="mb-2 sm:mx-8 md:mx-8 lg:mx-8">
                               <label htmlFor="detailAddress" className="font-bold">
-                                   Alamat Lengkap *
+                                   Alamat Lengkap <span className="text-red-500">*</span>
                               </label>
                               <textarea
                                    id="detailAddress"
@@ -309,9 +308,14 @@ const FormUsedCars = () => {
 
 
                          <div className="mb-2 sm:mx-8 md:mx-8 lg:mx-8">
-                              <label htmlFor="location" className="font-bold">
-                                   Lokasi Anda
-                              </label>
+                              <div className="flex flex-col">
+                                   <label htmlFor="location" className="font-bold">
+                                        Lokasi Anda
+                                   </label>
+                                   <label className="text-xs text-gray-400">
+                                        Klik atau search lokasi untuk menentukan lokasi iklan
+                                   </label>
+                              </div>
                               <div className="mt-2">
                                    <Map onLocationChange={handleLocationChange} />
                               </div>

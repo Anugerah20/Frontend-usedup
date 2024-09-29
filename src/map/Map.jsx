@@ -128,7 +128,7 @@ const Map = ({ onLocationChange }) => {
                {address && (
                     <div className="mt-4">
                          <h4 className="font-bold">Detail Lokasi</h4>
-                         <p>{address}</p>
+                         <p className='text-sm text-gray-400'>{address}</p>
                     </div>
                )}
           </div>
