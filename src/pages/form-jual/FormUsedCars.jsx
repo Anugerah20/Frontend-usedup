@@ -218,6 +218,7 @@ const FormUsedCars = () => {
                                    type="text"
                                    id="merk"
                                    className="mt-2 border"
+                                   style={{borderWidth: "1px"}}
                                    disabled={loading}
                                    {...register("title", { required: true, minLength: 10 })}
                               />
