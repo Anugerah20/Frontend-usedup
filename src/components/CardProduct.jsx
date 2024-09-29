@@ -16,7 +16,7 @@ const CardProduct = ({ id, title, image, price, location, isLiked }) => {
 
     useEffect(() => {
         if (loggedInUser) {
-            isLiked.map((item) => {
+            isLiked?.map((item) => {
                 if (item.userId === loggedInUser) {
                     setIsFavorite(true);
                     setIdLike(item.id);
@@ -36,11 +36,21 @@ const CardProduct = ({ id, title, image, price, location, isLiked }) => {
             if (isFavorite) {
                 await useApiDelete(`/likeAdvert/deleteLikeAdvert/${idLike}`)
                 setIsFavorite(false);
-                toast.error('Berhasil dihapus ke favorit');
+                toast.success('Berhasil dihapus dari favorit', {
+                    position: "top-right",
+                    autoClose: 1000,
+                    hideProgressBar: true,
+                });
+                setIdLike(null);
             } else {
-                await useApiPost('/likeAdvert/likeAdvert', { userId, advertId: id });
+                const reqLike = await useApiPost('/likeAdvert/likeAdvert', { userId, advertId: id });
                 setIsFavorite(true);
-                toast.success('Berhasil ditambahkan ke favorit');
+                toast.success('Berhasil ditambahkan ke favorit', {
+                    position: "top-right",
+                    autoClose: 1000,
+                    hideProgressBar: true,
+                });
+                setIdLike(reqLike.data.response.id);
             }
 
         } catch (error) {
@@ -53,7 +63,7 @@ const CardProduct = ({ id, title, image, price, location, isLiked }) => {
             <div className="absolute top-0 right-0 pt-2 pr-2">
                 {loggedInUser && (
                     <Tooltip
-                        content="Hapus dari favorit"
+                        content={`${isFavorite ? 'Hapus dari favorit' : 'Tambahkan ke favorit'}`}
                         animation="duration-300"
                         style='light'
                     >

@@ -56,7 +56,7 @@ const PageCategory = () => {
                 title={advert.title}
                 price={advert.price}
                 location={advert.location}
-                isLiked={advert.likes.length === 0 ? false : true}
+                isLiked={advert.likes}
               />
             ))}
           </div>

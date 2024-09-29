@@ -110,7 +110,8 @@ const LoginCard = () => {
             </label>
             <input
               type="email"
-              className="w-full border  border-shadow mt-2 disabled:bg-gray-100 disabled:cursor-not-allowed"
+              className="w-full border border-shadow mt-2 disabled:bg-gray-100 disabled:cursor-not-allowed"
+              style={{ borderWidth: "1px" }}
               id="Email"
               disabled={loading}
               {...register("emailRequired", { required: true, pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i })}
@@ -130,6 +131,7 @@ const LoginCard = () => {
               type="password"
               className="w-full border border-shadow mt-2 disabled:bg-gray-100 disabled:cursor-not-allowed"
               id="Password"
+              style={{ borderWidth: "1px" }}
               disabled={loading}
               {...register("passwordRequired", { required: true, minLength: 6 })}
             />

@@ -85,11 +85,19 @@ export const DetailProduct = () => {
             if (isFavorite) {
                 await useApiDelete(`/likeAdvert/deleteLikeAdvert/${idLike}`)
                 setIsFavorite(false);
-                toast.error('Berhasil dihapus ke favorit');
+                toast.success('Berhasil dihapus dari favorit', {
+                    hideProgressBar: true,
+                    autoClose: 1000,
+                });
+                setIdLike(null);
             } else {
-                await useApiPost('/likeAdvert/likeAdvert', { userId, advertId: id });
+                const reqLike = await useApiPost('/likeAdvert/likeAdvert', { userId, advertId: id });
                 setIsFavorite(true);
-                toast.success('Berhasil ditambahkan ke favorit');
+                toast.success('Berhasil ditambahkan ke favorit', {
+                    hideProgressBar: true,
+                    autoClose: 1000,
+                });
+                setIdLike(reqLike.data.response.id);
             }
 
         } catch (error) {
@@ -281,10 +289,10 @@ export const DetailProduct = () => {
                         </button>
                     </div>
                 </div>
-                <button className="card w-full py-3 group flex items-center hover:bg-gray-50 active:bg-gray-100 justify-center transition" onClick={() => addFavoriteAdvert(adverts?.likes[0]?.id)}>
-                    <AiFillHeart className={`mr-2 ${isFavorite ? 'text-red-500' : 'text-secondary'} transition`}
+                <button className={`card w-full py-3 group flex items-center font-semibold ${isFavorite ? 'bg-red-400 text-white hover:bg-red-500' : 'bg-white'} hover:bg-gray-50 active:bg-gray-100 justify-center transition`} onClick={() => addFavoriteAdvert(adverts?.likes[0]?.id)}>
+                    <AiFillHeart className={`mr-2 ${isFavorite ? 'text-white' : 'text-red-500'} transition`}
                     />
-                    {isFavorite ? 'Hapus favorit' : 'Tambah favorit'}
+                    {isFavorite ? 'Hapus dari favorit' : 'Tambah ke favorit'}
                 </button>
                 <div className="map space-y-2">
                     <h1

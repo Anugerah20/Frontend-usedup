@@ -22,6 +22,7 @@ import Chat from "./pages/Chat";
 import PageCategory from "./pages/PageCategory";
 import SuksesVerif from "./pages/profile-page/SuksesVerif";
 import { Fragment } from "react";
+import BerhasilJual from "./pages/BerhasilJual";
 
 function App() {
   const pathname = useLocation().pathname;
@@ -60,6 +61,7 @@ function App() {
               <Route path="/form-jual" element={<FormlMobilBekas />} />
               <Route path="/chats" element={<Chat />} />
               <Route path="/verifikasi/:token" element={<SuksesVerif />} />
+              <Route path="/berhasil-jual" element={<BerhasilJual />} />
             </Route>
 
             {/* ketika sudah login maka tidak bisa akses route login dan register sebelum logout */}
