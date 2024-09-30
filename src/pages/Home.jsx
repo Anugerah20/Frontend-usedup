@@ -34,7 +34,7 @@ export const Home = () => {
     const onPageChange = (page) => setCurrentPage(page);
 
     return (
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-7xl mx-auto">
             <h2 className="font-bold text-xl md:text-2xl mb-4">
                 Jangan sampai keduluan
             </h2>

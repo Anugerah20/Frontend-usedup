@@ -60,6 +60,11 @@ const CardProduct = ({ id, title, image, price, location, isLiked }) => {
 
     return (
         <div className="card relative rounded w-full">
+            <div className="highlight absolute shadow">
+                <h1>
+                    BARANG BAGUS NIH!
+                </h1>
+            </div>
             <div className="absolute top-0 right-0 pt-2 pr-2">
                 {loggedInUser && (
                     <Tooltip
