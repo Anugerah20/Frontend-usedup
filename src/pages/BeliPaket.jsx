@@ -113,17 +113,17 @@ function BeliPaket() {
                                 <tr>
                                     <td>Nama Paket</td>
                                     <td className="px-2">:</td>
-                                    <td>{getKeranjang.name}</td>
+                                    <td>{getKeranjang?.name}</td>
                                 </tr>
                                 <tr>
                                     <td>Harga</td>
                                     <td className="px-2">:</td>
-                                    <td>{formatToIDR(getKeranjang.price)}</td>
+                                    <td>{formatToIDR(getKeranjang?.price)}</td>
                                 </tr>
                                 <tr>
                                     <td>Deskripsi</td>
                                     <td className="px-2">:</td>
-                                    <td>{getKeranjang.description.description}</td>
+                                    <td>{getKeranjang.description?.description}</td>
                                 </tr>
                             </table>
                             <hr className="mt-4 w-full" />
@@ -148,7 +148,7 @@ function BeliPaket() {
                                     Total Harga
                                 </h1>
                                 <p>
-                                    {formatToIDR(getKeranjang.price)}
+                                    {formatToIDR(getKeranjang?.price)}
                                 </p>
                             </div>
                         </div>
@@ -164,7 +164,7 @@ function BeliPaket() {
                                         target="_blank"
                                     >
                                         <Button color="blue" className="btn w-full">
-                                            Bayar {formatToIDR(getKeranjang.price)}
+                                            Bayar {formatToIDR(getKeranjang?.price)}
                                         </Button>
                                     </Link>
                                 </Fragment>
@@ -307,16 +307,16 @@ function BeliPaket() {
                                 :
                                 (
                                     <Fragment>
-                                        {filterForIklan.map((p, i) =>
+                                        {filterForIklan?.map((p, i) =>
                                             <div key={i} className="paket border p-4 bg-white shadow-sm rounded-lg">
                                                 <div className="paket-header">
-                                                    <h2 className="text-primary font-bold text-lg">{p.name}</h2>
-                                                    <p className="text-primary text-2xl">{formatToIDR(p.price)}</p>
+                                                    <h2 className="text-primary font-bold text-lg">{p?.name}</h2>
+                                                    <p className="text-primary text-2xl">{formatToIDR(p?.price)}</p>
                                                     <div className="benefit mt-2">
                                                         <hr className="my-4" />
                                                         <List className="border-0">
                                                             {/* <List.Item icon={BsCheck} className="text-secondary">Aktif selama 30 hari</List.Item> */}
-                                                            <List.Item icon={BsCheck} className="text-secondary">{p.description.description}</List.Item>
+                                                            <List.Item icon={BsCheck} className="text-secondary">{p?.description?.description}</List.Item>
                                                         </List>
                                                     </div>
                                                 </div>
@@ -428,16 +428,16 @@ function BeliPaket() {
                                 :
                                 (
                                     <Fragment>
-                                        {filterForSorot.map((p, i) =>
+                                        {filterForSorot?.map((p, i) =>
                                             <div key={i} className="paket border p-4 bg-white shadow-sm rounded-lg">
                                                 <div className="paket-header">
-                                                    <h2 className="text-primary font-bold text-lg">{p.name}</h2>
-                                                    <p className="text-primary text-2xl">{formatToIDR(p.price)}</p>
+                                                    <h2 className="text-primary font-bold text-lg">{p?.name}</h2>
+                                                    <p className="text-primary text-2xl">{formatToIDR(p?.price)}</p>
                                                     <div className="benefit mt-2">
                                                         <hr className="my-4" />
                                                         <List className="border-0">
                                                             {/* <List.Item icon={BsCheck} className="text-secondary">Aktif selama 30 hari</List.Item> */}
-                                                            <List.Item icon={BsCheck} className="text-secondary">{p.description.description}</List.Item>
+                                                            <List.Item icon={BsCheck} className="text-secondary">{p?.description.description}</List.Item>
                                                         </List>
                                                     </div>
                                                 </div>
