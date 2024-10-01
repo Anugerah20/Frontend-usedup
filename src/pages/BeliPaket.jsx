@@ -134,7 +134,7 @@ function BeliPaket() {
                                 <tr>
                                     <td>Harga</td>
                                     <td className="px-2">:</td>
-                                    <td>{formatToIDR(getKeranjang.price)}</td>
+                                    <td>{formatToIDR(getKeranjang?.price)}</td>
                                 </tr>
                                 <tr>
                                     <td>Diskon</td>
