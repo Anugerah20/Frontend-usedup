@@ -2,10 +2,10 @@
 import ProfileUser from "../assets/profile-user.png"
 import { Avatar, Badge, Dropdown } from "flowbite-react"
 import { useEffect, useState } from "react";
-import { FaBullhorn, FaHeart, FaSignOutAlt, FaStar } from "react-icons/fa";
+import { FaBullhorn, FaEdit, FaHeart, FaHistory, FaSignOutAlt, FaStar } from "react-icons/fa";
 import { useApiGet, userLogout } from "../services/apiService";
 import { Link } from "react-router-dom";
-import { RiFileList2Fill } from "react-icons/ri";
+import { RiEditBoxFill, RiFileList2Fill } from "react-icons/ri";
 
 const DropdownNav = () => {
      const [userData, setUserData] = useState(null);
@@ -43,14 +43,27 @@ const DropdownNav = () => {
                               <Avatar img={userData?.foto} alt="Profile User" className="w-12 h-12 rounded-full" />
                               <span className="text-sm text-primary ml-2">
                                    <p className="pt-1 text-primary"> Halo, <span className="font-bold">{userData?.fullname}</span></p>
-                                   <p className="text-slate-300 text-xs mt-1 mb-0">
-                                        Kuota Sundul : <span className="font-bold">0</span>
-                                   </p>
-                                   <br />
-                                   <Link to={`edit-profile`} className="underline text-secondary font-normal">Edit Profile</Link>
+                                   <table>
+                                        <tr>
+                                             <td className="text-slate-400 text-xs font-normal">Kuota Iklan</td>
+                                             <td className="text-slate-400 text-xs font-normal">:</td>
+                                             <td className="text-slate-400 text-xs font-bold">{userData?.kuota_iklan}</td>
+                                        </tr>
+                                        <tr>
+                                             <td className="text-slate-400 text-xs font-normal">Kuota Sorot</td>
+                                             <td className="text-slate-400 text-xs font-normal">:</td>
+                                             <td className="text-slate-400 text-xs font-bold">{userData?.kuota_sorot}</td>
+                                        </tr>
+                                   </table>
                               </span>
                          </div>
                     </Dropdown.Header>
+                    <Dropdown.Item>
+                         <Link to='/edit-profile' className="text-base font-normal py-1 text-gray-600 flex items-center w-full text-left">
+                              <RiEditBoxFill className='mr-2' />
+                              Edit Profile
+                         </Link>
+                    </Dropdown.Item>
                     <Dropdown.Item>
                          <Link to='/iklan' className="text-base font-normal py-1 text-gray-600 flex items-center w-full text-left">
                               <FaBullhorn className='mr-2' />
@@ -64,18 +77,24 @@ const DropdownNav = () => {
                          </Link>
                     </Dropdown.Item>
                     <Dropdown.Item>
-                         <Link to='/favorit' className="text-base font-normal py-1 text-gray-600 flex items-center w-full text-left">
+                         <Link to='/riwayat-pembelian' className="text-base font-normal py-1 text-gray-600 flex items-center w-full text-left">
+                              <FaHistory className='mr-2' />
+                              Riwayat Pembelian
+                         </Link>
+                    </Dropdown.Item>
+                    <Dropdown.Item>
+                         <Link to='/beli-paket' className="text-base font-normal py-1 text-gray-600 flex items-center w-full text-left">
                               <RiFileList2Fill className='mr-2' />
                               Beli Paket Bisnis
                               <Badge color="success" className="ml-2">Baru!</Badge>
                          </Link>
                     </Dropdown.Item>
-                    <Dropdown.Item>
+                    {/* <Dropdown.Item>
                          <Link to='/favorit' className="text-base justify-center bg-gradient-to-br from-sky-100 via-cyan-300 to-sky-300 font-normal py-1 text-cyan-600 rounded-lg flex items-center w-full text-left">
                               <FaStar className='mr-2' />
                               Menjadi Premium!
                          </Link>
-                    </Dropdown.Item>
+                    </Dropdown.Item> */}
                     <Dropdown.Divider />
                     <Dropdown.Item>
                          <span className="text-base font-normal py-1 text-gray-600 flex items-center w-full text-left" onClick={userLogout}>
