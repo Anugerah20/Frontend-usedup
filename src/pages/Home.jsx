@@ -57,8 +57,8 @@ export const Home = () => {
                 </div>
             }
 
-            <div className="flex justify-center items-center my-5">
-                <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={onPageChange} showIcons />
+            <div className="flex justify-center overflow-x-auto items-center my-5">
+                <Pagination layout="navigation" currentPage={currentPage} totalPages={totalPages} onPageChange={onPageChange} showIcons />
             </div>
 
         </div>
