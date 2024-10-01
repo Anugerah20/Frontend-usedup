@@ -437,7 +437,7 @@ function BeliPaket() {
                                                         <hr className="my-4" />
                                                         <List className="border-0">
                                                             {/* <List.Item icon={BsCheck} className="text-secondary">Aktif selama 30 hari</List.Item> */}
-                                                            <List.Item icon={BsCheck} className="text-secondary">{p?.description.description}</List.Item>
+                                                            <List.Item icon={BsCheck} className="text-secondary">{p?.description?.description}</List.Item>
                                                         </List>
                                                     </div>
                                                 </div>
