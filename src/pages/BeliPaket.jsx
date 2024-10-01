@@ -123,7 +123,7 @@ function BeliPaket() {
                                 <tr>
                                     <td>Deskripsi</td>
                                     <td className="px-2">:</td>
-                                    <td>{getKeranjang.description?.description}</td>
+                                    <td>{getKeranjang?.description?.description}</td>
                                 </tr>
                             </table>
                             <hr className="mt-4 w-full" />
