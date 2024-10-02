@@ -88,16 +88,20 @@ function BeliPaket() {
         setLinkPembayaran("");
     }, [])
 
-    const filterForIklan = paket.filter(p => p.type === "IKLAN");
+    const filterForIklan = paket
+        .filter(p => p.type === "IKLAN")
+        .sort((a, b) => a.price - b.price);
 
-    const filterForSorot = paket.filter(p => p.type === "SOROT");
+    const filterForSorot = paket
+        .filter(p => p.type === "SOROT")
+        .sort((a, b) => a.price - b.price);
 
     const getKeranjang = JSON.parse(localStorage.getItem("currentPaket"));
 
     return (
         <Fragment>
             <div className={`modal-keranjang fixed bg-white z-50 w-full h-full top-0 left-0 flex items-center justify-center ${showModalKeranjang ? 'block' : 'invisible'}`}>
-                <div className="modal-content w-1/3 mx-auto flex justify-center flex-col items-start border p-10">
+                <div className="modal-content md:w-1/3 mx-auto flex justify-center flex-col items-start border p-10">
                     <div className="w-full">
                         <div className="modal-header w-full">
                             <h1 className="font-bold text-2xl">
