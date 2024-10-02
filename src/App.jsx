@@ -25,6 +25,7 @@ import { Fragment } from "react";
 import BerhasilJual from "./pages/BerhasilJual";
 import BeliPaket from "./pages/BeliPaket";
 import RiwayatPembelian from "./pages/RiwayatPembelian";
+import PembayaranBerhasil from "./pages/PembayaranBerhasil";
 
 function App() {
   const pathname = useLocation().pathname;
@@ -66,6 +67,7 @@ function App() {
               <Route path="/berhasil-jual" element={<BerhasilJual />} />
               <Route path="/beli-paket" element={<BeliPaket />} />
               <Route path="/riwayat-pembelian" element={<RiwayatPembelian />} />
+              <Route path="/pembayaran-berhasil" element={<PembayaranBerhasil />} />
             </Route>
 
             {/* ketika sudah login maka tidak bisa akses route login dan register sebelum logout */}
