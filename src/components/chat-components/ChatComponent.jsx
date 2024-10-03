@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { IoMdSend } from "react-icons/io";
+import { Dropdown } from "flowbite-react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 
 const ChatComponent = () => {
+    const [showDropdown, setShowDropdown] = useState(false);
 
     const text = 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Lorem ipsum, dolor sit amet consectetur adipisicing elit.Lorem ipsum, dolor sit amet consectetur adipisicing elit.';
 
@@ -104,8 +106,13 @@ const ChatComponent = () => {
                                     <p className='font-semibold'>Toko Fiktif</p>
                                 </div>
                             </div>
-                            <div>
-                                <BsThreeDotsVertical size={20} />
+                            <div className='relative'>
+                                <BsThreeDotsVertical className='cursor-pointer' size={20} onClick={() => setShowDropdown(!showDropdown)} />
+                                <div className={`${showDropdown ? 'visible' : 'hidden'} absolute bg-white left-[-55px] rounded border-2 border-slate-200 p-1 px-3 space-y-1 font-semibold text-sm`}>
+                                    <button>option</button>
+                                    <button>option</button>
+                                    <button>option</button>
+                                </div>
                             </div>
                         </div>
                     </div>
