@@ -1,11 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useState, useEffect, useRef } from 'react'
 import { Alert, Avatar, Tabs, Tooltip } from 'flowbite-react'
-import { AiFillHeart, AiFillHome, AiFillWarning } from 'react-icons/ai'
+import { AiFillHeart, AiFillHome} from 'react-icons/ai'
 import { BiChevronRight } from 'react-icons/bi'
-import { HiBadgeCheck, HiInformationCircle, HiLocationMarker } from 'react-icons/hi'
-import { Link, redirect, useNavigate, useParams } from 'react-router-dom'
-import Profile from '../assets/profile-user.png'
+import { HiBadgeCheck, HiLocationMarker } from 'react-icons/hi'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useApiDelete, useApiGet, useApiPost } from '../services/apiService'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { toast } from 'react-toastify';
@@ -21,7 +21,6 @@ import 'swiper/css/navigation';
 import { Navigation } from 'swiper/modules';
 import { formatToIDR } from '../utils/FormatRupiah'
 import { IoWarning } from 'react-icons/io5'
-import { animated } from '@cloudinary/url-gen/qualifiers/flag'
 
 export const DetailProduct = () => {
     const mapContainerRef = useRef(null);
@@ -74,7 +73,7 @@ export const DetailProduct = () => {
 
 
     // Function add favorite Produk
-    const addFavoriteAdvert = async (advertId) => {
+    const addFavoriteAdvert = async () => {
         try {
             if (!isLogin) {
                 return navigate('/login');
@@ -124,7 +123,7 @@ export const DetailProduct = () => {
             setLongitude(response.data.detailAdvert.longitude);
             setLatitude(response.data.detailAdvert.latitude);
 
-            fetchAddress(response.data.detailAdvert.longitude, response.data.detailAdvert.latitude).then((address) => {
+            fetchAddress(response.data.detailAdvert.longitude, response.data.detailAdvert.latitude).then(() => {
                 mapRef.current.flyTo({
                     center: [response.data.detailAdvert.longitude, response.data.detailAdvert.latitude],
                     zoom: 14,
@@ -211,11 +210,7 @@ export const DetailProduct = () => {
                         {formatToIDR(adverts?.price)}
                     </p>
                 </div>
-                <Tabs.Group
-                    aria-label="Tabs with underline"
-                    // eslint-disable-next-line react/style-prop-object
-                    style='underline'
-                >
+                <Tabs aria-label="Tabs with underline" variant="underline">
                     <Tabs.Item title="Catatan Penjual" >
                         <div className="whitespace-normal">
                             <p className='break-words'>
@@ -223,7 +218,7 @@ export const DetailProduct = () => {
                             </p>
                         </div>
                     </Tabs.Item>
-                </Tabs.Group>
+                </Tabs>
             </div>
             <div className="right w-full lg:w-5/6 ml-auto mt-9 space-y-6">
                 <h1
