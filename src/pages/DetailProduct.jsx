@@ -299,6 +299,5 @@ export const DetailProduct = () => {
                 </div>
             </div>
         </div>
-
     )
 }
