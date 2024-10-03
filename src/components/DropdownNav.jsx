@@ -90,11 +90,11 @@ const DropdownNav = () => {
                          </Link>
                     </Dropdown.Item>
                     {/* <Dropdown.Item>
-                         <Link to='/favorit' className="text-base justify-center bg-gradient-to-br from-sky-100 via-cyan-300 to-sky-300 font-normal py-1 text-cyan-600 rounded-lg flex items-center w-full text-left">
-                              <FaStar className='mr-2' />
-                              Menjadi Premium!
-                         </Link>
                     </Dropdown.Item> */}
+                    <Link to='/favorit' className="text-base justify-center bg-gradient-to-br from-sky-100 via-cyan-300 to-sky-300 font-medium py-2 text-cyan-800 flex items-center w-full text-left">
+                         <FaStar className='mr-2' />
+                         Menjadi Premium!
+                    </Link>
                     <Dropdown.Divider />
                     <Dropdown.Item>
                          <span className="text-base font-normal py-1 text-gray-600 flex items-center w-full text-left" onClick={userLogout}>
