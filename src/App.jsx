@@ -10,7 +10,6 @@ import PageKategori from "./pages/PageCategory";
 import SearchProduct from "./pages/SearchProduct";
 import FavoriteProduct from "./pages/FavoriteProduct";
 import NotFound from "./pages/NotFound";
-import { DetailProduct } from "./pages/DetailProduct";
 import MyAdvertisement from "./pages/My-Advertisement";
 import Profile from "./pages/Profile";
 import FormlMobilBekas from "./pages/form-jual/FormUsedCars";
@@ -26,6 +25,8 @@ import BerhasilJual from "./pages/BerhasilJual";
 import BeliPaket from "./pages/BeliPaket";
 import RiwayatPembelian from "./pages/RiwayatPembelian";
 import PembayaranBerhasil from "./pages/PembayaranBerhasil";
+import { DetailProduct } from "./pages/DetailProduct";
+import ChatPages from "./pages/chat-pages/ChatPages";
 
 function App() {
   const pathname = useLocation().pathname;
@@ -41,11 +42,11 @@ function App() {
       <div className="flex flex-col h-screen justify-between">
         <Navigation />
 
-          <img
-            src={Banner}
-            alt="banner"
-            className={`${isUrlContainSlash ? "md:block hidden " : "hidden"}`}
-          />
+        <img
+          src={Banner}
+          alt="banner"
+          className={`${isUrlContainSlash ? "md:block hidden " : "hidden"}`}
+        />
 
         <div className="App px-4 sm:my-10 my-5 grow">
           {/* Tampilkan banner hanya di halaman utama */}
@@ -68,6 +69,7 @@ function App() {
               <Route path="/beli-paket" element={<BeliPaket />} />
               <Route path="/riwayat-pembelian" element={<RiwayatPembelian />} />
               <Route path="/pembayaran-berhasil" element={<PembayaranBerhasil />} />
+              <Route path="/chat" element={<ChatPages />} />
             </Route>
 
             {/* ketika sudah login maka tidak bisa akses route login dan register sebelum logout */}
