@@ -34,7 +34,7 @@ const DropdownNav = () => {
                <Dropdown
                     arrowIcon={true}
                     inline
-                    className="mt-2 shadow-sm"
+                    className="mt-2 shadow-sm z-20"
                     label={<Avatar alt="user" img={userData?.foto} className="w-full rounded-full" />}
                >
                     <Dropdown.Header>
