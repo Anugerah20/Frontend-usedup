@@ -23,6 +23,7 @@ import SuksesVerif from "./pages/profile-page/SuksesVerif";
 import { Fragment } from "react";
 import BerhasilJual from "./pages/BerhasilJual";
 import BeliPaket from "./pages/BeliPaket";
+import BeliPaketPremium from "./pages/BeliPaketPremium";
 import RiwayatPembelian from "./pages/RiwayatPembelian";
 import PembayaranBerhasil from "./pages/PembayaranBerhasil";
 import { DetailProduct } from "./pages/DetailProduct";
@@ -67,6 +68,7 @@ function App() {
               <Route path="/verifikasi/:token" element={<SuksesVerif />} />
               <Route path="/berhasil-jual" element={<BerhasilJual />} />
               <Route path="/beli-paket" element={<BeliPaket />} />
+              <Route path="/beli-paket-premium" element={<BeliPaketPremium />} />
               <Route path="/riwayat-pembelian" element={<RiwayatPembelian />} />
               <Route path="/pembayaran-berhasil" element={<PembayaranBerhasil />} />
               <Route path="/chat" element={<ChatPages />} />
