@@ -327,7 +327,7 @@ const FormUsedCars = () => {
                                         <label htmlFor="location" className="font-bold">
                                              Lokasi Anda
                                         </label>
-                                        <label className="text-xs text-gray-400">
+                                        <label className="text-xs mt-2 text-gray-400">
                                              Klik atau search lokasi untuk menentukan lokasi iklan
                                         </label>
                                    </div>
