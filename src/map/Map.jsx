@@ -104,7 +104,6 @@ const Map = ({ onLocationChange }) => {
                // Ambil detail alamat
                const address = await fetchAddress(lng, lat);
                setAddress(address);
-               // setCurrentLocation([lng, lat]);
 
                // Kirim latitude dan longitude ke parent component
                onLocationChange(lat, lng);
@@ -128,7 +127,7 @@ const Map = ({ onLocationChange }) => {
                {address && (
                     <div className="mt-4">
                          <h4 className="font-bold">Detail Lokasi</h4>
-                         <p className='text-sm text-gray-400'>{address}</p>
+                         <p className='text-sm text-secondary'>{address}</p>
                     </div>
                )}
           </div>
