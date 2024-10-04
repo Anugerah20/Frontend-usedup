@@ -36,7 +36,6 @@ function RiwayatPembelian() {
                     Riwayat pembelian paket yang telah Anda beli.
                 </p>
             </div>
-            {/* <hr className="mt-4" /> */}
             <Tabs aria-label="Tabs with underline" variant="underline">
                 <Tabs.Item active title="Semua">
                     <div className="overflow-x-auto">
@@ -142,19 +141,19 @@ function RiwayatPembelian() {
                                                     </Table.Cell>
                                                     <Table.Cell>
                                                         <div className="w-fit">
-                                                        {riwayat.status === 'SUCCESS' ?
-                                                            <Badge color="success" className="text-center">
-                                                                Success
-                                                            </Badge>
-                                                        : riwayat.status === 'FAILED' ?
-                                                            <Badge color="failure" className="text-center">
-                                                                Failed
-                                                            </Badge>
-                                                        :
-                                                            <Badge color="warning" className="text-center">
-                                                                Pending
-                                                            </Badge>
-                                                        }
+                                                            {riwayat.status === 'SUCCESS' ?
+                                                                <Badge color="success" className="text-center">
+                                                                    Success
+                                                                </Badge>
+                                                                : riwayat.status === 'FAILED' ?
+                                                                    <Badge color="failure" className="text-center">
+                                                                        Failed
+                                                                    </Badge>
+                                                                    :
+                                                                    <Badge color="warning" className="text-center">
+                                                                        Pending
+                                                                    </Badge>
+                                                            }
                                                         </div>
                                                     </Table.Cell>
                                                     <Table.Cell>
