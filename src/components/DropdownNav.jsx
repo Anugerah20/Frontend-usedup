@@ -89,6 +89,14 @@ const DropdownNav = () => {
                               <Badge color="success" className="ml-2">Baru!</Badge>
                          </Link>
                     </Dropdown.Item>
+                    {/* Paket Premium */}
+                    <Dropdown.Item>
+                         <Link to='/beli-paket-premium' className="text-base font-normal py-1 text-gray-600 flex items-center w-full text-left">
+                              <RiFileList2Fill className='mr-2' />
+                              Beli Paket Premium
+                              <Badge color="indigo" className="ml-2">Baru!</Badge>
+                         </Link>
+                    </Dropdown.Item>
                     {/* <Dropdown.Item>
                          <Link to='/favorit' className="text-base justify-center bg-gradient-to-br from-sky-100 via-cyan-300 to-sky-300 font-normal py-1 text-cyan-600 rounded-lg flex items-center w-full text-left">
                               <FaStar className='mr-2' />
