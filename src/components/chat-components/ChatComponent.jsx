@@ -9,6 +9,8 @@ const ChatComponent = () => {
     const [rooms, setRooms] = useState([]);
     const [messages, setMessages] = useState([]);
     const [penerimaChat, setPenerimaChat] = useState([]);
+    const [roomId, setRoomId] = useState('');
+    const [content, setContent] = useState('');
 
     const userLogin = localStorage.getItem('userId');
 
@@ -21,6 +23,9 @@ const ChatComponent = () => {
 
     const getMessages = async (room) => {
         const userId = localStorage.getItem('userId');
+        setRoomId(room.id);
+        console.log('room id', room.id);
+
         const data = {
             userid: userId,
             room
@@ -31,9 +36,24 @@ const ChatComponent = () => {
         setPenerimaChat(response.data.roomMessages.users);
     }
 
+    const sendMessage = async (e) => {
+        e.preventDefault();
+        const userId = localStorage.getItem('userId');
+        const data = {
+            senderId: userId,
+            content,
+            roomId
+        }
+        const response = await useApiPost('/chat/sendMessage', { data });
+        console.log('send message', response);
+        setContent('');
+        getMessages();
+    }
+
     useEffect(() => {
         getRooms();
         getMessages();
+        sendMessage();
     }, [])
 
     return (
@@ -109,10 +129,12 @@ const ChatComponent = () => {
                                 UsedUp Chat
                             </div>
                         )}
-                        <div className={`${messages.length > 0 ? 'visible' : 'hidden'} w-full bg-slate-200 px-2 py-3 gap-3 flex items-center sticky bottom-0 z-10`}>
-                            <input type="text" className='h-[35px]' placeholder='kirim pesan...' />
-                            <IoMdSend size={30} />
-                        </div>
+                        <form onSubmit={sendMessage} className={`${messages.length > 0 ? 'visible' : 'hidden'} w-full bg-slate-200 px-2 py-3 gap-3 flex items-center sticky bottom-0 z-10`}>
+                            <input type="text" value={content} onChange={(e) => setContent(e.target.value)} className='h-[35px]' placeholder='kirim pesan...' />
+                            <button type='submit'>
+                                <IoMdSend size={30} />
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>
