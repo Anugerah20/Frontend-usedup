@@ -1,10 +1,24 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { IoMdSend } from "react-icons/io";
 import { Dropdown } from "flowbite-react";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import { useApiPost } from '../../services/apiService';
 
 const ChatComponent = () => {
     const [showDropdown, setShowDropdown] = useState(false);
+    const [rooms, setRooms] = useState([]);
+
+    const getRooms = async () => {
+        const userId = localStorage.getItem('userId');
+        const response = await useApiPost('/chat/getRoom', { userId });
+        console.log('get room', response.data.rooms);
+        setRooms(response.data.rooms);
+    }
+
+    useEffect(() => {
+        getRooms();
+    }, [])
+
 
     const text = 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Lorem ipsum, dolor sit amet consectetur adipisicing elit.Lorem ipsum, dolor sit amet consectetur adipisicing elit.';
 
@@ -22,79 +36,19 @@ const ChatComponent = () => {
                             <input type="text" placeholder='cari percakapan...' />
                         </div>
                     </div>
-                    <div className='p-2 space-y-5'>
-                        <div className='flex items-center gap-5'>
+                    <div className='p-2 space-y-5'>{rooms.map((room) => (
+                        <div key={room.id} className='flex items-center gap-5'>
                             <div>
-                                <div className='w-[60px] h-[60px] bg-red-600 rounded-full'></div>
+                                <div>
+                                    <img className='w-[60px] h-[60px] rounded-full' src={room.users[0].foto} alt="" />
+                                </div>
                             </div>
                             <div className='col-span-4'>
-                                <p className='font-semibold'>adam pangeran feby</p>
-                                <p className='text-sm truncate-text'>{slicedtext}</p>
+                                <p className='font-semibold'>{room.users[0].fullname}</p>
+                                <p className='text-sm truncate-text'>{room.users[0].messages[0].content}</p>
                             </div>
                         </div>
-                        <div className='flex items-center gap-5'>
-                            <div>
-                                <div className='w-[60px] h-[60px] bg-blue-600 rounded-full'></div>
-                            </div>
-                            <div className='col-span-4'>
-                                <p className='font-semibold'>nabil presiden usedup</p>
-                                <p className='text-sm truncate-text'>{slicedtext}</p>
-                            </div>
-                        </div>
-                        <div className='flex items-center gap-5'>
-                            <div>
-                                <div className='w-[60px] h-[60px] bg-red-600 rounded-full'></div>
-                            </div>
-                            <div className='col-span-4'>
-                                <p className='font-semibold'>adam pangeran feby</p>
-                                <p className='text-sm truncate-text'>{slicedtext}</p>
-                            </div>
-                        </div>
-                        <div className='flex items-center gap-5'>
-                            <div>
-                                <div className='w-[60px] h-[60px] bg-blue-600 rounded-full'></div>
-                            </div>
-                            <div className='col-span-4'>
-                                <p className='font-semibold'>nabil presiden usedup</p>
-                                <p className='text-sm truncate-text'>{slicedtext}</p>
-                            </div>
-                        </div>
-                        <div className='flex items-center gap-5'>
-                            <div>
-                                <div className='w-[60px] h-[60px] bg-red-600 rounded-full'></div>
-                            </div>
-                            <div className='col-span-4'>
-                                <p className='font-semibold'>adam pangeran feby</p>
-                                <p className='text-sm truncate-text'>{slicedtext}</p>
-                            </div>
-                        </div>
-                        <div className='flex items-center gap-5'>
-                            <div>
-                                <div className='w-[60px] h-[60px] bg-blue-600 rounded-full'></div>
-                            </div>
-                            <div className='col-span-4'>
-                                <p className='font-semibold'>nabil presiden usedup</p>
-                                <p className='text-sm truncate-text'>{slicedtext}</p>
-                            </div>
-                        </div>
-                        <div className='flex items-center gap-5'>
-                            <div>
-                                <div className='w-[60px] h-[60px] bg-red-600 rounded-full'></div>
-                            </div>
-                            <div className='col-span-4'>
-                                <p className='font-semibold'>adam pangeran feby</p>
-                                <p className='text-sm truncate-text'>{slicedtext}</p>
-                            </div>
-                        </div>
-                        <div className='flex items-center gap-5'>
-                            <div>
-                                <div className='w-[60px] h-[60px] bg-blue-600 rounded-full'></div>
-                            </div>
-                            <div className='col-span-4'>
-                                <p className='font-semibold'>nabil presiden usedup</p>
-                                <p className='text-sm truncate-text'>{slicedtext}</p>
-                            </div>
-                        </div>
+                    ))}
                     </div>
                 </div>
                 <div className='kanan space-y-4 overflow-scroll'>
