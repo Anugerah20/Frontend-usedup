@@ -54,7 +54,7 @@ const SearchProduct = () => {
                                         title={item.title}
                                         price={item.price}
                                         location={item.location}
-                                        isLiked={item.likes.length === 0 ? false : true}
+                                        isLiked={item.likes}
                                    />
                               ))}
                          </div>
