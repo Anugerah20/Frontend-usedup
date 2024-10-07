@@ -89,21 +89,27 @@ const ChatComponent = () => {
                         }
                     </div>
                     <div className='flex-1 flex flex-col justify-between'>
-                        <div className='flex flex-col'>
-                            {messages.map(message => (
-                                <div key={message.id} className='px-[20px] mb-5'>
-                                    <div className={`${message.senderId === userLogin ? 'flex-row-reverse' : ''} flex gap-3`}>
-                                        <div>
-                                            <img className='w-[30px] h-[30px] rounded-full' src={message.sender.foto} alt="" />
-                                        </div>
-                                        <div className='w-[70%] bg-slate-100 rounded p-2'>
-                                            <p>{message.content}</p>
+                        {messages.length > 0 ? (
+                            <div className='flex flex-col'>
+                                {messages.map(message => (
+                                    <div key={message.id} className='px-[20px] mb-5'>
+                                        <div className={`${message.senderId === userLogin ? 'flex-row-reverse' : ''} flex gap-3`}>
+                                            <div>
+                                                <img className='w-[30px] h-[30px] rounded-full' src={message.sender.foto} alt="" />
+                                            </div>
+                                            <div className='w-[70%] bg-slate-100 rounded p-2'>
+                                                <p>{message.content}</p>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            ))}
-                        </div>
-                        <div className='w-full bg-slate-200 px-2 py-3 gap-3 flex items-center sticky bottom-0 z-10'>
+                                ))}
+                            </div>
+                        ) : (
+                            <div className='font-bold mx-auto my-auto'>
+                                UsedUp Chat
+                            </div>
+                        )}
+                        <div className={`${messages.length > 0 ? 'visible' : 'hidden'} w-full bg-slate-200 px-2 py-3 gap-3 flex items-center sticky bottom-0 z-10`}>
                             <input type="text" className='h-[35px]' placeholder='kirim pesan...' />
                             <IoMdSend size={30} />
                         </div>
