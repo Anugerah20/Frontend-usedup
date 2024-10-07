@@ -86,7 +86,7 @@ function ModalConfirmSorot({ handleModal }) {
 
     return (
         <div className="modal-keranjang fixed bg-white z-50 w-full h-full top-0 left-0 flex items-center justify-center">
-            <div className="modal-content md:w-1/3 mx-auto flex justify-center flex-col items-start border p-10">
+    <div className="modal-content md:w-1/3 mx-auto flex flex-col justify-start items-start border p-10 max-h-[80vh] overflow-y-auto">
                 <div className="w-full">
                     <div className="modal-header w-full">
                         <h1 className="font-bold text-2xl">
