@@ -57,6 +57,7 @@ const PageCategory = () => {
                 price={advert.price}
                 location={advert.location}
                 isLiked={advert.likes}
+                isHighlight={advert.isHighlighted}
               />
             ))}
           </div>

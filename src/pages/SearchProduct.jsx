@@ -55,6 +55,7 @@ const SearchProduct = () => {
                                         price={item.price}
                                         location={item.location}
                                         isLiked={item.likes}
+                                        isHighlight={item.isHighlighted}
                                    />
                               ))}
                          </div>
