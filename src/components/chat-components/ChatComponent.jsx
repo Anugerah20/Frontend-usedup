@@ -78,19 +78,25 @@ const ChatComponent = () => {
                         </div>
                     </div>
                     <div className='p-2 space-y-5'>
-                        {rooms.map((room) => (
-                            <div key={room.id} className='flex items-center gap-5 cursor-pointer' onClick={() => getMessages(room)}>
-                                <div>
+                        {rooms.length === 0 ? (
+                            <div className='font-bold text-center mt-10'>
+                                <p>Kamu belum memulai percakapan</p>
+                            </div>
+                        ) : (
+                            rooms.map((room) => (
+                                <div key={room.id} className='flex items-center gap-5 cursor-pointer' onClick={() => getMessages(room)}>
                                     <div>
-                                        <img className='w-[60px] h-[60px] rounded-full' src={room.users[0].foto} alt="" />
+                                        <div>
+                                            <img className='w-[60px] h-[60px] rounded-full' src={room.users[0].foto} alt="" />
+                                        </div>
+                                    </div>
+                                    <div className='col-span-4'>
+                                        <p className='font-semibold'>{room.users[0].fullname}</p>
+                                        <p className='text-sm truncate-text'>{room.users[0].messages[0]?.content ? room.users[0].messages[0].content.length >= 50 ? room.users[0].messages[0].content.slice(0, 50) + '...' : room.users[0].messages[0].content : ''}</p>
                                     </div>
                                 </div>
-                                <div className='col-span-4'>
-                                    <p className='font-semibold'>{room.users[0].fullname}</p>
-                                    <p className='text-sm truncate-text'>{room.users[0].messages[0]?.content ? room.users[0].messages[0].content.length >= 50 ? room.users[0].messages[0].content.slice(0, 50) + '...' : room.users[0].messages[0].content : ''}</p>
-                                </div>
-                            </div>
-                        ))}
+                            ))
+                        )}
                     </div>
                 </div>
                 <div className='kanan flex flex-col space-y-4 overflow-scroll'>
@@ -134,8 +140,8 @@ const ChatComponent = () => {
                                 ))}
                             </div>
                         ) : (
-                            <div className='font-bold mx-auto my-auto'>
-                                UsedUp Chat
+                            <div className='font-bold text-center mt-10'>
+                                <p>UsedUp Chat</p>
                             </div>
                         )}
                         <form onSubmit={sendMessage} className={`${roomId.length > 0 ? 'visible' : 'hidden'} w-full bg-slate-200 px-2 py-3 gap-3 flex items-center sticky bottom-0 z-10`}>
