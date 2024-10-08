@@ -2,7 +2,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useState, useEffect, useRef } from 'react'
 import { Alert, Avatar, Tabs, Tooltip } from 'flowbite-react'
-import { AiFillHeart, AiFillHome} from 'react-icons/ai'
+import { AiFillHeart, AiFillHome } from 'react-icons/ai'
 import { BiChevronRight } from 'react-icons/bi'
 import { HiBadgeCheck, HiLocationMarker } from 'react-icons/hi'
 import { Link, useNavigate, useParams } from 'react-router-dom'
@@ -163,6 +163,19 @@ export const DetailProduct = () => {
         setZoomStyle({ transform: 'scale(1)' });
     };
 
+    const createRoomChat = async () => {
+        const userId = localStorage.getItem('userId');
+        const friendId = adverts.userId;
+
+        try {
+            const response = await useApiPost('/chat/createRoom', { userId, friendId });
+            window.location.href = `/chat`
+        } catch (error) {
+            console.log('failed create room ', error);
+        }
+
+    }
+
     return (
         <div className='max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-y-4 gap-x-0 md:gap-x-2'>
             <div className="left space-y-4 col-span-2">
@@ -273,6 +286,7 @@ export const DetailProduct = () => {
                         <h2 className='font-semibold'>
                             Kontak Penjual
                         </h2>
+                        <button onClick={createRoomChat} className='font-semibold text-blue-link underline'>Chat Penjual</button>
                         <p>
                             {isNoTelpVisible ? adverts?.user?.no_telp : '************'}
                         </p>

@@ -87,7 +87,7 @@ const ChatComponent = () => {
                                 </div>
                                 <div className='col-span-4'>
                                     <p className='font-semibold'>{room.users[0].fullname}</p>
-                                    <p className='text-sm truncate-text'>{room.users[0].messages[0].content.length >= 50 ? room.users[0].messages[0].content.slice(0, 50) + '...' : room.users[0].messages[0].content}</p>
+                                    <p className='text-sm truncate-text'>{room.users[0].messages[0]?.content ? room.users[0].messages[0].content.length >= 50 ? room.users[0].messages[0].content.slice(0, 50) + '...' : room.users[0].messages[0].content : ''}</p>
                                 </div>
                             </div>
                         ))}
@@ -118,7 +118,7 @@ const ChatComponent = () => {
                         }
                     </div>
                     <div className='flex-1 flex flex-col justify-between'>
-                        {messages.length > 0 ? (
+                        {roomId.length > 0 ? (
                             <div className='flex flex-col'>
                                 {messages.map(message => (
                                     <div key={message.id} className='px-[20px] mb-5'>
@@ -138,7 +138,7 @@ const ChatComponent = () => {
                                 UsedUp Chat
                             </div>
                         )}
-                        <form onSubmit={sendMessage} className={`${messages.length > 0 ? 'visible' : 'hidden'} w-full bg-slate-200 px-2 py-3 gap-3 flex items-center sticky bottom-0 z-10`}>
+                        <form onSubmit={sendMessage} className={`${roomId.length > 0 ? 'visible' : 'hidden'} w-full bg-slate-200 px-2 py-3 gap-3 flex items-center sticky bottom-0 z-10`}>
                             <input type="text" value={content} onChange={(e) => setContent(e.target.value)} className='h-[35px]' placeholder='kirim pesan...' />
                             <button type='submit'>
                                 <IoMdSend size={30} />
