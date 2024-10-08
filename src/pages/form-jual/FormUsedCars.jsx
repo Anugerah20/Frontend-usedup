@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form"
 import ImageUploading from "react-images-uploading"
 import Modal from "react-modal"
 import axios from "axios"
-import { ToastContainer } from "react-toastify"
+import { toast, ToastContainer } from "react-toastify"
 import { toastSuccess, toastError } from "../../services/toatsService"
 import { Spinner } from "flowbite-react"
 import { useApiGet, useApiPost } from "../../services/apiService"
@@ -29,6 +29,7 @@ const FormUsedCars = () => {
      const [provinces, setProvinces] = useState([])
      const [loading, setLoading] = useState(false)
      const [location, setLocation] = useState({ latitude: '', longitude: '' })
+     const [quotaExhausted, setQuotaExhausted] = useState(false)
      const maxNumber = 6
 
 
@@ -98,10 +99,34 @@ const FormUsedCars = () => {
           setModalIsOpen(false);
      };
 
+     // if the advertising quota runs out, there will be a notification
+     const checkQuota = async () => {
+          try {
+               setLoading(true);
+               const userId = localStorage.getItem("userId");
+               const res = await useApiGet(`/user/${userId}`);
+
+               if (res.data.kuota_iklan === 0) {
+                    console.log(res.data.kuota_iklan)
+                    setQuotaExhausted(true);
+                    toast.info('Kuota iklan anda habis, silahkan beli kuota iklan terlebih dahulu');
+               } else {
+                    setQuotaExhausted(false);
+               }
+          } catch (error) {
+               console.log('error check quota:', error);
+          } finally {
+               setLoading(false);
+          }
+     }
+
+
      const submitForm = async (data) => {
           try {
 
                setLoading(true)
+
+               checkQuota()
 
                const dataForm = {
                     title: data.title,
@@ -408,9 +433,13 @@ const FormUsedCars = () => {
                                              <button
                                                   type="submit"
                                                   className="text-white w-full bg-gray-800 hover:bg-gray-900 active:bg-gray-950 focus:outline-none font-medium text-sm px-3 py-2.5 mr-2 mb-2 transition"
+                                                  onClick={checkQuota}
                                              >
+                                                  {/* menjalankan kuota iklan habis button disable */}
                                                   <span className="flex items-center justify-center py-1 text-base">
-                                                       JUAL SEKARANG
+                                                       {
+                                                            quotaExhausted ? 'KUOTA IKLAN HABIS' : 'JUAL SEKARANG'
+                                                       }
                                                        <MdSell className="ml-2" />
                                                   </span>
                                              </button>
