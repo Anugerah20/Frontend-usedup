@@ -47,9 +47,7 @@ const ChatComponent = () => {
         const response = await useApiPost('/chat/sendMessage', { data });
         console.log('send message', response);
         setContent('');
-        getMessages();
     }
-
     useEffect(() => {
         getRooms();
     }, [])
