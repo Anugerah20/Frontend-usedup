@@ -29,7 +29,7 @@ const MyAdvertisement = () => {
 
      useEffect(() => {
           getDataAdvert();
-     }, []);
+     }, [openModalSorot]);
 
      // Fungsi untuk menampilkan modal konfirmasi hapus iklan
      const openDeleteModal = (id) => {
@@ -67,12 +67,16 @@ const MyAdvertisement = () => {
 
      const handleModalSorot = (item) => {
           setOpenModalSorot(!openModalSorot);
-          localStorage.setItem("currentIklan", JSON.stringify(item));
+          if (openModalSorot === false) {
+               localStorage.setItem("currentIklan", JSON.stringify(item));
+          } else {
+               localStorage.removeItem("currentIklan");
+          }
      }
 
      return (
           <Fragment>
-               {openModalSorot && 
+               {openModalSorot &&
                     <ModalConfirmSorot handleModal={handleModalSorot} />
                }
                <div className="max-w-6xl mx-auto">
@@ -136,7 +140,11 @@ const MyAdvertisement = () => {
                                              </div>
                                              <div className="flex space-x-4">
                                                   <button onClick={() => openDeleteModal(item.id)} className="flex justify-center items-center text-sm w-28 h-10 bg-red-500 hover:bg-red-600 text-white transition rounded">Hapus Iklan</button>
-                                                  <button onClick={() => handleModalSorot(item)} className="flex justify-center items-center text-sm w-28 h-10 bg-yellow-300 hover:bg-yellow-500 active:bg-yellow-700 text-white transition rounded">Sorot</button>
+                                                  {item.isHighlighted ?
+                                                       <Fragment></Fragment>
+                                                       :
+                                                       <button onClick={() => handleModalSorot(item)} className="flex justify-center items-center text-sm w-28 h-10 bg-yellow-300 hover:bg-yellow-500 active:bg-yellow-700 text-white transition rounded">Sorot</button>
+                                                  }
                                              </div>
                                         </div>
                                    </div>
