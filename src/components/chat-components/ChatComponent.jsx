@@ -15,39 +15,52 @@ const ChatComponent = () => {
     const userLogin = localStorage.getItem('userId');
 
     const getRooms = async () => {
-        const userId = localStorage.getItem('userId');
-        const response = await useApiPost('/chat/getRoom', { userId });
-        console.log('get room', response.data.rooms);
-        setRooms(response.data.rooms);
+        try {
+            const userId = localStorage.getItem('userId');
+            const response = await useApiPost('/chat/getRoom', { userId });
+            console.log('get room', response.data.rooms);
+            setRooms(response.data.rooms);
+        } catch (error) {
+            console.log('error get room', error);
+        }
     }
 
     const getMessages = async (room) => {
-        const userId = localStorage.getItem('userId');
-        setRoomId(room.id);
-        console.log('room id', room.id);
+        try {
+            const userId = localStorage.getItem('userId');
+            setRoomId(room.id);
+            console.log('room id', room.id);
 
-        const data = {
-            userid: userId,
-            room
+            const data = {
+                userid: userId,
+                room
+            }
+            const response = await useApiPost('/chat/getMessages', { data });
+            console.log(response.data.roomMessages);
+            setMessages(response.data.roomMessages.messages);
+            setPenerimaChat(response.data.roomMessages.users);
+        } catch (error) {
+            console.log('error get messages', error);
         }
-        const response = await useApiPost('/chat/getMessages', { data });
-        console.log(response.data.roomMessages);
-        setMessages(response.data.roomMessages.messages);
-        setPenerimaChat(response.data.roomMessages.users);
     }
 
     const sendMessage = async (e) => {
-        e.preventDefault();
-        const userId = localStorage.getItem('userId');
-        const data = {
-            senderId: userId,
-            content,
-            roomId
+        try {
+            e.preventDefault();
+            const userId = localStorage.getItem('userId');
+            const data = {
+                senderId: userId,
+                content,
+                roomId
+            }
+            const response = await useApiPost('/chat/sendMessage', { data });
+            console.log('send message', response);
+            setContent('');
+        } catch (error) {
+            console.log('error send message', error);
         }
-        const response = await useApiPost('/chat/sendMessage', { data });
-        console.log('send message', response);
-        setContent('');
     }
+
     useEffect(() => {
         getRooms();
     }, [])
