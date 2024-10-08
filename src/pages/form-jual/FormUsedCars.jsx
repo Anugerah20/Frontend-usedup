@@ -107,7 +107,6 @@ const FormUsedCars = () => {
                const res = await useApiGet(`/user/${userId}`);
 
                if (res.data.kuota_iklan === 0) {
-                    console.log(res.data.kuota_iklan)
                     setQuotaExhausted(true);
                     toast.info('Kuota iklan anda habis, silahkan beli kuota iklan terlebih dahulu');
                } else {
