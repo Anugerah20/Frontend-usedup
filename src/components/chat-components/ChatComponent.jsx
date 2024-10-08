@@ -52,8 +52,6 @@ const ChatComponent = () => {
 
     useEffect(() => {
         getRooms();
-        getMessages();
-        sendMessage();
     }, [])
 
     return (
