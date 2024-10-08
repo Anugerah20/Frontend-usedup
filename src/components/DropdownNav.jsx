@@ -85,24 +85,26 @@ const DropdownNav = () => {
                     <Dropdown.Item>
                          <Link to='/beli-paket' className="text-base font-normal py-1 text-gray-600 flex items-center w-full text-left">
                               <RiFileList2Fill className='mr-2' />
-                              Beli Paket Bisnis
-                              <Badge color="success" className="ml-2">Baru!</Badge>
+                              Paket Bisnis
+                              {/* <Badge color="success" className="ml-2">Baru!</Badge> */}
                          </Link>
                     </Dropdown.Item>
                     {/* Paket Premium */}
                     <Dropdown.Item>
-                         <Link to='/beli-paket-premium' className="text-base font-normal py-1 text-gray-600 flex items-center w-full text-left">
-                              <RiFileList2Fill className='mr-2' />
-                              Beli Paket Premium
-                              <Badge color="indigo" className="ml-2">Baru!</Badge>
+                         <Link to='/beli-paket-premium' className="text-base font-normal py-1 bg-gradient-to-br from-sky-600 via-cyan-400 to-sky-300 text-transparent bg-clip-text flex items-center w-full text-left">
+                              <FaStar className='mr-2 text-sky-300' />
+                              Paket Premium
+                              {/* <Badge color="indigo" className="ml-2">Baru!</Badge> */}
                          </Link>
                     </Dropdown.Item>
                     {/* <Dropdown.Item>
                     </Dropdown.Item> */}
-                    <Link to='/favorit' className="text-base justify-center bg-gradient-to-br from-sky-100 via-cyan-300 to-sky-300 font-medium py-2 text-cyan-800 flex items-center w-full text-left">
+                    {/* <Dropdown>
+                    <Link to='/beli-paket-premium' className="text-base justify-center bg-gradient-to-br from-sky-100 via-cyan-300 to-sky-300 font-medium py-2 text-cyan-800 flex items-center w-full text-left">
                          <FaStar className='mr-2' />
                          Menjadi Premium!
                     </Link>
+                    </Dropdown> */}
                     <Dropdown.Divider />
                     <Dropdown.Item>
                          <span className="text-base font-normal py-1 text-gray-600 flex items-center w-full text-left" onClick={userLogout}>
