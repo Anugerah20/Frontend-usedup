@@ -54,7 +54,7 @@ textarea, select {
 }
 
 .highlight {
-     @apply bg-yellow-300 w-2/3 rounded-br-lg text-sm py-1 pl-2 font-semibold
+     @apply bg-yellow-300 w-fit rounded-sm text-xs py-1 px-2 font-semibold
 }
 
 /* card untuk login & register */
