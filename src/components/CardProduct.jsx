@@ -8,8 +8,9 @@ import { formatToIDR } from "../utils/FormatRupiah";
 import { useApiPost, useApiDelete, useApiGet } from "../services/apiService";
 import { toast } from "react-toastify";
 import { Tooltip } from "flowbite-react";
+import { MdHighlight } from "react-icons/md";
 
-const CardProduct = ({ id, title, image, price, location, isLiked }) => {
+const CardProduct = ({ id, title, image, price, location, isLiked, isHighlight }) => {
     const [isFavorite, setIsFavorite] = useState(false);
     const [idLike, setIdLike] = useState(null);
     const loggedInUser = localStorage.getItem('userId');
@@ -60,11 +61,6 @@ const CardProduct = ({ id, title, image, price, location, isLiked }) => {
 
     return (
         <div className="card relative rounded w-full">
-            <div className="highlight absolute shadow">
-                <h1>
-                    BARANG BAGUS NIH!
-                </h1>
-            </div>
             <div className="absolute top-0 right-0 pt-2 pr-2">
                 {loggedInUser && (
                     <Tooltip
@@ -84,14 +80,25 @@ const CardProduct = ({ id, title, image, price, location, isLiked }) => {
                 )}
             </div>
             <Link to={`/detail/${id}`} >
-                <div className="px-2 pt-3">
-                    <img src={image} alt={title} className='max-w-full h-32 object-contain mx-auto' />
+                <div className="flex flex-col justify-between h-full">
+                    <div className="px-2 pt-3">
+                        <img src={image} alt={title} className='max-w-full h-32 object-contain mx-auto' />
+                    </div>
+                    <div className="px-4 md:px-6 py-2 mt-4">
+                        {isHighlight &&
+                            <div className="highlight flex items-center shadow-sm mb-1 text-sm">
+                                <MdHighlight />
+                                <h1 className="ml-1 font-normal">
+                                    HIGHLIGHT
+                                </h1>
+                            </div>
+                        }
+                        <div className="font-bold text-base md:text-lg mb-1 line-clamp-1">{title}</div>
+                        <p className="text-blue-link font-bold text-base md:text-xl">{formatToIDR(price)}</p>
+                        <p className="text-secondary text-right mt-4 text-xs uppercase md:text-sm">{location}</p>
+                    </div>
                 </div>
-                <div className="px-4 md:px-6 py-2">
-                    <div className="font-bold text-base md:text-lg mb-1 line-clamp-1">{title}</div>
-                    <p className="text-blue-link font-bold text-base md:text-xl">{formatToIDR(price)}</p>
-                    <p className="text-secondary text-right mt-4 text-xs uppercase md:text-sm">{location}</p>
-                </div>
+
             </Link>
         </div>
     );

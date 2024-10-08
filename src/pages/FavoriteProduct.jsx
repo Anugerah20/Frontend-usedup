@@ -51,6 +51,7 @@ const FavoriteProduct = () => {
                                         price={item?.advert?.price}
                                         location={item?.advert?.province.name}
                                         isLiked={favoriteProducts}
+                                        isHighlight={item?.advert?.isHighlighted}
                                    />
                                    <button hidden onClick={() => deleteFavoriteProduct(item?.id)}>Hapus</button>
                               </Fragment>

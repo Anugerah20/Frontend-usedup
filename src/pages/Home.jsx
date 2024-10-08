@@ -52,6 +52,7 @@ export const Home = () => {
                             price={item.price}
                             location={item.province.name}
                             isLiked={item.likes}
+                            isHighlight={item.isHighlighted}
                         />
                     ))}
                 </div>
