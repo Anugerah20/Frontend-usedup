@@ -92,7 +92,7 @@ const ChatComponent = () => {
                                     </div>
                                     <div className='col-span-4'>
                                         <p className='font-semibold'>{room.users[0].fullname}</p>
-                                        <p className='text-sm truncate-text'>{room.users[0].messages[0]?.content ? room.users[0].messages[0].content.length >= 50 ? room.users[0].messages[0].content.slice(0, 50) + '...' : room.users[0].messages[0].content : ''}</p>
+                                        <p className='text-sm truncate-text'>{room.messages[0]?.content ? room.messages[0].content.length >= 50 ? room.messages[0].content.slice(0, 50) + '...' : room.messages[0].content : ''}</p>
                                     </div>
                                 </div>
                             ))
