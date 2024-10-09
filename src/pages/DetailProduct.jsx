@@ -38,6 +38,7 @@ export const DetailProduct = () => {
 
     const navigate = useNavigate();
     const userId = localStorage.getItem('userId');
+    const hideChatButton = userId === adverts.userId ? true : false;
 
     // Check button isLogin into favorit produk
     useEffect(() => {
@@ -286,7 +287,7 @@ export const DetailProduct = () => {
                         <h2 className='font-semibold'>
                             Kontak Penjual
                         </h2>
-                        <button onClick={createRoomChat} className='font-semibold text-blue-link underline'>Chat Penjual</button>
+                        <button onClick={createRoomChat} className={`${hideChatButton ? 'hidden' : 'visible'} font-semibold text-blue-link underline`}>Chat Penjual</button>
                         <p>
                             {isNoTelpVisible ? adverts?.user?.no_telp : '************'}
                         </p>
