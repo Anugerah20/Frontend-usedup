@@ -108,7 +108,7 @@ function ModalConfirmSorot({ handleModal }) {
                             </p>
                             <div className="detail mt-4">
                                 Iklan anda di sorot sampai dengan <br /> <span className="font-semibold"> {formatDate(dataSorot?.highlightExpiry)} </span>
-                            </div>   
+                            </div>
                             <p
                                 className="text-center underline text-sm mt-4 hover:cursor-pointer hover:text-secondary transition w-fit mx-auto"
                                 onClick={() => handleModalKeranjang()}
@@ -153,7 +153,7 @@ function ModalConfirmSorot({ handleModal }) {
                             </table>
                             <hr className="mt-4 w-full" />
                         </div>
-                        <div className="info-biaya space-y-2">
+                        <div className={`info-biaya space-y-2 ${kuota === 0 ? 'hidden' : 'block'}`}>
                             <h1 className="text-xl font-bold mt-4">
                                 Detail Biaya
                             </h1>
@@ -190,7 +190,7 @@ function ModalConfirmSorot({ handleModal }) {
                                 </tr>
                             </table>
                         </div>
-                        <div className="modal-footer w-full mt-16">
+                        <div className={`modal-footer w-full ${kuota === 0 ? 'mt-0' : 'mt-16'}`}>
                             {linkPembayaran !== "" ?
                                 <Fragment>
                                     <Alert color="success" className="w-full mb-3" icon={BsInfoCircleFill}>
@@ -219,13 +219,19 @@ function ModalConfirmSorot({ handleModal }) {
                                                 Selamat! Iklan ini sudah di sorot.
                                             </Alert>
                                         ) : (
-                                            <Button
-                                                color="dark"
-                                                className="btn w-full"
-                                                onClick={() => handleCreatePaketSorot()}
-                                            >
-                                                Setuju dan Lanjutkan
-                                            </Button>
+                                            kuota === 0 ? (
+                                                <Alert color="red" className="w-full mb-3" icon={BsInfoCircleFill}>
+                                                    Oopss, kuota sorot kamu sudah habis.
+                                                </Alert>
+                                            ) : (
+                                                <Button
+                                                    color="dark"
+                                                    className="btn w-full"
+                                                    onClick={() => handleCreatePaketSorot()}
+                                                >
+                                                    Setuju dan Lanjutkan
+                                                </Button>
+                                            )
                                         )
                                     )}
                                 </Fragment>
