@@ -14,7 +14,7 @@ export const Home = () => {
     const getDataAdvert = async () => {
         try {
             setLoading(true);
-            const getData = await useApiGet(`/advert/getAdvert?page=${currentPage}&pageSize=5`);
+            const getData = await useApiGet(`/advert/getAdvert?page=${currentPage}&pageSize=8`);
 
             setTotalPages(getData.data.totalPages);
             setDataAdvert(getData.data.adverts);
