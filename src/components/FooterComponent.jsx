@@ -2,6 +2,8 @@ import { Footer } from "flowbite-react"
 import { BsFacebook, BsInstagram, BsTwitter } from 'react-icons/bs';
 
 const FooterComponent = () => {
+     const currentYear = new Date().getFullYear();
+
      return (
           <>
                <Footer>
@@ -62,7 +64,7 @@ const FooterComponent = () => {
                          <div className="w-full flex justify-center items-center mb-0 sm:mb-5 p-4">
                               <Footer.Copyright
                                    by="UsedUp"
-                                   year={2023}
+                                   year={currentYear}
                                    className="text-white-breadcrumb"
                               />
                          </div>
