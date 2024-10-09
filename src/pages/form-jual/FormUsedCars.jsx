@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useState, useEffect, Fragment } from "react"
 import { FaPlus, FaTimes } from "react-icons/fa"
-import { useForm } from "react-hook-form"
+import { set, useForm } from "react-hook-form"
 import ImageUploading from "react-images-uploading"
 import Modal from "react-modal"
 import axios from "axios"
@@ -106,14 +106,14 @@ const FormUsedCars = () => {
                const userId = localStorage.getItem("userId");
                const res = await useApiGet(`/user/${userId}`);
 
-               if (res.data.kuota_iklan === 0) {
-                    setQuotaExhausted(true);
-                    toast.info('Kuota iklan anda habis, silahkan beli kuota iklan terlebih dahulu');
+               if (res.data.kuota_iklan > 0) {
+                    return true;
                } else {
-                    setQuotaExhausted(false);
+                    return false;
                }
           } catch (error) {
                console.log('error check quota:', error);
+               return false;
           } finally {
                setLoading(false);
           }
@@ -122,10 +122,7 @@ const FormUsedCars = () => {
 
      const submitForm = async (data) => {
           try {
-
                setLoading(true)
-
-               checkQuota()
 
                const dataForm = {
                     title: data.title,
@@ -160,6 +157,17 @@ const FormUsedCars = () => {
      const onSubmit = async (data) => {
           try {
                setLoading(true)
+               setQuotaExhausted(false)
+
+               // check quota
+               const isQuotaAvailable = await checkQuota();
+
+               if (!isQuotaAvailable) {
+                    setQuotaExhausted(true);
+                    toast.info('Kuota iklan anda habis, silahkan beli kuota iklan terlebih dahulu');
+                    reset();
+                    return;
+               }
 
                if (images.length === 0 || images.length > maxNumber) {
                     throw Error('Tolong minimal 1 gambar dan maksimal 6 gambar')
@@ -432,7 +440,7 @@ const FormUsedCars = () => {
                                              <button
                                                   type="submit"
                                                   className="text-white w-full bg-gray-800 hover:bg-gray-900 active:bg-gray-950 focus:outline-none font-medium text-sm px-3 py-2.5 mr-2 mb-2 transition"
-                                                  onClick={checkQuota}
+                                                  disabled={quotaExhausted}
                                              >
                                                   {/* menjalankan kuota iklan habis button disable */}
                                                   <span className="flex items-center justify-center py-1 text-base">
