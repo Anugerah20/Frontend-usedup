@@ -6,8 +6,9 @@ import CardProduct from './CardProduct';
 import { useApiGet } from '../services/apiService';
 import { toast } from 'react-toastify';
 import { useParams } from 'react-router-dom';
-import { Avatar } from 'flowbite-react';
+import { Avatar, Badge } from 'flowbite-react';
 import CardSkeleton from './CardSkeleton';
+import { FaStar } from 'react-icons/fa';
 
 const ProfilePenjual = () => {
     const [data, setData] = useState({})
@@ -42,13 +43,15 @@ const ProfilePenjual = () => {
             <div className='flex flex-col mx-auto max-w-6xl'>
                 <div className='profile-penjual flex md:flex-row flex-col md:space-x-3 md:space-y-0 space-y-4 shadow p-4'>
                     {loading ? (
-                        <div className="bg-gray-200 h-36 w-36 rounded-lg flex items-center justify-center animate-pulse">
+                        <div className="bg-gray-200 h-40 w-40 rounded-lg flex items-center justify-center animate-pulse">
                             <BiUser className='h-10 w-10 text-gray-500' />
                         </div>
                     ) : (
-                        <Avatar alt='user' img={data?.foto} size='xl' className='justify-start md:w-1/4 w-full' />
+                        <div className="w-40">
+                            <Avatar alt='user' img={data?.foto} size='xl' className='justify-start w-full' />
+                        </div>
                     )}
-                    <div className='space-y-2 md:pl-1 pl-0'>
+                    <div className='space-y-2 md:pl-1 pl-0 w-full'>
                         <div className="header ">
                             {loading ? (
                                 <Fragment>
@@ -58,7 +61,14 @@ const ProfilePenjual = () => {
                                 </Fragment>
                             ) : (
                                 <Fragment>
-                                    <h1 className='font-bold text-[32px]'>{data?.fullname}</h1>
+                                    <div className="flex md:items-center w-full items-start md:flex-row flex-col-reverse justify-between">
+                                        <h1 className='font-bold text-[32px]'>{data?.fullname}</h1>
+                                        {data?.isPremium &&
+                                            <Badge icon={FaStar} className="bg-cyan-200">
+                                                Premium
+                                            </Badge>
+                                        }
+                                    </div>
                                     <p className='text-sm text-gray-500 text-justify'>{data?.bio}</p>
                                 </Fragment>
                             )}

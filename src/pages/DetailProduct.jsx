@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useState, useEffect, useRef } from 'react'
-import { Alert, Avatar, Tabs, Tooltip } from 'flowbite-react'
+import { Alert, Avatar, Badge, Tabs, Tooltip } from 'flowbite-react'
 import { AiFillHeart, AiFillHome } from 'react-icons/ai'
 import { BiChevronRight } from 'react-icons/bi'
 import { HiBadgeCheck, HiLocationMarker } from 'react-icons/hi'
@@ -21,6 +21,7 @@ import 'swiper/css/navigation';
 import { Navigation } from 'swiper/modules';
 import { formatToIDR } from '../utils/FormatRupiah'
 import { IoWarning } from 'react-icons/io5'
+import { FaStar } from 'react-icons/fa'
 
 export const DetailProduct = () => {
     const mapContainerRef = useRef(null);
@@ -71,7 +72,6 @@ export const DetailProduct = () => {
             .addTo(mapRef.current);
 
     }, [longitude, latitude]);
-
 
     // Function add favorite Produk
     const addFavoriteAdvert = async () => {
@@ -265,6 +265,11 @@ export const DetailProduct = () => {
                                         </div>
                                     </Tooltip>
                                 )}
+                                {adverts?.user?.isPremium &&
+                                    <Tooltip content="User Premium!">
+                                        <Badge icon={FaStar} className="bg-cyan-200 text-center flex justify-center" />
+                                    </Tooltip>
+                                }
                             </div>
                             <Link to={`/profile/${adverts?.user?.id}`} className="underline text-blue-link">
                                 Lihat Profile

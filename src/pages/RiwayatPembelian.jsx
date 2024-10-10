@@ -134,7 +134,9 @@ function RiwayatPembelian() {
                                                         {riwayat.paket.name}
                                                     </Table.Cell>
                                                     <Table.Cell>
-                                                        {riwayat.paket.description.description}
+                                                        <div className="overflow-auto md:whitespace-normal whitespace-nowrap md:w-auto w-28">
+                                                            {riwayat.paket.description.description}
+                                                        </div>
                                                     </Table.Cell>
                                                     <Table.Cell>
                                                         {formatToIDR(riwayat.paket.price)}

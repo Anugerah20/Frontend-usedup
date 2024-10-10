@@ -39,23 +39,30 @@ const DropdownNav = () => {
                >
                     <Dropdown.Header>
                          <div className={`bg-red-200 text-red-500 p-3 font-normal rounded-md ${isComplete ? 'hidden' : 'visible'}`}>Lengkapi profil di edit profil</div>
-                         <div className="flex items-start my-2 space-x-2">
-                              <Avatar img={userData?.foto} alt="Profile User" className="w-12 h-12 rounded-full" />
-                              <span className="text-sm text-primary ml-2">
-                                   <p className="pt-1 text-primary"> Halo, <span className="font-bold">{userData?.fullname}</span></p>
-                                   <table>
-                                        <tr>
-                                             <td className="text-slate-400 text-xs font-normal">Kuota Iklan</td>
-                                             <td className="text-slate-400 text-xs font-normal">:</td>
-                                             <td className="text-slate-400 text-xs font-bold">{userData?.kuota_iklan}</td>
-                                        </tr>
-                                        <tr>
-                                             <td className="text-slate-400 text-xs font-normal">Kuota Sorot</td>
-                                             <td className="text-slate-400 text-xs font-normal">:</td>
-                                             <td className="text-slate-400 text-xs font-bold">{userData?.kuota_sorot}</td>
-                                        </tr>
-                                   </table>
-                              </span>
+                         <div className="flex flex-col">
+                              <div className="flex items-start my-2 space-x-2">
+                                   <Avatar img={userData?.foto} alt="Profile User" className="w-12 h-12 rounded-full" />
+                                   <span className="text-sm text-primary ml-2">
+                                        <p className="pt-1 text-primary "> Halo, <span className="font-bold">{userData?.fullname}</span></p>
+                                        <table>
+                                             <tr>
+                                                  <td className="text-slate-400 text-xs font-normal">Kuota Iklan</td>
+                                                  <td className="text-slate-400 text-xs font-normal">:</td>
+                                                  <td className="text-slate-400 text-xs font-bold">{userData?.kuota_iklan}</td>
+                                             </tr>
+                                             <tr>
+                                                  <td className="text-slate-400 text-xs font-normal">Kuota Sorot</td>
+                                                  <td className="text-slate-400 text-xs font-normal">:</td>
+                                                  <td className="text-slate-400 text-xs font-bold">{userData?.kuota_sorot}</td>
+                                             </tr>
+                                        </table>
+                                   </span>
+                              </div>
+                              {userData?.isPremium &&
+                                   <Badge icon={FaStar} className="bg-cyan-200 text-center flex justify-center">
+                                        Premium
+                                   </Badge>
+                              }
                          </div>
                     </Dropdown.Header>
                     <Dropdown.Item>
