@@ -11,6 +11,7 @@ const ChatComponent = () => {
     const [penerimaChat, setPenerimaChat] = useState([]);
     const [roomId, setRoomId] = useState('');
     const [content, setContent] = useState('');
+    const [filterTerm, setFilterTerm] = useState('');
 
     const userLogin = localStorage.getItem('userId');
 
@@ -24,6 +25,15 @@ const ChatComponent = () => {
             console.log('error get room', error);
         }
     }
+
+    const filteredRoom = rooms.filter(room => {
+        const roomName = room.users[0].fullname.toLowerCase();
+        const lastMessage = room.messages[0]?.content.toLowerCase();
+        return (
+            roomName.includes(filterTerm.toLowerCase()) ||
+            lastMessage.includes(filterTerm.toLowerCase())
+        );
+    });
 
     const getMessages = async (room) => {
         try {
@@ -74,7 +84,7 @@ const ChatComponent = () => {
                             <p className='text-xl font-bold'>Chat</p>
                         </div>
                         <div className='w-full'>
-                            <input type="text" placeholder='cari percakapan...' />
+                            <input type="text" value={filterTerm} onChange={(e) => setFilterTerm(e.target.value)} placeholder='cari percakapan/user' />
                         </div>
                     </div>
                     <div className='p-2 space-y-5'>
@@ -83,7 +93,7 @@ const ChatComponent = () => {
                                 <p>Kamu belum memulai percakapan</p>
                             </div>
                         ) : (
-                            rooms.map((room) => (
+                            filteredRoom.map((room) => (
                                 <div key={room.id} className='flex items-center gap-5 cursor-pointer' onClick={() => getMessages(room)}>
                                     <div>
                                         <div>
