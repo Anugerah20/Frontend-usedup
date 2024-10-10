@@ -1,11 +1,12 @@
-import React, { Fragment, useEffect, useState } from "react";
-import { Button, List } from "flowbite-react";
+/* eslint-disable react-hooks/rules-of-hooks */
+import { Fragment, useEffect, useState } from "react";
+import { Alert, Button, Modal, Spinner } from "flowbite-react";
 import { Link } from "react-router-dom";
 import { useApiGet, useApiPost } from "../services/apiService";
 import { formatToIDR } from "../utils/FormatRupiah";
 import { toast } from "react-toastify";
-import { BsCheck, BsInfoCircleFill, BsRocket, BsRocketTakeoffFill } from "react-icons/bs";
-import { FaBullhorn } from "react-icons/fa";
+import { BsInfoCircleFill } from "react-icons/bs";
+import {  FaStar } from "react-icons/fa";
 
 const BeliPaketPremium = () => {
      const [paket, setPaket] = useState([]);
@@ -13,7 +14,23 @@ const BeliPaketPremium = () => {
      const [linkPembayaran, setLinkPembayaran] = useState("");
      const [loading, setLoading] = useState(false);
      const [loadingPaket, setLoadingPaket] = useState(false);
+     const [openModal, setOpenModal] = useState(false)
+     const [currentPaket, setCurrentPaket] = useState({})
+     const [isPremium, setIsPremium] = useState(false)
      const getUser = localStorage.getItem("userId");
+
+     const checkPremium = async () => {
+          try {
+               setLoadingPaket(true);
+               const response = await useApiGet(`/user/${getUser}`);
+               console.log(response.data);
+               setIsPremium(response.data.isPremium);
+               setLoadingPaket(false);
+          } catch (error) {
+               setLoadingPaket(false);
+               console.log(error);
+          }
+     }
 
      const getPaket = async () => {
           try {
@@ -29,21 +46,20 @@ const BeliPaketPremium = () => {
           }
      }
 
-     const handlePilihPaket = (paket) => {
-          const parsePaket = JSON.stringify(paket);
-          localStorage.setItem("currentPaket", parsePaket);
-          setShowModalKeranjang(!showModalKeranjang);
-     }
-
      const handleModalKeranjang = () => {
           setShowModalKeranjang(!showModalKeranjang);
           setLinkPembayaran("");
      }
 
+     const handlePilihPaket = (paket) => {
+          setCurrentPaket(paket)
+          setShowModalKeranjang(!showModalKeranjang);
+     }
+
+
      const handleBeliPaket = async () => {
           try {
                setLoading(true);
-               const currentPaket = JSON.parse(localStorage.getItem("currentPaket"));
 
                const data = {
                     id_user: getUser,
@@ -82,19 +98,84 @@ const BeliPaketPremium = () => {
           }
      }
 
+     const convertToBulan = (hari) => {
+          return Math.floor(hari / 30);
+     }
+
+     const handleConfirmPay = (p) => {
+          setCurrentPaket(p)
+          setOpenModal(!openModal)
+     }
+
      useEffect(() => {
           getPaket();
           setLinkPembayaran("");
+          checkPremium();
      }, []);
 
      const filterForPremium = paket
           .filter(p => p.type === "PREMIUM")
           .sort((a, b) => a.price - b.price);
 
-     const getKeranjang = JSON.parse(localStorage.getItem("currentPaket"));
-
      return (
           <Fragment>
+               <div className="modal">
+                    <Modal show={openModal} position="center" onClose={() => handleConfirmPay()}>
+                         <Modal.Header>Konfirmasi Pembelian Paket Premium</Modal.Header>
+                         <Modal.Body>
+                              <div className="space-y-2">
+                                   <table className="border-collapse">
+                                        <tr>
+                                             <td className="whitespace-nowrap">Nama Paket</td>
+                                             <td className="px-2">:</td>
+                                             <td className="font-semibold">{currentPaket?.name}</td>
+                                        </tr>
+                                        <tr>
+                                             <td className="whitespace-nowrap">Harga</td>
+                                             <td className="px-2">:</td>
+                                             <td className="font-semibold">{formatToIDR(currentPaket?.price)}</td>
+                                        </tr>
+                                        <tr>
+                                             <td className="whitespace-nowrap">Durasi</td>
+                                             <td className="px-2">:</td>
+                                             <td className="font-semibold">{convertToBulan(currentPaket?.duration)} Bulan</td>
+                                        </tr>
+                                        {/* <tr>
+                                             <td className="whitespace-nowrap">Deskripsi</td>
+                                             <td className="px-2">:</td>
+                                             <td className="font-semibold">{currentPaket?.description?.description}</td>
+                                        </tr> */}
+                                   </table>
+                                   <div className="py-4">
+                                        <hr className="w-full" />
+                                   </div>
+                                   <h2 className="font-bold">
+                                        Detail Harga
+                                   </h2>
+                                   <table className="border-collapse">
+                                        <tr>
+                                             <td>Harga</td>
+                                             <td className="px-2">:</td>
+                                             <td>{formatToIDR(currentPaket?.price)}</td>
+                                        </tr>
+                                        <tr>
+                                             <td>Diskon</td>
+                                             <td className="px-2">:</td>
+                                             <td>-Rp 0</td>
+                                        </tr>
+                                   </table>
+                              </div>
+                         </Modal.Body>
+                         <Modal.Footer>
+                              <div className="flex justify-end w-full space-x-2">
+                                   <Button color="dark" onClick={() => setOpenModal(false)}>Buat Pembayaran</Button>
+                                   <Button color="gray" onClick={() => setOpenModal(false)}>
+                                        Batal
+                                   </Button>
+                              </div>
+                         </Modal.Footer>
+                    </Modal>
+               </div>
                <div className={`modal-keranjang fixed bg-white z-50 w-full h-full top-0 left-0 flex items-center justify-center ${showModalKeranjang ? 'block' : 'invisible'}`}>
                     <div className="modal-content md:w-1/3 mx-auto flex justify-center flex-col items-start border p-10">
                          <div className="w-full">
@@ -112,18 +193,23 @@ const BeliPaketPremium = () => {
                                         <tr>
                                              <td>Nama Paket</td>
                                              <td className="px-2">:</td>
-                                             <td>{getKeranjang?.name}</td>
+                                             <td>{currentPaket?.name}</td>
                                         </tr>
                                         <tr>
                                              <td>Harga</td>
                                              <td className="px-2">:</td>
-                                             <td>{formatToIDR(getKeranjang?.price)}</td>
+                                             <td>{formatToIDR(currentPaket?.price)}</td>
                                         </tr>
                                         <tr>
+                                             <td className="whitespace-nowrap">Durasi</td>
+                                             <td className="px-2">:</td>
+                                             <td>{convertToBulan(currentPaket?.duration)} Bulan</td>
+                                        </tr>
+                                        {/* <tr>
                                              <td>Deskripsi</td>
                                              <td className="px-2">:</td>
-                                             <td>{getKeranjang?.description?.description}</td>
-                                        </tr>
+                                             <td>{currentPaket?.description?.description}</td>
+                                        </tr> */}
                                    </table>
                                    <hr className="mt-4 w-full" />
                                    <h2 className="mt-4 font-bold">
@@ -133,7 +219,7 @@ const BeliPaketPremium = () => {
                                         <tr>
                                              <td>Harga</td>
                                              <td className="px-2">:</td>
-                                             <td>{formatToIDR(getKeranjang?.price)}</td>
+                                             <td>{formatToIDR(currentPaket?.price)}</td>
                                         </tr>
                                         <tr>
                                              <td>Diskon</td>
@@ -147,7 +233,7 @@ const BeliPaketPremium = () => {
                                              Total Harga
                                         </h1>
                                         <p>
-                                             {formatToIDR(getKeranjang?.price)}
+                                             {formatToIDR(currentPaket?.price)}
                                         </p>
                                    </div>
                               </div>
@@ -163,7 +249,7 @@ const BeliPaketPremium = () => {
                                                   target="_blank"
                                              >
                                                   <Button color="blue" className="btn w-full">
-                                                       Bayar {formatToIDR(getKeranjang?.price)}
+                                                       Bayar {formatToIDR(currentPaket?.price)}
                                                   </Button>
                                              </Link>
                                         </Fragment>
@@ -176,14 +262,21 @@ const BeliPaketPremium = () => {
                                                             Sedang membuat pembayaran...
                                                        </p>
                                                   </div>
-                                                  :
-                                                  <Button
-                                                       color="dark"
-                                                       className="btn w-full"
-                                                       onClick={() => handleBeliPaket()}
-                                                  >
-                                                       Buat Pembayaran
-                                                  </Button>
+                                                  : (
+                                                       isPremium ? (
+                                                            <Alert color="warning" className="w-full mb-3" icon={BsInfoCircleFill}>
+                                                                 Wow! Kamu sudah berlangganan paket premium, silahkan cek di halaman <Link to="/riwayat-pembelian" className="underline">Riwayat Pembelian</Link>
+                                                            </Alert>  
+                                                       ) : (
+                                                            <Button
+                                                                 color="dark"
+                                                                 className="btn w-full"
+                                                                 onClick={() => handleBeliPaket()}
+                                                            >
+                                                                 Buat Pembayaran
+                                                            </Button>
+                                                       )
+                                                  )
                                              }
                                         </Fragment>
                                    }
@@ -203,26 +296,20 @@ const BeliPaketPremium = () => {
                     </div>
                </div>
                <div className="md:h-screen space-y-4 max-w-6xl mx-auto">
-                    <div className="welcome-message space-y-1 text-center">
-                         <h1 className="text-primary font-bold text-2xl">
-                              Silahkan Pilih Paket Premium Anda!
-                         </h1>
-                         <p className="text-sm text-secondary">
-                              Pilihan paket premium supaya anda bisa mengakses berbagai fitur lengkap
+                    <div className="welcome-message space-y-4 text-center rounded-md shadow bg-gradient-to-br from-sky-300 via-cyan-300 to-sky-400 px-2 py-10">
+                         <div className="flex items-center justify-center space-x-2 text-white">
+                              <FaStar className="text-2xl bg-cyan-500 rounded-full p-2 h-10 w-10" />
+                              <h1 className="font-bold text-3xl text-cyan-600">
+                                   Premium
+                              </h1>
+                         </div>
+                         <p className="text-base text-cyan-600">
+                              Sistem keanggotaan dengan berbagai fitur eksklusif yang dapat meningkatkan reputasi toko, visibilitas akun, dan kepercayaan pembeli, sehingga dapat meningkatkan penjualan. Tingkatkan akun Anda ke Profil Premium sekarang dan dapatkan semua keuntungannya.
                          </p>
                     </div>
 
                     <section className="paket-wrapper space-y-10 pt-10">
                          <div className="paket-row">
-                              <div className="title-paket mb-4">
-                                   <h1 className="font-bold text-3xl flex items-center">
-                                        Paket Iklan
-                                        <FaBullhorn className="ml-2" />
-                                   </h1>
-                                   <p className="text-secondary">
-                                        Paket iklan ini akan membantu anda untuk mengiklankan lebih banyak.
-                                   </p>
-                              </div>
                               <div className="pilih-paket grid md:grid-cols-3 grid-cols-1 gap-4">
                                    {loadingPaket ?
                                         <Fragment>
@@ -236,11 +323,7 @@ const BeliPaketPremium = () => {
                                                        </p>
                                                        <div className="benefit mt-2">
                                                             <hr className="my-4" />
-                                                            <List className="border-0">
-                                                                 <List.Item icon={BsCheck} className="text-secondary">
-                                                                      <div className="w-full bg-gray-200 animate-pulse h-4 rounded-lg"></div>
-                                                                 </List.Item>
-                                                            </List>
+                                                            <div className="w-full bg-gray-200 animate-pulse h-4 rounded-lg"></div>
                                                        </div>
                                                   </div>
                                                   <Button
@@ -261,11 +344,7 @@ const BeliPaketPremium = () => {
                                                        </p>
                                                        <div className="benefit mt-2">
                                                             <hr className="my-4" />
-                                                            <List className="border-0">
-                                                                 <List.Item icon={BsCheck} className="text-secondary">
-                                                                      <div className="w-full bg-gray-200 animate-pulse h-4 rounded-lg"></div>
-                                                                 </List.Item>
-                                                            </List>
+                                                            <div className="w-full bg-gray-200 animate-pulse h-4 rounded-lg"></div>
                                                        </div>
                                                   </div>
                                                   <Button
@@ -286,11 +365,7 @@ const BeliPaketPremium = () => {
                                                        </p>
                                                        <div className="benefit mt-2">
                                                             <hr className="my-4" />
-                                                            <List className="border-0">
-                                                                 <List.Item icon={BsCheck} className="text-secondary">
-                                                                      <div className="w-full bg-gray-200 animate-pulse h-4 rounded-lg"></div>
-                                                                 </List.Item>
-                                                            </List>
+                                                            <div className="w-full bg-gray-200 animate-pulse h-4 rounded-lg"></div>
                                                        </div>
                                                   </div>
                                                   <Button
@@ -310,13 +385,13 @@ const BeliPaketPremium = () => {
                                                        <div key={i} className="paket border p-4 bg-white shadow-sm rounded-lg">
                                                             <div className="paket-header">
                                                                  <h2 className="text-primary font-bold text-lg">{p?.name}</h2>
-                                                                 <p className="text-primary text-2xl">{formatToIDR(p?.price)}</p>
+                                                                 <p className="text-primary text-2xl">
+                                                                      {formatToIDR(p?.price)} / <span className="text-sm text-secondary"> {convertToBulan(p?.duration)} bulan </span>
+                                                                 </p>
                                                                  <div className="benefit mt-2">
                                                                       <hr className="my-4" />
-                                                                      <List className="border-0">
-                                                                           {/* <List.Item icon={BsCheck} className="text-secondary">Aktif selama 30 hari</List.Item> */}
-                                                                           <List.Item icon={BsCheck} className="text-secondary">{p?.description?.description}</List.Item>
-                                                                      </List>
+                                                                      {/* <List.Item icon={BsCheck} className="text-secondary">Aktif selama 30 hari</List.Item> */}
+                                                                      <p className="text-secondary text-base">{p?.description?.description}</p>
                                                                  </div>
                                                             </div>
                                                             <Button
@@ -333,9 +408,67 @@ const BeliPaketPremium = () => {
                                    }
                               </div>
                          </div>
+                         <hr className="text-gray-100" />
+                    </section >
+                    <section className="keuntungan pt-4">
+                         <div className="keuntungan-wrapper space-y-4">
+                              <div className="keuntungan-header space-y-1">
+                                   <h1 className="font-bold text-2xl text-primary">
+                                        Keuntungan Yang Anda Dapatkan
+                                   </h1>
+                                   <p className="text-secondary text-sm">
+                                        Berikut adalah keuntungan yang akan anda dapatkan ketika anda membeli paket premium
+                                   </p>
+                              </div>
+                              <div className="keuntungan-body grid md:grid-cols-4 gap-4">
+                                   <div className="keuntungan-card border p-4 bg-white space-y-1 rounded-lg">
+                                        <div className="flex items-center space-x-2">
+                                             <h1 className="font-bold text-lg text-primary">
+                                                  Profil Menjadi Lebih Terpercaya
+                                             </h1>
+                                        </div>
+                                        <p className="text-secondary">
+                                             Profil anda akan menjadi lebih terpercaya di mata pembeli
+                                        </p>
+                                   </div>
+                                   <div className="keuntungan-card border p-4 bg-white space-y-1 rounded-lg">
+                                        <div className="flex items-center space-x-2">
+                                             <h1 className="font-bold text-lg text-primary">
+                                                  Badge Khusus Di Profil
+                                             </h1>
+                                        </div>
+                                        <p className="text-secondary">
+                                             Badge akan tampil di halaman profil kamu dan di halaman iklan kamu!
+                                        </p>
+                                   </div>
+                                   <div className="keuntungan-card border p-4 bg-white space-y-1 rounded-lg">
+                                        <div className="flex items-center space-x-2">
+                                             <h1 className="font-bold text-lg text-primary">
+                                                  Gratis Kuota Iklan
+                                             </h1>
+                                        </div>
+                                        <p className="text-secondary">
+                                             Kamu dapat free <span className="font-bold text-gray-400"> 100 kuota iklan </span> berlaku secara permanen
+                                        </p>
+                                   </div>
+                                   <div className="keuntungan-card border p-4 bg-white space-y-1 rounded-lg">
+                                        <div className="flex items-center space-x-2">
+                                             <h1 className="font-bold text-lg text-primary">
+                                                  Gratis Kuota Sorot
+                                             </h1>
+                                        </div>
+                                        <p className="text-secondary">
+                                             Kamu dapat free <span className="font-bold text-gray-400"> 100 kuota sorot </span> berlaku secara permanen
+                                        </p>
+                                   </div>
+                              </div>
+                              <p className="text-center pt-6 font-semibold">
+                                   ✨ Langganan Sekarang dan Nikmati Keuntungannya! ✨
+                              </p>
+                         </div>
                     </section>
-               </div>
-          </Fragment>
+               </div >
+          </Fragment >
      );
 };
 
