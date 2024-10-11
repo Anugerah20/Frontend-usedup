@@ -1,4 +1,4 @@
-import { Pagination } from "flowbite-react"
+import { Button, Pagination } from "flowbite-react"
 import CardProduct from "../components/CardProduct"
 import { Fragment, useEffect, useState } from "react"
 import { useApiGet } from "../services/apiService"
@@ -9,18 +9,19 @@ export const Home = () => {
     const [totalPages, setTotalPages] = useState(1);
     const [dataAdvert, setDataAdvert] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [pageSize, setPageSize] = useState(8);
     const loggedInUser = localStorage.getItem('userId');
 
     const getDataAdvert = async () => {
         try {
-            setLoading(true);
-            const getData = await useApiGet(`/advert/getAdvert?page=${currentPage}&pageSize=8`);
+            // setLoading(true);
+            const getData = await useApiGet(`/advert/getAdvert?page=${currentPage}&pageSize=${pageSize}`);
 
             setTotalPages(getData.data.totalPages);
             setDataAdvert(getData.data.adverts);
-            setLoading(false);
+            // setLoading(false);
         } catch (error) {
-            setLoading(false);
+            // setLoading(false);
             console.log("Get data advert", error);
         }
     }
@@ -29,9 +30,13 @@ export const Home = () => {
         getDataAdvert()
 
         window.scrollTo(0, 0);
-    }, [currentPage])
+    }, [])
 
-    const onPageChange = (page) => setCurrentPage(page);
+    useEffect(() => {
+        getDataAdvert()
+    }, [pageSize])
+
+    // const onPageChange = (page) => setCurrentPage(page);
 
     return (
         <div className="max-w-7xl mx-auto">
@@ -39,7 +44,7 @@ export const Home = () => {
                 Jangan sampai keduluan
             </h2>
             {/* Card */}
-            {loading ? (
+            {dataAdvert?.length === 0 ? (
                 <CardSkeleton />
             ) :
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -58,9 +63,14 @@ export const Home = () => {
                 </div>
             }
 
+            <div className='flex justify-center my-6'>
+                <Button color="dark" onClick={() => setPageSize(pageSize + 8)}>Tampilkan lainnya</Button>
+            </div>
+            {/* 
+
             <div className="flex justify-center overflow-x-auto items-center my-5">
                 <Pagination layout="navigation" currentPage={currentPage} totalPages={totalPages} onPageChange={onPageChange} showIcons />
-            </div>
+            </div> */}
 
         </div>
     )
