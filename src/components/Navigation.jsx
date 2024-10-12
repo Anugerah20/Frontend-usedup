@@ -8,6 +8,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateSearchTerm } from "../features/liveSearchSlice";
 import { IoChatbox } from "react-icons/io5";
 import { IoChatbubbleOutline } from "react-icons/io5";
+import { useApiPost } from "../services/apiService"
+import { setUnreadMessage } from "../features/chatNotifSlice"
+import { useEffect } from "react"
 
 const Navigation = () => {
      // Check Token User
@@ -17,6 +20,7 @@ const Navigation = () => {
      // Live Search
      const dispatch = useDispatch();
      const { searchTerm } = useSelector((state) => state.product);
+     const { unreadMessage } = useSelector((state) => state.chatNotif);
 
      const navigate = useNavigate();
 
@@ -30,6 +34,19 @@ const Navigation = () => {
                navigate('/')
           }
      };
+
+     const getUnreadMessage = async () => {
+          const userId = localStorage.getItem('userId');
+          const response = await useApiPost('/chat/getNotif', { userId });
+          console.log(response);
+
+          dispatch(setUnreadMessage(response.data.unreadCount));
+     }
+
+     useEffect(() => {
+          getUnreadMessage();
+     }, [])
+
 
      return (
           <div>
@@ -78,7 +95,7 @@ const Navigation = () => {
                                         </Link>
                                         <Link to='/chat' className="relative">
                                              <div className="w-[20px] h-[20px] bg-red-600 absolute right-[-10px] top-[-5px] rounded-full text-center">
-                                                  <p className="text-white">1</p>
+                                                  <p className="text-white">{unreadMessage}</p>
                                              </div>
                                              <IoChatbubbleOutline size={30} />
                                         </Link>
