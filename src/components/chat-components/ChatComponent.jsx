@@ -3,6 +3,8 @@ import { IoMdSend } from "react-icons/io";
 import { Dropdown } from "flowbite-react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { useApiPost } from '../../services/apiService';
+import { useDispatch, useSelector } from 'react-redux';
+import { setUnreadMessage } from '../../features/chatNotifSlice';
 
 const ChatComponent = () => {
     const [showDropdown, setShowDropdown] = useState(false);
@@ -14,6 +16,8 @@ const ChatComponent = () => {
     const [filterTerm, setFilterTerm] = useState('');
 
     const userLogin = localStorage.getItem('userId');
+    const dispatch = useDispatch();
+    const { unreadMessage } = useSelector((state) => state.chatNotif);
 
     const getRooms = async () => {
         try {
@@ -35,6 +39,12 @@ const ChatComponent = () => {
         );
     });
 
+    const getUnreadMessage = async () => {
+        const userId = localStorage.getItem('userId');
+        const response = await useApiPost('/chat/getNotif', { userId });
+        return dispatch(setUnreadMessage(response.data.unreadCount));
+    }
+
     const getMessages = async (room) => {
         try {
             const userId = localStorage.getItem('userId');
@@ -45,7 +55,9 @@ const ChatComponent = () => {
                 userid: userId,
                 room
             }
+
             const response = await useApiPost('/chat/getMessages', { data });
+            getUnreadMessage();
             console.log(response.data.roomMessages);
             setMessages(response.data.roomMessages.messages);
             setPenerimaChat(response.data.roomMessages.users);

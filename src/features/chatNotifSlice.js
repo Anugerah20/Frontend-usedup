@@ -4,6 +4,7 @@ const chatNotifSlice = createSlice({
     name: "chatNotif",
     initialState: {
         unreadMessage: 0,
+        dataMessage: []
     },
     reducers: {
         setUnreadMessage: (state, action) => {
