@@ -5,6 +5,9 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { useApiPost } from '../../services/apiService';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUnreadMessage } from '../../features/chatNotifSlice';
+import io from 'socket.io-client';
+
+const socket = io('http://localhost:3000');
 
 const ChatComponent = () => {
     const [showDropdown, setShowDropdown] = useState(false);
@@ -77,6 +80,7 @@ const ChatComponent = () => {
             }
             const response = await useApiPost('/chat/sendMessage', { data });
             console.log('send message', response);
+            socket.emit('sendMessage', data);
             setContent('');
         } catch (error) {
             console.log('error send message', error);
@@ -85,6 +89,14 @@ const ChatComponent = () => {
 
     useEffect(() => {
         getRooms();
+
+        socket.on('newMessage', (data) => {
+            setMessages((prevMessages) => [...prevMessages, data]);
+        });
+
+        return () => {
+            socket.off('newMessage');
+        }
     }, [])
 
     return (
@@ -124,13 +136,13 @@ const ChatComponent = () => {
                 <div className='kanan flex flex-col space-y-4 overflow-scroll'>
                     <div className='flex p-3 h-16 items-center border-b-2 border-slate-200 space-x-5 sticky top-0 z-10 bg-slate-50'>
                         {penerimaChat.map(receiver => (
-                            <div key={receiver.id} className='flex justify-between items-center w-full'>
+                            <div key={receiver?.id} className='flex justify-between items-center w-full'>
                                 <div className='flex items-center gap-4'>
                                     <div >
-                                        <img className='w-[40px] h-[40px] rounded-full' src={receiver.foto} alt="" />
+                                        <img className='w-[40px] h-[40px] rounded-full' src={receiver?.foto} alt="" />
                                     </div>
                                     <div>
-                                        <p className='font-semibold'>{receiver.fullname}</p>
+                                        <p className='font-semibold'>{receiver?.fullname}</p>
                                     </div>
                                 </div>
                                 <div className='relative'>
@@ -149,13 +161,13 @@ const ChatComponent = () => {
                         {roomId.length > 0 ? (
                             <div className='flex flex-col'>
                                 {messages.map(message => (
-                                    <div key={message.id} className='px-[20px] mb-5'>
-                                        <div className={`${message.senderId === userLogin ? 'flex-row-reverse' : ''} flex gap-3`}>
+                                    <div key={message?.id} className='px-[20px] mb-5'>
+                                        <div className={`${message?.senderId === userLogin ? 'flex-row-reverse' : ''} flex gap-3`}>
                                             <div>
-                                                <img className='w-[30px] h-[30px] rounded-full' src={message.sender.foto} alt="" />
+                                                <img className='w-[30px] h-[30px] rounded-full' src={message?.sender?.foto} alt="" />
                                             </div>
                                             <div className='w-[70%] bg-slate-100 rounded p-2'>
-                                                <p>{message.content}</p>
+                                                <p>{message?.content}</p>
                                             </div>
                                         </div>
                                     </div>
