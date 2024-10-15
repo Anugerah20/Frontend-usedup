@@ -11,7 +11,7 @@ const prod = "https://api-usedup-production.up.railway.app/api";
 
 const apiService = axios.create({
   // baseURL: prod,
-  baseURL: dev,
+  baseURL: prod,
   headers: {
     "Content-Type": "application/json",
     Authorization: `Bearer ${localStorage.getItem("useToken")}`,
