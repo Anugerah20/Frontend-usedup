@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { IoMdSend } from "react-icons/io";
 import { Dropdown } from "flowbite-react";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import { useApiPost } from '../../services/apiService';
+import { useApiDelete, useApiPost } from '../../services/apiService';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUnreadMessage } from '../../features/chatNotifSlice';
 import { BsChevronCompactUp } from "react-icons/bs";
@@ -90,17 +90,10 @@ const ChatComponent = () => {
     }
 
     const toggleVisibility = (id) => {
-        setMessageOption((prevState) => {
-            const newState = { ...prevState };
-            Object.keys(newState).forEach((key) => {
-                if (key !== id) {
-                    newState[key] = false;
-                } else {
-                    newState[key] = !prevState[key];
-                }
-            });
-            return newState;
-        });
+        setMessageOption((prevState) => ({
+            ...prevState,
+            [id]: !prevState[id]
+        }));
     };
 
     useEffect(() => {
@@ -115,9 +108,15 @@ const ChatComponent = () => {
         }
     }, [])
 
-    const choosenMessage = Object.keys(messageOption).find(key => messageOption[key] === true);
 
+
+    const choosenMessage = Object.keys(messageOption).find(key => messageOption[key] === true);
     console.log('choosen message', choosenMessage);
+    const deleteMessage = async () => {
+        const id = choosenMessage;
+        const deletedMessage = await useApiDelete(`/chat/deleteMessage/${id}`)
+        console.log('deleted message', deletedMessage);
+    }
 
 
     return (
@@ -197,7 +196,7 @@ const ChatComponent = () => {
                                             </div>
                                         </div>
                                         {message?.senderId === userLogin ? (
-                                            <div className={`${messageOption[message.id] ? 'visible' : 'hidden'} absolute top-[-40px] right-[20px] p-2 rounded bg-slate-300 font-semibold`}>hapus pesan</div>
+                                            <button onClick={deleteMessage} className={`${messageOption[message.id] ? 'visible' : 'hidden'} absolute top-[-40px] right-[20px] p-2 rounded bg-slate-300 font-semibold`}>hapus pesan</button>
                                         ) : (
                                             ''
                                         )}
