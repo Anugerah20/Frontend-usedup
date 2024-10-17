@@ -163,10 +163,7 @@ const ChatComponent = () => {
                                 {messages.map(message => (
                                     <div key={message?.id} className='px-[20px] mb-5'>
                                         <div className={`${message?.senderId === userLogin ? 'flex-row-reverse' : ''} flex gap-3`}>
-                                            <div>
-                                                <img className='w-[30px] h-[30px] rounded-full' src={message?.sender?.foto} alt="" />
-                                            </div>
-                                            <div className='w-[70%] bg-slate-100 rounded p-2'>
+                                            <div className={`w-[70%] rounded p-2 ${message?.senderId === userLogin ? 'bg-slate-200' : 'bg-slate-100'}`}>
                                                 <p>{message?.content}</p>
                                             </div>
                                         </div>
@@ -187,7 +184,7 @@ const ChatComponent = () => {
                     </div>
                 </div>
             </div>
-        </div>
+        </div >
 
     )
 }
