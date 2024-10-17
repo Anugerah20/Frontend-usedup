@@ -5,6 +5,7 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { useApiPost } from '../../services/apiService';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUnreadMessage } from '../../features/chatNotifSlice';
+import { BsChevronCompactUp } from "react-icons/bs";
 import io from 'socket.io-client';
 
 const socket = io('http://localhost:3000');
@@ -17,6 +18,7 @@ const ChatComponent = () => {
     const [roomId, setRoomId] = useState('');
     const [content, setContent] = useState('');
     const [filterTerm, setFilterTerm] = useState('');
+    const [messageOption, setMessageOption] = useState(false);
 
     const userLogin = localStorage.getItem('userId');
     const dispatch = useDispatch();
@@ -148,9 +150,7 @@ const ChatComponent = () => {
                                 <div className='relative'>
                                     <BsThreeDotsVertical className='cursor-pointer' size={20} onClick={() => setShowDropdown(!showDropdown)} />
                                     <div className={`${showDropdown ? 'visible' : 'hidden'} absolute bg-white left-[-55px] rounded border-2 border-slate-200 p-1 px-3 space-y-1 font-semibold text-sm`}>
-                                        <button>option</button>
-                                        <button>option</button>
-                                        <button>option</button>
+                                        <button>Coming Soon</button>
                                     </div>
                                 </div>
                             </div>
@@ -161,12 +161,27 @@ const ChatComponent = () => {
                         {roomId.length > 0 ? (
                             <div className='flex flex-col'>
                                 {messages.map(message => (
-                                    <div key={message?.id} className='px-[20px] mb-5'>
+                                    <div key={message?.id} className='px-[20px] mb-5 relative'>
                                         <div className={`${message?.senderId === userLogin ? 'flex-row-reverse' : ''} flex gap-3`}>
                                             <div className={`w-[70%] rounded p-2 ${message?.senderId === userLogin ? 'bg-slate-200' : 'bg-slate-100'}`}>
-                                                <p>{message?.content}</p>
+                                                <div className='flex justify-between group relative'>
+                                                    <p>{message?.content}</p>
+                                                    {message?.senderId === userLogin ? (
+                                                        <BsChevronCompactUp onClick={() => setMessageOption(!messageOption)}
+                                                            className='text-end self-end cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity duration-300'
+                                                            size={20}
+                                                        />
+                                                    ) : (
+                                                        ''
+                                                    )}
+                                                </div>
                                             </div>
                                         </div>
+                                        {message?.senderId === userLogin ? (
+                                            <div className={`${messageOption ? 'visible' : 'hidden'} absolute top-[-40px] right-[20px] p-2 rounded bg-slate-300 font-semibold`}>hapus pesan</div>
+                                        ) : (
+                                            ''
+                                        )}
                                     </div>
                                 ))}
                             </div>
