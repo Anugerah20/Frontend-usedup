@@ -18,7 +18,7 @@ const ChatComponent = () => {
     const [roomId, setRoomId] = useState('');
     const [content, setContent] = useState('');
     const [filterTerm, setFilterTerm] = useState('');
-    const [messageOption, setMessageOption] = useState(false);
+    const [messageOption, setMessageOption] = useState({});
 
     const userLogin = localStorage.getItem('userId');
     const dispatch = useDispatch();
@@ -89,6 +89,20 @@ const ChatComponent = () => {
         }
     }
 
+    const toggleVisibility = (id) => {
+        setMessageOption((prevState) => {
+            const newState = { ...prevState };
+            Object.keys(newState).forEach((key) => {
+                if (key !== id) {
+                    newState[key] = false;
+                } else {
+                    newState[key] = !prevState[key];
+                }
+            });
+            return newState;
+        });
+    };
+
     useEffect(() => {
         getRooms();
 
@@ -100,6 +114,11 @@ const ChatComponent = () => {
             socket.off('newMessage');
         }
     }, [])
+
+    const choosenMessage = Object.keys(messageOption).find(key => messageOption[key] === true);
+
+    console.log('choosen message', choosenMessage);
+
 
     return (
         <div className='max-w-6xl mx-auto border-2 border-slate-200 rounded'>
@@ -159,7 +178,7 @@ const ChatComponent = () => {
                     </div>
                     <div className='flex-1 flex flex-col justify-between'>
                         {roomId.length > 0 ? (
-                            <div className='flex flex-col'>
+                            <div className='flex flex-col mt-5'>
                                 {messages.map(message => (
                                     <div key={message?.id} className='px-[20px] mb-5 relative'>
                                         <div className={`${message?.senderId === userLogin ? 'flex-row-reverse' : ''} flex gap-3`}>
@@ -167,7 +186,7 @@ const ChatComponent = () => {
                                                 <div className='flex justify-between group relative'>
                                                     <p>{message?.content}</p>
                                                     {message?.senderId === userLogin ? (
-                                                        <BsChevronCompactUp onClick={() => setMessageOption(!messageOption)}
+                                                        <BsChevronCompactUp onClick={() => toggleVisibility(message.id)}
                                                             className='text-end self-end cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity duration-300'
                                                             size={20}
                                                         />
@@ -178,7 +197,7 @@ const ChatComponent = () => {
                                             </div>
                                         </div>
                                         {message?.senderId === userLogin ? (
-                                            <div className={`${messageOption ? 'visible' : 'hidden'} absolute top-[-40px] right-[20px] p-2 rounded bg-slate-300 font-semibold`}>hapus pesan</div>
+                                            <div className={`${messageOption[message.id] ? 'visible' : 'hidden'} absolute top-[-40px] right-[20px] p-2 rounded bg-slate-300 font-semibold`}>hapus pesan</div>
                                         ) : (
                                             ''
                                         )}
