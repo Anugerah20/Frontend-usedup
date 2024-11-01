@@ -8,7 +8,7 @@ import { setUnreadMessage } from '../../features/chatNotifSlice';
 import { BsChevronCompactUp } from "react-icons/bs";
 import io from 'socket.io-client';
 
-const socket = io('http://localhost:3000');
+const socket = io('https://api-usedup-production.up.railway.app');
 
 const ChatComponent = () => {
     const [showDropdown, setShowDropdown] = useState(false);
