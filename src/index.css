@@ -3,32 +3,31 @@
 @tailwind utilities;
 
 @layer components {
+  /* Breadcrumb edit profile */
+  .breadcrumb {
+    @apply flex;
+  }
 
-     /* Breadcrumb edit profile */
-     .breadcrumb {
-          @apply flex
-     }
+  .breadcrumb-no-active {
+    @apply text-[18px] font-medium;
+  }
 
-     .breadcrumb-no-active {
-          @apply text-[18px] font-medium
-     }
+  .breadcrumb-active {
+    @apply text-[18px] font-medium underline;
+  }
 
-     .breadcrumb-active {
-          @apply text-[18px] font-medium underline
-     }
+  .breadcrumb-divider {
+    @apply text-[22px] flex justify-center items-center;
+  }
 
-     .breadcrumb-divider {
-          @apply text-[22px] flex justify-center items-center
-     }
+  /* Button edit profile */
+  .btn-profile {
+    @apply w-full h-[2.5rem] mt-2 font-normal rounded transition-all duration-300 ease-in uppercase;
+  }
 
-     /* Button edit profile */
-     .btn-profile {
-          @apply w-full h-[2.5rem] mt-2 font-normal rounded transition-all duration-300 ease-in uppercase
-     }
-
-     .border-bottom {
-          @apply border-solid border-b-2 w-full pt-8
-     }
+  .border-bottom {
+    @apply border-solid border-b-2 w-full pt-8;
+  }
 }
 
 /* input */
@@ -40,87 +39,91 @@ input[type="number"],
 input[type="date"],
 input[type="time"],
 input[type="file"],
-textarea, select {
-     @apply w-full px-4 py-2.5 rounded-lg border border-gray-300 outline-none focus:border-indigo-500 transition ease-in-out
+textarea,
+select {
+  @apply w-full px-4 py-2.5 rounded-lg border border-gray-300 outline-none focus:border-indigo-500 transition ease-in-out;
 }
 
 /* error validation color */
 .text-red-error {
-     @apply text-red-500
+  @apply text-red-500;
 }
 
 .button {
-     @apply rounded-lg text-white font-semibold ease-in-out transition
+  @apply rounded-lg text-white font-semibold ease-in-out transition;
 }
 
 .highlight {
-     @apply bg-yellow-300 w-fit rounded-sm text-xs py-1 px-2 font-semibold
+  @apply bg-yellow-300 w-fit rounded-sm text-xs py-1 px-2 font-semibold;
 }
 
 /* card untuk login & register */
 .card {
-     @apply border mx-auto;
+  @apply border mx-auto;
 }
 
 .card-login {
-     @apply max-w-md px-8 py-5
+  @apply max-w-md px-8 py-5;
 }
 
 .card-register {
-     @apply max-w-md px-8 py-5
+  @apply max-w-md px-8 py-5;
 }
-
 
 /* Button Navigation */
 .btn-search {
-     @apply lg:w-[60px] md:w-[40px] sm:w-[100px];
+  @apply lg:w-[60px] md:w-[40px] sm:w-[100px];
 }
 
 .btn-nav {
-     @apply flex flex-col lg:w-[85px] md:w-[70px] w-[80px] text-[18px];
+  @apply flex flex-col lg:w-[85px] md:w-[70px] w-[80px] text-[18px];
 }
 
 .input-search {
-     @apply lg:w-[400px] md:w-[300px] w-[100%] outline-none
+  @apply lg:w-[400px] md:w-[300px] w-[100%] outline-none;
 }
 
 /* Navigation */
 .categories {
-     @apply flex flex-col mt-5 whitespace-nowrap sm:whitespace-nowrap;
+  @apply flex flex-col mt-5 whitespace-nowrap sm:whitespace-nowrap;
 }
 
 .group-categories {
-     @apply sm:mx-auto overflow-x-scroll sm:overflow-auto;
+  @apply sm:mx-auto overflow-x-scroll sm:overflow-auto;
 }
 
 /* pilih kategori box */
 .box-category {
-     @apply w-full py-5 border flex justify-center items-center transition border-input-gray mb-4
+  @apply w-full py-5 border flex justify-center items-center transition border-input-gray mb-4;
 }
 
 .box-category:hover {
-     @apply bg-black text-white
+  @apply bg-black text-white;
 }
 
 .text-choose-category {
-     @apply font-semibold text-[20px]
+  @apply font-semibold text-[20px];
 }
 
 /* Button with google */
 .google-btn {
-     @apply w-full p-1 my-6 flex justify-center !shadow-none !border !border-gray-300 !font-semibold !text-black
+  @apply w-full p-1 my-6 flex justify-center !shadow-none !border !border-gray-300 !font-semibold !text-black;
 }
 
 /* Custom styling for the Mapbox Geocoder search input */
 .mapboxgl-ctrl-geocoder--input {
-  @apply !pl-[30px]
+  @apply !pl-[30px];
 }
 
 .mapboxgl-ctrl-geocoder {
- @apply !w-full !max-w-none
+  @apply !w-full !max-w-none;
 }
 
 .mapboxgl-ctrl-geocoder--suggestions {
-  @apply z-10
+  @apply z-10;
 }
- 
+
+/* Detail Product Image */
+.img-detail {
+  @apply w-full h-full object-cover transition transform duration-200 ease-in-out;
+}
