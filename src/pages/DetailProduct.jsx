@@ -147,13 +147,24 @@ export const DetailProduct = () => {
     const imgRef = useRef(null);
 
     const handleMouseMove = (e) => {
+        // const img = imgRef.current;
+        // const x = e.clientX - img.offsetLeft;
+        // const y = e.clientY - img.offsetTop;
+
+        // Author: Nabil - 02/11/2024
+        // Fix bug zoom image
         const img = imgRef.current;
-        const x = e.clientX - img.offsetLeft;
-        const y = e.clientY - img.offsetTop;
+        const rect = img.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
 
         if (window.innerWidth > 1023) {
             setZoomStyle({
-                transformOrigin: `${x}px ${y}px`,
+                // transformOrigin: `${x}px ${y}px`,
+
+                // Author: Nabil - 02/11/2024
+                // Fix bug zoom image
+                transformOrigin: `${x}% ${y}%`,
                 transform: 'scale(2)',
             });
         }
@@ -194,12 +205,13 @@ export const DetailProduct = () => {
                         {adverts?.image?.map((image, index) => ( // Added parentheses and an index
                             <SwiperSlide key={index}> {/* Assuming you have unique keys for each slide */}
                                 <div className="img-detail overflow-hidden bg-black"
-                                    onMouseMove={handleMouseMove}
-                                    onMouseLeave={handleMouseLeave}
-                                    ref={imgRef}>
+                                >
                                     <img
+                                        onMouseMove={handleMouseMove}
+                                        onMouseLeave={handleMouseLeave}
+                                        ref={imgRef}
                                         src={image} alt='carousel-image'
-                                        className='max-w-full h-56 sm:h-64 xl:h-80 2xl:h-96 object-contain mx-auto'
+                                        className='max-w-full h-56 sm:h-64 xl:h-80 2xl:h-96 object-contain mx-auto cursor-zoom-in'
                                         style={zoomStyle} />
                                 </div>
 
