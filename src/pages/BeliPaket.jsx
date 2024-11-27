@@ -52,7 +52,7 @@ function BeliPaket() {
             {showModalKeranjang &&
                 <ModalConfirmPayment handleModal={handleModalKeranjang} />
             }
-            <div className="md:h-screen space-y-4 max-w-6xl mx-auto">
+            <div className="md:min-h-screen space-y-4 max-w-6xl mx-auto">
                 <div className="welcome-message space-y-1 text-center">
                     <h1 className="text-primary font-bold text-2xl">
                         Silahkan Pilih Paket Bisnis Anda!
