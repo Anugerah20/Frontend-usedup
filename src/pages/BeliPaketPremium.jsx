@@ -6,7 +6,7 @@ import { useApiGet, useApiPost } from "../services/apiService";
 import { formatToIDR } from "../utils/FormatRupiah";
 import { toast } from "react-toastify";
 import { BsInfoCircleFill } from "react-icons/bs";
-import {  FaStar } from "react-icons/fa";
+import { FaStar } from "react-icons/fa";
 
 const BeliPaketPremium = () => {
      const [paket, setPaket] = useState([]);
@@ -266,7 +266,7 @@ const BeliPaketPremium = () => {
                                                        isPremium ? (
                                                             <Alert color="warning" className="w-full mb-3" icon={BsInfoCircleFill}>
                                                                  Wow! Kamu sudah berlangganan paket premium, silahkan cek di halaman <Link to="/riwayat-pembelian" className="underline">Riwayat Pembelian</Link>
-                                                            </Alert>  
+                                                            </Alert>
                                                        ) : (
                                                             <Button
                                                                  color="dark"
@@ -295,7 +295,7 @@ const BeliPaketPremium = () => {
                          </div>
                     </div>
                </div>
-               <div className="md:h-screen space-y-4 max-w-6xl mx-auto">
+               <div className="md:min-h-screen space-y-4 max-w-6xl mx-auto">
                     <div className="welcome-message space-y-4 text-center rounded-md shadow bg-gradient-to-br from-sky-300 via-cyan-300 to-sky-400 px-2 py-10">
                          <div className="flex items-center justify-center space-x-2 text-white">
                               <FaStar className="text-2xl bg-cyan-500 rounded-full p-2 h-10 w-10" />
